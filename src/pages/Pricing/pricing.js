@@ -1,4 +1,3 @@
-import { Outlet, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import AdbIcon from '@mui/icons-material/Adb';
@@ -33,10 +32,17 @@ const rows = [
   createData(search, 356, 16.0, 49, 3.9),
 ];
 
+const handleSubmit = (event) => {
+  event.preventDefault();
+  alert(`search: ${search}`);
+  }
+
+
 return (
     <div className="Procedures">
       <br></br>
       <body></body>
+      <form onSubmit={handleSubmit}>
       <div className="Searchbar">
         <TextField
           id="input-with-icon-adornment"
@@ -68,10 +74,14 @@ return (
           }}
           label= "Insurance Provider"
         />
+
+        <button type="submit">Search</button>
         </center>
 
 
       </div>
+      </form>
+      
       <h1>
       <center>
           <table>
@@ -79,7 +89,7 @@ return (
                 <Table sx={{ minWidth: 1050 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Procedures</TableCell>
+                      <TableCell align="right">Procedures</TableCell>
                       <TableCell align="right">Costs</TableCell>
                       <TableCell align="right">Hospital&nbsp;</TableCell>
                       <TableCell align="right">Date&nbsp;</TableCell>
