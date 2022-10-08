@@ -13,7 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+//UPDATE PAGES TO EXACT ROUTE NAMES OF PAGES
+const pages = ['Products', 'Pricing', 'Blog', 'Celestins balls'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const ResponsiveAppBar = () => {
@@ -99,7 +100,7 @@ const ResponsiveAppBar = () => {
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/layout"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -118,10 +119,12 @@ const ResponsiveAppBar = () => {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
+                href={`/${page}`}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
               </Button>
+
             ))}
           </Box>
 
