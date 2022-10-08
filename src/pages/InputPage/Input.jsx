@@ -10,7 +10,7 @@ const Input = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`balls balls balls balls\n
+    alert(`
      procedure: ${procedure}\n
      cost: ${cost}\n 
      hospital: ${hospital}\n
