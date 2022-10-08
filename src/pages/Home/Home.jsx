@@ -1,4 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
+import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 
 const Home = () => {
   return (
@@ -17,8 +18,8 @@ const Home = () => {
         </ul>
       </nav>
       <Outlet />
-
       <h1> Home </h1>
+      <ResponsiveAppBar></ResponsiveAppBar>
     </div>
     
   )
