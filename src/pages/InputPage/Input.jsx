@@ -1,6 +1,3 @@
-import { Outlet, Link } from "react-router-dom";
-import ResponsiveAppBar from "../../components/ResponsiveAppBar";
-
 const Input = () => {
   return (
     <div>
