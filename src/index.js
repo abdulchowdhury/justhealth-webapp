@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home/Home";
 import Pricing from "./pages/Pricing/pricing"
+import Input from "./pages/InputPage/Input";
 import NoPage from "./pages/NoPage";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
 
@@ -14,6 +15,7 @@ export default function App() {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/layout" element={<Layout />} />
+        <Route path="/Crowdsource" element={<Input />} />
         <Route path="/Pricing" element={<Pricing />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
