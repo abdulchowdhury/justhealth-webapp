@@ -4,10 +4,12 @@ import Layout from "./pages/Layout";
 import Home from "./pages/Home/Home";
 
 import NoPage from "./pages/NoPage";
+import ResponsiveAppBar from "./components/ResponsiveAppBar";
 
 export default function App() {
   return (
     <div>
+      <ResponsiveAppBar></ResponsiveAppBar>
       <BrowserRouter>
       <Routes>
         <Route index element={<Home />} />
