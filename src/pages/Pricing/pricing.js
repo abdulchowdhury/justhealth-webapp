@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TextField from "@mui/material/TextField";
-import AdbIcon from '@mui/icons-material/Adb';
-import { Title } from "@mui/icons-material";
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -9,11 +7,7 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import styled from 'styled-components';
-import { useTable, usePagination } from 'react-table';
-import BasicTable from "./BasicTable.js";
 
  
 export default function Pricing () {
