@@ -18,6 +18,8 @@ import BasicTable from "./BasicTable.js";
  
 export default function Pricing () {
   const [search, setSearch] = useState("")
+  const [zip, setZip] = useState("")
+  const [insurance, setInsurance] = useState("")
 
 function createData(name, costs, hospital, date, provider) {
   return { name, costs, hospital, date, provider };
@@ -60,7 +62,7 @@ return (
           variant="outlined"
           
           onChange={(e) => {
-            setSearch(e.target.value);
+            setZip(e.target.value);
           }}
           label= "Zip Code"
         />
@@ -70,7 +72,7 @@ return (
           variant="outlined"
           
           onChange={(e) => {
-            setSearch(e.target.value);
+            setInsurance(e.target.value);
           }}
           label= "Insurance Provider"
         />
