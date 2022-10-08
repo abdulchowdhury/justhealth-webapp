@@ -3,16 +3,16 @@ const Input = () => {
     <div>
       <form action="/">
         <h1>Previous Procedure Input Form</h1>
-        <h4>Type of Procedure<span>*</span></h4>
-        <input class="name" type="text" name="name" placeholder="First" />
-        <h4>Total Accrued Costs<span>*</span></h4>
-        <input type="text" name="name" />
-        <h4>Procedure Hospital<span>*</span></h4>
-        <input type="text" name="name"/>
-        <h4>Procedure Data</h4>
-        <input type="text" name="name"/>
-        <h4>Insurance Provider</h4>
-        <input type="text" name="name"/>
+        <label for="procedure"><h4>Type of Procedure</h4></label>
+        <input id="procedure" type="text" name="procedure" />
+        <label for="costs"><h4>Total Accrued Costs</h4></label>
+        <input id="costs" type="text" name="costs" />
+        <label for="hospital"><h4>Procedure Hospital</h4></label>
+        <input id = "hospital" type="text" name="hospital"/>
+        <label for="date"><h4>Procedure Date</h4></label>
+        <input id="date" type="date" name="date"/>
+        <label><h4>Insurance Provider</h4></label>
+        <input id="insurance" type="text" name="insurance"/>
         <div class="btn-block">
           <button type="submit" href="/">Submit</button>
         </div>
