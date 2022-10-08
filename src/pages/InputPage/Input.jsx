@@ -1,3 +1,5 @@
+import Button from '@mui/material/Button'
+
 const Input = () => {
   return (
     <div>
@@ -14,7 +16,8 @@ const Input = () => {
         <label><h4>Insurance Provider</h4></label>
         <input id="insurance" type="text" name="insurance"/>
         <div class="btn-block">
-          <button type="submit" href="/">Submit</button>
+          
+          <Button type = "submit" href = "/" color = "primary" variant='contained' sx={{ mt:4}}>Submit</Button>
         </div>
       </form>
     </div>
