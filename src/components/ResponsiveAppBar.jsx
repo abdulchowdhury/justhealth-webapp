@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
 //UPDATE PAGES TO EXACT ROUTE NAMES OF PAGES
-const pages = ['Products', 'Pricing', 'Crowdsource', 'Celestins balls'];
+const pages = ['Pricing', 'Crowdsource'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const ResponsiveAppBar = () => {
