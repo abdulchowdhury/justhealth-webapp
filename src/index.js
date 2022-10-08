@@ -5,6 +5,7 @@ import Home from "./pages/Home/Home";
 import Input from "./pages/InputPage/Input";
 import NoPage from "./pages/NoPage";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
+import Procedure from "./pages/Procedure/procedure";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="/layout" element={<Layout />} />
         <Route path="/Crowdsource" element={<Input />} />
+        <Route path="/Procedure/*" element={<Procedure pName="Knee Surgery (test)"/>}/>
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
