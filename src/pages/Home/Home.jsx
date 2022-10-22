@@ -1,6 +1,7 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Axios from 'axios'
 
 import { useState } from "react";
 
@@ -13,7 +14,16 @@ const Home = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`query parameters: procedure: ${procedure}, insurance: ${insurance}, zip: ${zip}`)
+    Axios.post("http://localhost:3002/api/get", {
+      params: {
+
+      }
+    }).then((data)=>{
+    console.log(data)
+    alert(`query parameters: procedure: ${procedure}, insurance: ${insurance}, zip: ${zip}\n
+    ${data.data.message}`)
+
+    });
   }
   
     

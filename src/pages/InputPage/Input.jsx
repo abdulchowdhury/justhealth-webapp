@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button'
 import { useState } from 'react';
+import Axios from 'axios'
 
 const Input = () => {
   const [procedure, setProcedure] = useState("");
@@ -10,12 +11,10 @@ const Input = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`
-     procedure: ${procedure}\n
-     cost: ${cost}\n 
-     hospital: ${hospital}\n
-     date: ${date}\n
-     insurance: ${insurance}`);
+    Axios.post("http://localhost:3002/api/get").then((data)=>{
+    console.log(data)
+    alert(`Your penis length in inches is: ${data.data.result[0].penisLength}`);
+  });
   }
 
   return (
