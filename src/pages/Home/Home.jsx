@@ -1,19 +1,26 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Axios from 'axios'
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"
+
 
 
 const Home = () => {
 
+  let navigate = useNavigate()
   const [procedure, setProcedure] = useState("");
   const [zip, setZip] = useState("");
   const [insurance, setInsurance] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`query parameters: procedure: ${procedure}, insurance: ${insurance}, zip: ${zip}`)
+    
+    let queryString = `?pid=${procedure}&insurance=${insurance}&zip=${zip}`
+    let path = "/Procedure/" + queryString
+    navigate(`${path}`)
   }
   
     
