@@ -18,7 +18,7 @@ export default function App() {
         <Route path="/layout" element={<Layout />} />
         <Route path="/Crowdsource" element={<Input />} />
         <Route path="/Pricing" element={<Pricing />} />
-        <Route path="/Procedure/*" element={<Procedure pName="Knee Surgery (test)"/>}/>
+        <Route path="/Procedure/*" element={<Procedure />}/>
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>

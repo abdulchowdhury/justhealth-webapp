@@ -13,7 +13,7 @@ const Input = () => {
     event.preventDefault();
     Axios.post("http://localhost:3002/api/get").then((data)=>{
     console.log(data)
-    alert(`Your penis length in inches is: ${data.data.result[0].penisLength}`);
+    alert(`test: ${data.data.result[0].penisLength}`);
   });
   }
 
