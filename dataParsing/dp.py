@@ -6,7 +6,7 @@ jsonData = df.to_json(orient ='records')
 
 #build string
 tableString = ""
-colString = "Med_Procedure_Description varchar(255),Charge varchar(255),Aetna_Coventry_Exp_Reimbursement varchar(255)"
+colString = ""
 
 
 #establishing the connection
@@ -21,9 +21,17 @@ cols = ",".join([str(i) for i in df.columns.tolist()])
 cols = cols.replace(" ", "_")
 cols = cols.replace("'", "")
 
-table_name = "GradyAetna"
+table_name = "Grady_Data"
 sql = "DROP TABLE IF EXISTS " + table_name
 cursor.execute(sql)
+
+for col in df.columns:
+  if col == "Code":
+      col = "Procedure_Code"
+  colString += col.replace(" ", "_") + " varchar(255)" + ", "
+colString = colString[:-2]
+
+
 sql = "CREATE TABLE {} ({})".format(table_name, colString)
 cursor.execute(sql)
 
@@ -34,18 +42,15 @@ vals = ""
   
   # Commit your changes in the database
 conn.commit()
-for row in jsonData:
+for row in jsonData[:1000]:
   colString = ""
   vals = []
   for attribute, value in row.items():
-    if attribute == "Med_Procedure Description":
-      colString += "Med_Procedure_Description, "
-      vals.append(value)
-    elif attribute == "Charge":
-      colString += attribute + ", "
-      vals.append(value)
-    elif attribute == "Aetna_Coventry Exp Reimbursement":
-      colString += "Aetna_Coventry_Exp_Reimbursement, "
+    if attribute == "Code":
+      colString += "Procedure_Code, "
+      vals.append(value.replace("�", "").replace(" ", ""))
+    else:
+      colString += attribute.replace(" ", "_") + ", "
       vals.append(value)
   colString = colString[:-2]
   st_1 = "INSERT INTO {}({})".format(table_name, colString)
