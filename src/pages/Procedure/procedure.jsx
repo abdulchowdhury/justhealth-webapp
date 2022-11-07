@@ -97,8 +97,7 @@ const Procedure = (props) => {
         <h2>Analytics:</h2>
         <p>Hopitals nearby prices here</p>
         <p>Cost timeline here</p>
-        <h3>Avg cost here : {'$' + dollar.format(avgCost)}</h3>
-        <h3>Cost Comparisons between insurances at this hospital here : </h3>
+        <h3>Average Cost: {'$' + dollar.format(avgCost)}</h3>
         <Graph b={b}/>
         
     </div>
