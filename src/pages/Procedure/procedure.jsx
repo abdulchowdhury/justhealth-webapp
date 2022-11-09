@@ -11,6 +11,7 @@ import { avatarGroupClasses, ListItemAvatar } from '@mui/material';
 const Procedure = (props) => {
 
   const [data, setData] = useState("no data")
+  const [crowdsourced, setCrowdsourced] = useState("no data")
 
   const [searchParams, setSearchParams] = useSearchParams();
   const pid = searchParams.get("pid")
@@ -34,6 +35,13 @@ const Procedure = (props) => {
         }
       }).then((data)=>{
       setData(data.data.result)
+    })
+    Axios.post("http://localhost:3002/api/getCrowdsourced", {}, {
+        params: {
+          pid: pid
+        }
+      }).then((data)=>{
+      setCrowdsourced(data.data.result)
     })
   }
 
@@ -78,27 +86,37 @@ const Procedure = (props) => {
 
 
   Object.values(b).forEach(avg); // loops through for average
-  var avgCost = sum/count;
-
-
+  var avgCost = (sum/count).toFixed(2);
   
   let dollar = Intl.NumberFormat('en-US'); //currency format for cost
+  function getCAvg() {
+    let c_avg = "No crowdsourced data."
+    if (crowdsourced != "no data") {
+      var c_total = 0
+      for (var i = 0; i < crowdsourced.length; i++) {
+        c_total += parseFloat(crowdsourced[i].cost)
+      }
+      c_avg = (c_total/i).toFixed(2)
+    }
+    return c_avg
+  }
 
 
   return (
     <body>
     <div>
-      <h1>{data[0].Med_Procedure_Description}: {price}</h1>
+      <h1>{data[0].Med_Procedure_Description}</h1>
         {/* 
         data like data.charge are prices, but are strings with symbols like '$' and ',' so for
         any calculations to take place, they have to be parsed specially
          */}
 
         <h2>Analytics:</h2>
+        <p>Ticket Price: {price}</p>
         <p>Hopitals nearby prices here</p>
         <p>Cost timeline here</p>
-        <h3>Avg cost here : {'$' + dollar.format(avgCost)}</h3>
-        <h3>Cost Comparisons between insurances at this hospital here : </h3>
+        <p>Average Cost reported by users: ${getCAvg()}</p>
+        <h3>Average Cost: ${avgCost}</h3>
         <Graph b={b}/>
         
     </div>
