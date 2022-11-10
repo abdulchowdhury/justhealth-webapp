@@ -123,6 +123,7 @@ const Procedure = (props) => {
         <p>Cost timeline here</p>
         <p>Average Cost reported by users: {getCAvg()}</p>
         <h3>Average Cost: {dollar.format(avgCost)}</h3>
+        <p>Note: If insurance is not listed, it does not cover this procedure.</p>
         <Graph b={b} insurance={insurance}/>
         
     </div>
