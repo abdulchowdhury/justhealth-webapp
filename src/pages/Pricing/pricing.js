@@ -8,10 +8,13 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { useNavigate } from "react-router-dom"
 
  
 export default function Pricing () {
-  const [search, setSearch] = useState("")
+  let navigate = useNavigate()
+
+  const [procedure, setProcedure] = useState("")
   const [zip, setZip] = useState("")
   const [insurance, setInsurance] = useState("")
 
@@ -21,17 +24,19 @@ function createData(name, costs, hospital, date, provider) {
 
 
 const rows = [
-  createData(search, 159, 6.0, 24, 4.0),
-  createData(search, 237, 9.0, 37, 4.3),
-  createData(search, 262, 16.0, 24, 6.0),
-  createData(search, 305, 3.7, 67, 4.3),
-  createData(search, 356, 16.0, 49, 3.9),
+  createData(procedure, 159, 6.0, 24, 4.0),
+  createData(procedure, 237, 9.0, 37, 4.3),
+  createData(procedure, 262, 16.0, 24, 6.0),
+  createData(procedure, 305, 3.7, 67, 4.3),
+  createData(procedure, 356, 16.0, 49, 3.9),
 ];
 
 const handleSubmit = (event) => {
   event.preventDefault();
-  alert(`search: ${search}`);
-  }
+  let queryString = `?pid=${procedure}&insurance=${insurance}&zip=${zip}`
+  let path = "/Procedure/" + queryString
+  navigate(`${path}`)
+}
 
 
 return (
@@ -45,7 +50,7 @@ return (
           variant="outlined"
           fullWidth
           onChange={(e) => {
-            setSearch(e.target.value);
+            setProcedure(e.target.value);
           }}
           label= "Search Procedures"
         />
@@ -98,7 +103,7 @@ return (
                         key={row.name}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                               >
-                        <TableCell align="right">{search}</TableCell>
+                        <TableCell align="right">{procedure}</TableCell>
                         <TableCell align="right">{row.costs}</TableCell>
                         <TableCell align="right">{row.hospital}</TableCell>
                         <TableCell align="right">{row.date}</TableCell>
