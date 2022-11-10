@@ -9,14 +9,18 @@ class Graph extends Component {
                     type: 'bar', 
                     x: Object.keys(this.props.b),
                     y: Object.values(this.props.b),
-                    name: 'Insurance'
+                    name: 'Insurance',
+                    marker: {
+                      color: 'lightblue',
+                      width: 1
+                    }
                 }]}
                 layout = { {
                     title: "Insurance Pricing (what you would pay)",
                     width: 1300,
                     height: 700,
                     xaxis: {
-                      categoryorder: 'category ascending',
+                      categoryorder: 'total ascending',
                       title: {
                         text: 'Insurances',
                         font: {

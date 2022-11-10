@@ -4,8 +4,6 @@ import Graph from '../../components/Graph';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useState} from 'react';
-import { forEach, number, parse } from 'mathjs';
-import { avatarGroupClasses, ListItemAvatar } from '@mui/material';
 
 
 const Procedure = (props) => {
@@ -20,8 +18,8 @@ const Procedure = (props) => {
   //currently don't use these in the query, but could later
   const insurance = searchParams.get("insurance")
   const zip = searchParams.get("zip")
-  const price = data[0].Charge;
 
+  const price = data[0].Charge;
 
 
   useEffect(() => {
@@ -84,19 +82,27 @@ const Procedure = (props) => {
   Object.entries(b).forEach(num); // loops through to make float
   Object.entries(b).forEach(change); // loops through to get difference between cost and coverage
 
+  if (Object.keys(b).includes(insurance)) {
+    alert("match")
+  }
 
   Object.values(b).forEach(avg); // loops through for average
-  var avgCost = (sum/count).toFixed(2);
-  
-  let dollar = Intl.NumberFormat('en-US'); //currency format for cost
+  var avgCost = (sum/count)
+  let formatting_options = {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+ }
+  let dollar = Intl.NumberFormat('en-US', formatting_options); //currency format for cost
   function getCAvg() {
     let c_avg = "No crowdsourced data."
-    if (crowdsourced != "no data") {
+    if (crowdsourced.length !== 0) {
       var c_total = 0
       for (var i = 0; i < crowdsourced.length; i++) {
         c_total += parseFloat(crowdsourced[i].cost)
       }
-      c_avg = (c_total/i).toFixed(2)
+      c_avg = c_total/i
+      return dollar.format(c_avg)
     }
     return c_avg
   }
@@ -115,9 +121,9 @@ const Procedure = (props) => {
         <p>Ticket Price: {price}</p>
         <p>Hopitals nearby prices here</p>
         <p>Cost timeline here</p>
-        <p>Average Cost reported by users: ${getCAvg()}</p>
-        <h3>Average Cost: ${avgCost}</h3>
-        <Graph b={b}/>
+        <p>Average Cost reported by users: {getCAvg()}</p>
+        <h3>Average Cost: {dollar.format(avgCost)}</h3>
+        <Graph b={b} insurance={insurance}/>
         
     </div>
     </body>
