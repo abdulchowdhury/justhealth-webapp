@@ -35,8 +35,6 @@ for key in dict.keys():
     key = key.replace(" ", "_").replace("-", "_") 
     colString += key + " varchar(255)" + ", "
     columns.append(key)
-# colString += "CDM_Revenue_Code varchar(255), "
-# colString += "CDM_HCPCS varchar(255)"
 colString = colString[:-2]
 
 table_name = "Emory_Decatur_Data"
