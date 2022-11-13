@@ -110,9 +110,11 @@ vals = ""
   
   # Commit your changes in the database
 conn.commit()
-for row in jsonData[:10000]:
+for row in jsonData[:20000]:
   colString = ""
   vals = []
+  price = 0
+  reimbursement = 0
   for attribute, value in row.items():
     attribute = attribute.replace(" ", "_")
     if attribute == "Code":
@@ -122,6 +124,11 @@ for row in jsonData[:10000]:
         vals.append(value)
       else:
         vals.append(value)
+    elif (attribute == "Charge"):
+      colString += attribute.replace(" ", "_") + ", "
+      vals.append(value)
+      
+      price += value
     elif (attribute in insuranceList):
       if (attribute == "Ambetter__Exp_Reimbursement"):
         colString += attribute[:-len("__Exp_Reimbursement")] + ", "
