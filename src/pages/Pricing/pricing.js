@@ -1,4 +1,3 @@
-import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
@@ -11,7 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import { useNavigate } from "react-router-dom"
 import Axios from 'axios';
 import { Button } from "@mui/material";
-
+import { useState } from "react";
  
 export default function Pricing () {
   let navigate = useNavigate()
@@ -21,7 +20,7 @@ export default function Pricing () {
   const [zip, setZip] = useState("")
   const [insurance, setInsurance] = useState("")
   const [GradyData, setGradyData] = useState("no data")
-  const [NorthsideData, setNorthsideData] = useState("no data")
+  const [NorthsideAtlantaData, setNorthsideData] = useState("no data")
   const [done, setDone] = useState(false)
   const [rows, setRows] = useState([]);
 
@@ -42,7 +41,7 @@ const handleSubmit = async (event) => {
     }).then((data)=>{
     setGradyData(data.data.result)
   })
-  await Axios.post("http://localhost:3002/api/Northside", {}, {
+  await Axios.post("http://localhost:3002/api/NorthsideAtlanta", {}, {
       params: {
         pid: procedure
       }
@@ -54,7 +53,7 @@ const handleSubmit = async (event) => {
   // }
   setRows([
     createData("Grady Memorial Hospital", "Athena", GradyData),
-    //createData("Northside Hospital", "Distance", NorthsideData)
+    createData("Northside Atlanta Hospital", "Distance", NorthsideAtlantaData)
   ])
   console.log(rows)
   setDone(true);
@@ -64,6 +63,8 @@ const redirect = (hospital) => {
   let queryString = `?pid=${procedure}&insurance=${insurance}&zip=${zip}`
   if (hospital === "Grady Memorial Hospital") {
     queryString += "&hospital=Grady"
+  } else if (hospital === "Northside Atlanta Hospital") {
+    queryString += "&hospital=NorthsideAtlanta"
   }
   let path = "/Procedure/" + queryString
   navigate(`${path}`)
@@ -124,7 +125,7 @@ return (
                     key={"Labels"}>
                       <TableCell  align="left">Hospital</TableCell>
                       <TableCell  align="center">Insurances Accepted</TableCell>
-                      <TableCell  align="right">Average Cost</TableCell>
+                      <TableCell  align="right">Ticket Cost</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

@@ -49,8 +49,8 @@ app.post("/api/Grady", (req,res)=>{
 });
 
 //Northside data
-app.post("/api/Northside", (req,res)=>{
-    connection.query("SELECT * FROM Northside_Hospital_Atlanta_Data where code = ?", [req.query.pid], (err,result)=>{
+app.post("/api/NorthsideAtlanta", (req,res)=>{
+    connection.query("SELECT * FROM Northside_Hospital_Atlanta_Data where Procedure_Code = ?", [req.query.pid], (err,result)=>{
         if(err) {
             console.log(err)
         } else {

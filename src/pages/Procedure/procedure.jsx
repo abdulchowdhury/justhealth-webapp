@@ -114,7 +114,7 @@ const Procedure = (props) => {
   return (
     <body>
     <div>
-      <h1>{data[0].Med_Procedure_Description}</h1>
+      <h1>{data[0].Med_Procedure_Description} at {hospital}</h1>
         {/* 
         data like data.charge are prices, but are strings with symbols like '$' and ',' so for
         any calculations to take place, they have to be parsed specially
