@@ -9,31 +9,62 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useNavigate } from "react-router-dom"
+import Axios from 'axios';
+import { Button } from "@mui/material";
 
  
 export default function Pricing () {
   let navigate = useNavigate()
 
+
   const [procedure, setProcedure] = useState("")
   const [zip, setZip] = useState("")
   const [insurance, setInsurance] = useState("")
+  const [GradyData, setGradyData] = useState("no data")
+  const [NorthsideData, setNorthsideData] = useState("no data")
+  const [done, setDone] = useState(false)
+  const [rows, setRows] = useState([]);
 
-function createData(name, costs, hospital, date, provider) {
-  return { name, costs, hospital, date, provider };
-}
+
+  function createData(hospital, insurance, data) {
+    var cost = data[0].Charge
+    return { hospital, insurance, cost };
+  }
 
 
-const rows = [
-  createData(procedure, 159, 6.0, 24, 4.0),
-  createData(procedure, 237, 9.0, 37, 4.3),
-  createData(procedure, 262, 16.0, 24, 6.0),
-  createData(procedure, 305, 3.7, 67, 4.3),
-  createData(procedure, 356, 16.0, 49, 3.9),
-];
-
-const handleSubmit = (event) => {
+const handleSubmit = async (event) => {
+  console.log(event);
   event.preventDefault();
+  await Axios.post("http://localhost:3002/api/Grady", {}, {
+      params: {
+        pid: procedure
+      }
+    }).then((data)=>{
+    setGradyData(data.data.result)
+  })
+  await Axios.post("http://localhost:3002/api/Northside", {}, {
+      params: {
+        pid: procedure
+      }
+    }).then((data)=>{
+    setNorthsideData(data.data.result)
+  })
+  // if (GradyData === "no data") {
+  //   handleSubmit(event)
+  // }
+  setRows([
+    createData("Grady Memorial Hospital", "Athena", GradyData),
+    //createData("Northside Hospital", "Distance", NorthsideData)
+  ])
+  console.log(rows)
+  setDone(true);
+
+}
+const redirect = (hospital) => {
   let queryString = `?pid=${procedure}&insurance=${insurance}&zip=${zip}`
+  if (hospital === "Grady Memorial Hospital") {
+    queryString += "&hospital=Grady"
+  }
   let path = "/Procedure/" + queryString
   navigate(`${path}`)
 }
@@ -87,14 +118,13 @@ return (
       <center>
           <table>
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 1050 }} aria-label="simple table">
+              {done ? (<Table sx={{ minWidth: 1050 }} aria-label="simple table">
                   <TableHead>
-                    <TableRow>
-                      <TableCell align="right">Procedures</TableCell>
-                      <TableCell align="right">Costs</TableCell>
-                      <TableCell align="right">Hospital&nbsp;</TableCell>
-                      <TableCell align="right">Date&nbsp;</TableCell>
-                      <TableCell align="right">Providers&nbsp;</TableCell>
+                    <TableRow
+                    key={"Labels"}>
+                      <TableCell  align="left">Hospital</TableCell>
+                      <TableCell  align="center">Insurances Accepted</TableCell>
+                      <TableCell  align="right">Average Cost</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -103,15 +133,13 @@ return (
                         key={row.name}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                               >
-                        <TableCell align="right">{procedure}</TableCell>
-                        <TableCell align="right">{row.costs}</TableCell>
-                        <TableCell align="right">{row.hospital}</TableCell>
-                        <TableCell align="right">{row.date}</TableCell>
-                        <TableCell align="right">{row.provider}</TableCell>
+                        <TableCell align="left"><Button onClick={() => {redirect(row.hospital)}}>{row.hospital}</Button></TableCell>
+                        <TableCell align="center">{row.insurance}</TableCell>
+                        <TableCell align="right">{row.cost}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
-                </Table>
+                </Table>): ""}
       </TableContainer>
           </table>
           </center>

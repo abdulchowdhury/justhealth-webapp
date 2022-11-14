@@ -13,6 +13,7 @@ const Procedure = (props) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const pid = searchParams.get("pid")
+  const hospital = searchParams.get("hospital")
   const b = [];
 
   //currently don't use these in the query, but could later
@@ -27,7 +28,9 @@ const Procedure = (props) => {
   }, []);
 
   const queryOnLoad = () => {
-    Axios.post("http://localhost:3002/api/spsh", {}, {
+    let url = "http://localhost:3002/api/"
+    url += hospital
+    Axios.post(url, {}, {
         params: {
           pid: pid
         }
@@ -45,7 +48,7 @@ const Procedure = (props) => {
 
   function set(item) { // takes data and only finds prices and takes out $ and takes out the prices that are $0
     if (typeof(item[1]) === 'string' && item[1].substring(0,1) === '$') {
-      if((item[1]).substring(1,2) !== '0' && item[0] !== "Charge") {
+      if((item[1]).substring(1,2) !== '0' && item[0] !== "Charge" && item[0] !== "Payor_Rate_Max" && item[0] !== "Payor_Rate_Min") {
         const index = item[0].indexOf('_');
         b[(item[0]).substring(0,index)] = (item[1]).substring(1);
       } if (item[0] === "Charge") {
