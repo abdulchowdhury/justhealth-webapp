@@ -1,22 +1,30 @@
+import { responsiveProperty } from '@mui/material/styles/cssUtils';
 import React, {Component} from 'react';
 import Plotly from 'react-plotly.js';
 
 class Graph extends Component {
     render() {
+        var dtick_val = Number((Math.max(...Object.values(this.props.b))/10).toPrecision(1));
+        var width = window.innerWidth * .90
+        var height = window.innerHeight * .75
         return (
             <div>
                 <Plotly data = {[{
-                    type: 'bar', 
+                    type: 'bar',
                     x: Object.keys(this.props.b),
                     y: Object.values(this.props.b),
-                    name: 'Insurance'
+                    name: 'Insurance',
+                    marker: {
+                      color: 'lightblue',
+                      width: 1
+                    }
                 }]}
                 layout = { {
                     title: "Insurance Pricing (what you would pay)",
-                    width: 1300,
-                    height: 700,
+                    width: `${width}`,
+                    height: `${height}`,
                     xaxis: {
-                      categoryorder: 'category ascending',
+                      categoryorder: 'total ascending',
                       title: {
                         text: 'Insurances',
                         font: {
@@ -29,7 +37,7 @@ class Graph extends Component {
                     yaxis: {
                         tickmode: "linear",
                         tick0: 0,
-                        dtick: 50000,
+                        dtick: `${dtick_val}`,
                       title: {
                         text: 'Prices',
                         font: {
@@ -39,6 +47,9 @@ class Graph extends Component {
                         }
                       }
                     }
+                }}
+                config = {{
+                  responsive: true
                 }}
                 />
             </div>

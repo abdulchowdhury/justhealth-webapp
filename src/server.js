@@ -37,13 +37,58 @@ app.post("/api/get", (req,res)=>{
     });   
 });
 
-//spsh = single procedure at single hospital
-app.post("/api/spsh", (req,res)=>{
-    connection.query("SELECT * FROM Grady_Data where Procedure_Code = ?", [req.query.pid], (err,result)=>{
+//Grady data
+app.post("/api/Grady", (req,res)=>{
+    connection.query("SELECT * FROM Grady_Memorial_Hospital_Data where Procedure_Code = ?", [req.query.pid], (err,result)=>{
         if(err) {
             console.log(err)
         } else {
-            res.json({success: true, message: "single procedure at single hospital", result})
+            res.json({success: true, message: "single procedure at Grady", result})
+        }
+    });   
+});
+
+//Northside Atlanta data
+app.post("/api/NorthsideAtlanta", (req,res)=>{
+    connection.query("SELECT * FROM Northside_Hospital_Atlanta_Data where Procedure_Code = ?", [req.query.pid], (err,result)=>{
+        if(err) {
+            console.log(err)
+        } else {
+            res.json({success: true, message: "single procedure at Northside Atlanta", result})
+        }
+    });   
+});
+
+//Northside Duluth data
+app.post("/api/NorthsideDuluth", (req,res)=>{
+    connection.query("SELECT * FROM Northside_Hospital_Duluth_Data where Procedure_Code = ?", [req.query.pid], (err,result)=>{
+        if(err) {
+            console.log(err)
+        } else {
+            res.json({success: true, message: "single procedure at Northside Duluth", result})
+        }
+    });   
+});
+
+
+//input 
+app.post("/api/input", (req,res)=>{
+    query = "insert into Crowdsourced values (?, ?, ?, ?, ?)"
+    connection.query(query, [req.query.procedure, req.query.insurance, req.query.cost, req.query.hospital, req.query.date], (err, rows)=>{
+        if(err) {
+            console.log(err)
+        } else {
+            res.json({success: true, message: "single procedure at single hospital", rows})
+        }
+    });
+});
+
+app.post("/api/getCrowdsourced", (req,res)=>{
+    connection.query("SELECT * FROM Crowdsourced where p_id = ?", [req.query.pid], (err,result)=>{
+        if(err) {
+            console.log(err)
+        } else {
+            res.json({success: true, message: "Crowdsourced data", result})
         }
     });   
 });
