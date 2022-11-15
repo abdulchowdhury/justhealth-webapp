@@ -14,7 +14,11 @@ const Procedure = (props) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const pid = searchParams.get("pid")
-  const b = [];
+  const hospital = searchParams.get("hospital")
+  let key = 'completed'
+  let value = false;
+  let b = {[key]: value};
+  delete b[key];
 
   //currently don't use these in the query, but could later
   const insurance = searchParams.get("insurance")
@@ -37,13 +41,20 @@ const Procedure = (props) => {
     })
   }
 
+  function isNum(c) {
+    return c >= '0' && c <= '9';
+  }
+
+
   function set(item) { // takes data and only finds prices and takes out $ and takes out the prices that are $0
-    if (typeof(item[1]) === 'string' && item[1].substring(0,1) === '$') {
-      if((item[1]).substring(1,2) !== '0' && item[0] !== "Charge") {
-        const index = item[0].indexOf('_');
-        b[(item[0]).substring(0,index)] = (item[1]).substring(1);
+    if (typeof(item[1]) === 'string' && isNum(item[1].substring(0,1))) {
+      if(((item[1]).substring(0,1) !== '0') && item[0] !== "Charge" && item[0] !== "Payor_Rate_Max" && item[0] !== "Payor_Rate_Min" && item[0] !== "Procedure_Code") {
+        const name = (item[0].replace(/_/g," "));
+        if (name !== null || name !== "") {
+          b[name] = item[1];
+        }
       } if (item[0] === "Charge") {
-        numPrice = parseFloat(((item[1]).substring(1)).replace(/,/g, ''));;
+        numPrice = item[1];
       }
     }
   }
@@ -57,10 +68,11 @@ const Procedure = (props) => {
     b[p[0]] = p[1];
   }
 
+
   var numPrice;
   function change(x) { // takes insurance coverage and subtracts from charge
       b[x[0]] = (numPrice - x[1]);
-      if (b[x[0]] < 0) {
+      if (b[x[0]] <= 0) {
         delete b[x[0]];
         b[x[0] + ' (fully covered)'] = 0.00;
       }
@@ -72,7 +84,7 @@ const Procedure = (props) => {
     sum = sum + x;
     count++;
   }
-  Object.entries(data[0]).forEach(set); // loops through for data formating
+  (Object.entries(data[0])).forEach(set); // loops through for data formating
   Object.entries(b).forEach(num); // loops through to make float
   Object.entries(b).forEach(change); // loops through to get difference between cost and coverage
 

@@ -15,8 +15,55 @@ export default function Pricing () {
   const [zip, setZip] = useState("")
   const [insurance, setInsurance] = useState("")
 
-function createData(name, costs, hospital, date, provider) {
-  return { name, costs, hospital, date, provider };
+
+useEffect(() => {
+    let pid = searchParams.get("pid")
+    setProcedure(`${searchParams.get("pid")}`)
+    setZip(`${searchParams.get("zip")}`)
+    setInsurance(`${searchParams.get("insurance")}`)
+    if (!(pid === "" || pid === undefined)) {
+      queryAllHospitals(pid)
+      setDone(true);
+    }
+  }, []);
+
+const queryAllHospitals = async (pid) => {
+  const newRows = []
+  await Axios.post("http://localhost:3002/api/Grady", {}, {
+      params: {
+        pid: pid
+      }
+    }).then(async (data)=>{
+      console.log(data.data.result.length)
+    if (data.data.result.length !== 0) {
+      setGradyData(data.data.result)
+      newRows.push({hospital:"Grady Memorial Hospital", insurance:"a", cost:data.data.result[0].Charge})
+    }
+  })
+  await Axios.post("http://localhost:3002/api/NorthsideAtlanta", {}, {
+      params: {
+        pid: pid
+      }
+    }).then(async (data)=>{
+    if (data.data.result.length !== 0) {
+      setNorthsideAtlantaData(data.data.result)
+      newRows.push({hospital:"Northside Atlanta Hospital", insurance: "b", cost: data.data.result[0].Charge})
+    }
+  })
+  await Axios.post("http://localhost:3002/api/NorthsideDuluth", {}, {
+      params: {
+        pid: pid
+      }
+    }).then(async (data)=>{
+    if (data.data.result.length !== 0) {
+      setNorthsideDuluthData(data.data.result)
+      newRows.push({hospital:"Northside Duluth Hospital", insurance: "c", cost: data.data.result[0].Charge})
+    }
+  })
+  // if (GradyData === "no data") {
+  //   handleSubmit(event)
+  // }
+  setRows(newRows)
 }
 
 
