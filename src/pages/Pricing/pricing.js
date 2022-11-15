@@ -10,12 +10,13 @@ import TableRow from '@mui/material/TableRow';
 import { useNavigate } from "react-router-dom"
 import Axios from 'axios';
 import { Button } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from 'react-router-dom';
  
 export default function Pricing () {
   let navigate = useNavigate()
 
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const [procedure, setProcedure] = useState("")
   const [zip, setZip] = useState("")
   const [insurance, setInsurance] = useState("")
@@ -26,22 +27,22 @@ export default function Pricing () {
   const [rows, setRows] = useState([{hospital:"", insurance:"", cost:""}]);
 
 
-  function createData(hospital, insurance, data) {
-    if (data.length === 0) {
-      return {hospital, insurace:"no insurance", cost:"not offered"}
+useEffect(() => {
+    let pid = searchParams.get("pid")
+    setProcedure(`${searchParams.get("pid")}`)
+    setZip(`${searchParams.get("zip")}`)
+    setInsurance(`${searchParams.get("insurance")}`)
+    if (!(pid == "" || pid == undefined)) {
+      queryAllHospitals(pid)
+      setDone(true);
     }
-    var cost = data[0].Charge
-    return { hospital, insurance, cost };
-  }
+  }, []);
 
-
-const handleSubmit = async (event) => {
-  event.preventDefault();
-  setRows([])
+const queryAllHospitals = async (pid) => {
   const newRows = []
   await Axios.post("http://localhost:3002/api/Grady", {}, {
       params: {
-        pid: procedure
+        pid: pid
       }
     }).then(async (data)=>{
       console.log(data.data.result.length)
@@ -52,7 +53,7 @@ const handleSubmit = async (event) => {
   })
   await Axios.post("http://localhost:3002/api/NorthsideAtlanta", {}, {
       params: {
-        pid: procedure
+        pid: pid
       }
     }).then(async (data)=>{
     if (data.data.result.length !== 0) {
@@ -62,7 +63,7 @@ const handleSubmit = async (event) => {
   })
   await Axios.post("http://localhost:3002/api/NorthsideDuluth", {}, {
       params: {
-        pid: procedure
+        pid: pid
       }
     }).then(async (data)=>{
     if (data.data.result.length !== 0) {
@@ -74,6 +75,12 @@ const handleSubmit = async (event) => {
   //   handleSubmit(event)
   // }
   setRows(newRows)
+}
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  setRows([])
+  queryAllHospitals(procedure);
   setDone(true);
 
 }
@@ -83,6 +90,8 @@ const redirect = (hospital) => {
     queryString += "&hospital=Grady"
   } else if (hospital === "Northside Atlanta Hospital") {
     queryString += "&hospital=NorthsideAtlanta"
+  } else if (hospital === "Northside Duluth Hospital") {
+    queryString += "&hospital=NorthsideDuluth"
   }
   let path = "/Procedure/" + queryString
   navigate(`${path}`)
