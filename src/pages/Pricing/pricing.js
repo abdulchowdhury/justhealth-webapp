@@ -27,7 +27,6 @@ export default function Pricing () {
   const [rows, setRows] = useState([{hospital:"", insurance:"", cost:""}]);
   var insurances = [];
 
-
 useEffect(() => {
     let pid = searchParams.get("pid")
     setProcedure(`${searchParams.get("pid")}`)
@@ -47,9 +46,13 @@ const queryAllHospitals = async (pid) => {
       }
     }).then(async (data)=>{
     if (data.data.result.length !== 0) {
-      setGradyData(data.data.result)
+      setGradyData(data.data.result);
       insure(data.data.result[0]);
-      newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost:data.data.result[0].Charge})
+      console.log(typeof(insurance));
+      if (insurance === "" || ((insurances.toString()).indexOf(insurance.toUpperCase()) !== -1)) {
+        newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost:data.data.result[0].Charge})
+      }
+      insurances = [];
     }
   })
   await Axios.post("http://localhost:3002/api/NorthsideAtlanta", {}, {
@@ -59,7 +62,11 @@ const queryAllHospitals = async (pid) => {
     }).then(async (data)=>{
     if (data.data.result.length !== 0) {
       setNorthsideAtlantaData(data.data.result)
-      newRows.push({hospital:"Northside Atlanta Hospital", insurance: "b", cost: data.data.result[0].Charge})
+      insure(data.data.result[0]);
+      if (insurance === "" || ((insurances.toString()).indexOf(insurance.toUpperCase()) !== -1)) {
+        newRows.push({hospital:"Northside Atlanta Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: data.data.result[0].Charge})
+      }
+      insurances = [];
     }
   })
   await Axios.post("http://localhost:3002/api/NorthsideDuluth", {}, {
@@ -69,7 +76,11 @@ const queryAllHospitals = async (pid) => {
     }).then(async (data)=>{
     if (data.data.result.length !== 0) {
       setNorthsideDuluthData(data.data.result)
-      newRows.push({hospital:"Northside Duluth Hospital", insurance: "c", cost: data.data.result[0].Charge})
+      insure(data.data.result[0]);
+      if (insurance === "" || ((insurances.toString()).indexOf(insurance.toUpperCase()) !== -1)) {
+        newRows.push({hospital:"Northside Duluth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: data.data.result[0].Charge})
+      }
+      insurances = [];
     }
   })
   // if (GradyData === "no data") {
@@ -84,27 +95,16 @@ function isNum(c) { // checks if digit is num
 
 function insure(item) {
   for (const items in item) {
-    if (typeof(items) === 'string' && typeof((GradyData[0][items])) == 'string' && isNum((GradyData[0][items]).substring(0,1))) {
-      if(((GradyData[0][items]) !== '0') && items !== "Charge" && items !== "Payor_Rate_Max" && items !== "Payor_Rate_Min" && items !== "Procedure_Code" && items !== "Cash_Discount") {
+    if (typeof(items) === 'string' && typeof((item[items])) == 'string' && isNum((item[items]).substring(0,1))) {
+      if(((item[items]) !== '0') && items !== "Charge" && items !== "Payor_Rate_Max" && items !== "Payor_Rate_Min" && items !== "Procedure_Code" && items !== "Cash_Discount") {
         const name = (items.replace(/_/g," "));
-        insurances.push(name);
+        insurances.push(name.toUpperCase());
       }
     }
   }
 }
 
-// function set(item) { // takes data and only finds prices and takes out $ and takes out the prices that are $0
-//   if (typeof(item[1]) === 'string' && isNum(item[1].substring(0,1))) {
-//     if(((item[1]).substring(0,1) !== '0') && item[0] !== "Charge" && item[0] !== "Payor_Rate_Max" && item[0] !== "Payor_Rate_Min" && item[0] !== "Procedure_Code") {
-//       const name = (item[0].replace(/_/g," "));
-//       if (name !== null || name !== "") {
-//         b[name] = item[1];
-//       }
-//     } if (item[0] === "Charge") {
-//       numPrice = item[1];
-//     }
-//   }
-// }
+
 
 const handleSubmit = async (event) => {
   event.preventDefault();
