@@ -25,6 +25,7 @@ export default function Pricing () {
   const [NorthsideDuluthData, setNorthsideDuluthData] = useState([])
   const [done, setDone] = useState(false)
   const [rows, setRows] = useState([{hospital:"", insurance:"", cost:""}]);
+  var insurances = [];
 
 
 useEffect(() => {
@@ -48,7 +49,8 @@ const queryAllHospitals = async (pid) => {
       console.log(data.data.result.length)
     if (data.data.result.length !== 0) {
       setGradyData(data.data.result)
-      newRows.push({hospital:"Grady Memorial Hospital", insurance:"a", cost:data.data.result[0].Charge})
+      insure(data.data.result[0]);
+      newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost:data.data.result[0].Charge})
     }
   })
   await Axios.post("http://localhost:3002/api/NorthsideAtlanta", {}, {
@@ -76,6 +78,34 @@ const queryAllHospitals = async (pid) => {
   // }
   setRows(newRows)
 }
+
+function isNum(c) { // checks if digit is num
+  return c >= '0' && c <= '9';
+}
+
+function insure(item) {
+  for (const items in item) {
+    if (typeof(items) === 'string' && typeof((GradyData[0][items])) == 'string' && isNum((GradyData[0][items]).substring(0,1))) {
+      if(((GradyData[0][items]) !== '0') && items !== "Charge" && items !== "Payor_Rate_Max" && items !== "Payor_Rate_Min" && items !== "Procedure_Code" && items !== "Cash_Discount") {
+        const name = (items.replace(/_/g," "));
+        insurances.push(name);
+      }
+    }
+  }
+}
+
+// function set(item) { // takes data and only finds prices and takes out $ and takes out the prices that are $0
+//   if (typeof(item[1]) === 'string' && isNum(item[1].substring(0,1))) {
+//     if(((item[1]).substring(0,1) !== '0') && item[0] !== "Charge" && item[0] !== "Payor_Rate_Max" && item[0] !== "Payor_Rate_Min" && item[0] !== "Procedure_Code") {
+//       const name = (item[0].replace(/_/g," "));
+//       if (name !== null || name !== "") {
+//         b[name] = item[1];
+//       }
+//     } if (item[0] === "Charge") {
+//       numPrice = item[1];
+//     }
+//   }
+// }
 
 const handleSubmit = async (event) => {
   event.preventDefault();
@@ -162,7 +192,7 @@ return (
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                               >
                         <TableCell align="left"><Button onClick={() => {redirect(row.hospital)}}>{row.hospital}</Button></TableCell>
-                        <TableCell align="center">{row.insurance}</TableCell>
+                        <TableCell align="center"><div><ul>{row.insurance}</ul></div></TableCell>
                         <TableCell align="right">{row.cost}</TableCell>
                       </TableRow>
                     ))}
