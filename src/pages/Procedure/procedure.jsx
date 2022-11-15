@@ -18,7 +18,6 @@ const Procedure = (props) => {
   let key = 'completed'
   let value = false;
   let b = {[key]: value};
-  delete b[key];
 
   //currently don't use these in the query, but could later
   const insurance = searchParams.get("insurance")
