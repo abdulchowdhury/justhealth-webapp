@@ -46,7 +46,6 @@ const queryAllHospitals = async (pid) => {
         pid: pid
       }
     }).then(async (data)=>{
-      console.log(data.data.result.length)
     if (data.data.result.length !== 0) {
       setGradyData(data.data.result)
       insure(data.data.result[0]);
@@ -192,11 +191,7 @@ return (
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                               >
                         <TableCell align="left"><Button onClick={() => {redirect(row.hospital)}}>{row.hospital}</Button></TableCell>
-<<<<<<< HEAD
                         <TableCell align="center"><div><ul>{row.insurance}</ul></div></TableCell>
-=======
-                        <TableCell align="center">{row.insurance}</TableCell>
->>>>>>> christian
                         <TableCell align="right">{row.cost}</TableCell>
                       </TableRow>
                     ))}
