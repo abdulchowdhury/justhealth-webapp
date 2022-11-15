@@ -73,3 +73,18 @@ app.post("/api/getCrowdsourced", (req,res)=>{
 app.listen(PORT, function() {
     console.log(`Listening on ${PORT}...`);
 });
+
+app.post("/api/service.js", (req, res) => {
+    search = req.query.search
+    console.log(search)
+    var searchEmployees = `SELECT * FROM employees WHERE (employeeNo LIKE '%${search}%' OR name LIKE '%${search}%' OR email LIKE '%${search}%' OR contact LIKE '%${search}%') AND isDeleted='0' `
+    //searchValues = [search,search,search,search]
+    console.log(searchEmployees)
+    db.query(searchEmployees, function (errQuery, resQuery) {
+        if (errQuery) {
+            res.send(errQuery)
+        } else {
+            res.send(resQuery)
+        }
+    })
+});

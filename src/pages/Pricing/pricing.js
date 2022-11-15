@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Component } from 'react';
 import TextField from "@mui/material/TextField";
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
@@ -9,8 +10,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useNavigate } from "react-router-dom"
+import 'react-dropdown/style.css';
 
- 
 export default function Pricing () {
   let navigate = useNavigate()
 
@@ -38,22 +39,92 @@ const handleSubmit = (event) => {
   navigate(`${path}`)
 }
 
+// get search bar element
+const searchInput = document.getElementById("searchInput");
+
+// store name elements in array-like object
+const namesFromDOM = document.getElementsByClassName("name");
+
+// listen for user events
+if (searchInput){
+  searchInput.addEventListener("keyup", (event) => {
+    const { value } = event.target;
+    
+    // get user search input converted to lowercase
+    const searchQuery = value.toLowerCase();
+    
+    for (const nameElement of namesFromDOM) {
+        // store name text and convert to lowercase
+        let name = nameElement.textContent.toLowerCase();
+        
+        // compare current name to search input
+        if (name.includes(searchQuery)) {
+            // found name matching search, display it
+            nameElement.style.display = "block";
+        } else {
+            // no match, don't display name
+            nameElement.style.display = "none";
+        }
+    }
+});
+}
+
+const searchData = (event) => {
+  this.search = event.target.value
+  console.log(this.search)
+  console.log(this.filter)
+  this.empService.searchData(this.search).subscribe((res) => {
+    console.log("Filter Response", res);
+    if (res) {
+      this.employees = res
+      if (res.length === 0) {
+        this.noData = true
+      } else {
+        this.noData = false
+      }
+    }
+  },
+    (err) => {
+      console.log(err);
+      console.log("error")
+    })
+}
 
 return (
     <div className="Procedures">
       <br></br>
       <body></body>
       <form onSubmit={handleSubmit}>
+
       <div className="Searchbar">
-        <TextField
-          id="input-with-icon-adornment"
-          variant="outlined"
-          fullWidth
-          onChange={(e) => {
-            setProcedure(e.target.value);
-          }}
-          label= "Search Procedures"
-        />
+      <div id="container">
+        <div id="searchInput">
+        <input onKeyPress={ searchData.bind(this) }
+          type="text" class="form-control" 
+          placeholder="Search"
+          aria-label="Searchbox" 
+          aria-describedby="basic-addon1" />
+
+          <br></br><br></br><text>Most common procedures</text>
+          <ul id="results">
+            <li class="name">Appendectomy</li>
+            <li class="name">Breast biopsy</li>
+            <li class="name">Carotid endarterectomy</li>
+            <li class="name">Cataract surgery</li>
+            <li class="name">Cesarean section</li>
+            <li class="name">Cholecystectomy</li>
+            <li class="name">Coronary artery bypass</li>
+            <li class="name">Dilation and curettage</li>
+            <li class="name">Free skin graft</li>
+            <li class="name">Hemorrhoidectomy</li>
+            <li class="name">Hysterectomy</li>
+            <li class="name">Hysteroscopy</li>
+            <li class="name">Inguinal hernia repair</li>   
+        </ul>
+
+        </div>
+      </div>
+
         <body> </body>
         <center>
         <TextField
@@ -78,7 +149,6 @@ return (
 
         <button type="submit">Search</button>
         </center>
-
 
       </div>
       </form>
