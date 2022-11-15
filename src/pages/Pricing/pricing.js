@@ -192,7 +192,11 @@ return (
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                               >
                         <TableCell align="left"><Button onClick={() => {redirect(row.hospital)}}>{row.hospital}</Button></TableCell>
+<<<<<<< HEAD
                         <TableCell align="center"><div><ul>{row.insurance}</ul></div></TableCell>
+=======
+                        <TableCell align="center">{row.insurance}</TableCell>
+>>>>>>> christian
                         <TableCell align="right">{row.cost}</TableCell>
                       </TableRow>
                     ))}

@@ -1,6 +1,7 @@
 import Button from '@mui/material/Button'
 import { useState } from 'react';
 import Axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const Input = () => {
   const [procedure, setProcedure] = useState("");
@@ -8,12 +9,22 @@ const Input = () => {
   const [cost, setCost] = useState(0.0);
   const [date, setDate] = useState("");
   const [hospital, setHospital] = useState("");
+  let navigate = useNavigate()
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    Axios.post("http://localhost:3002/api/get").then((data)=>{
-    console.log(data)
-    alert(`test: ${data.data.result[0].penisLength}`);
+    Axios.post("http://localhost:3002/api/input", {}, {
+      params: {
+        procedure: procedure,
+        insurance: insurance,
+        cost: cost,
+        date: date,
+        hospital: hospital
+      }
+    }).then(()=>{
+      alert(`inputted ${procedure}, ${insurance}, ${cost}, ${hospital}, ${date}`);
+      navigate('/')
+
   });
   }
 
