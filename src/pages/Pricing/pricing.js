@@ -19,43 +19,61 @@ export default function Pricing () {
   const [procedure, setProcedure] = useState("")
   const [zip, setZip] = useState("")
   const [insurance, setInsurance] = useState("")
-  const [GradyData, setGradyData] = useState("no data")
-  const [NorthsideAtlantaData, setNorthsideData] = useState("no data")
+  const [GradyData, setGradyData] = useState([])
+  const [NorthsideAtlantaData, setNorthsideAtlantaData] = useState([])
+  const [NorthsideDuluthData, setNorthsideDuluthData] = useState([])
   const [done, setDone] = useState(false)
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState([{hospital:"", insurance:"", cost:""}]);
 
 
   function createData(hospital, insurance, data) {
+    if (data.length === 0) {
+      return {hospital, insurace:"no insurance", cost:"not offered"}
+    }
     var cost = data[0].Charge
     return { hospital, insurance, cost };
   }
 
 
 const handleSubmit = async (event) => {
-  console.log(event);
   event.preventDefault();
+  setRows([])
+  const newRows = []
   await Axios.post("http://localhost:3002/api/Grady", {}, {
       params: {
         pid: procedure
       }
-    }).then((data)=>{
-    setGradyData(data.data.result)
+    }).then(async (data)=>{
+      console.log(data.data.result.length)
+    if (data.data.result.length !== 0) {
+      setGradyData(data.data.result)
+      newRows.push({hospital:"Grady Memorial Hospital", insurance:"a", cost:data.data.result[0].Charge})
+    }
   })
   await Axios.post("http://localhost:3002/api/NorthsideAtlanta", {}, {
       params: {
         pid: procedure
       }
-    }).then((data)=>{
-    setNorthsideData(data.data.result)
+    }).then(async (data)=>{
+    if (data.data.result.length !== 0) {
+      setNorthsideAtlantaData(data.data.result)
+      newRows.push({hospital:"Northside Atlanta Hospital", insurance: "b", cost: data.data.result[0].Charge})
+    }
+  })
+  await Axios.post("http://localhost:3002/api/NorthsideDuluth", {}, {
+      params: {
+        pid: procedure
+      }
+    }).then(async (data)=>{
+    if (data.data.result.length !== 0) {
+      setNorthsideDuluthData(data.data.result)
+      newRows.push({hospital:"Northside Duluth Hospital", insurance: "c", cost: data.data.result[0].Charge})
+    }
   })
   // if (GradyData === "no data") {
   //   handleSubmit(event)
   // }
-  setRows([
-    createData("Grady Memorial Hospital", "Athena", GradyData),
-    createData("Northside Atlanta Hospital", "Distance", NorthsideAtlantaData)
-  ])
-  console.log(rows)
+  setRows(newRows)
   setDone(true);
 
 }
@@ -131,7 +149,7 @@ return (
                   <TableBody>
                     {rows.map((row) => (
                       <TableRow
-                        key={row.name}
+                        key={row.hospital}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                               >
                         <TableCell align="left"><Button onClick={() => {redirect(row.hospital)}}>{row.hospital}</Button></TableCell>

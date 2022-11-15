@@ -48,13 +48,24 @@ app.post("/api/Grady", (req,res)=>{
     });   
 });
 
-//Northside data
+//Northside Atlanta data
 app.post("/api/NorthsideAtlanta", (req,res)=>{
     connection.query("SELECT * FROM Northside_Hospital_Atlanta_Data where Procedure_Code = ?", [req.query.pid], (err,result)=>{
         if(err) {
             console.log(err)
         } else {
-            res.json({success: true, message: "single procedure at Northside", result})
+            res.json({success: true, message: "single procedure at Northside Atlanta", result})
+        }
+    });   
+});
+
+//Northside Duluth data
+app.post("/api/NorthsideDuluth", (req,res)=>{
+    connection.query("SELECT * FROM Northside_Hospital_Duluth_Data where Procedure_Code = ?", [req.query.pid], (err,result)=>{
+        if(err) {
+            console.log(err)
+        } else {
+            res.json({success: true, message: "single procedure at Northside Duluth", result})
         }
     });   
 });
