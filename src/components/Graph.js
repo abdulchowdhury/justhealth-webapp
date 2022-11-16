@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import Plotly from 'react-plotly.js';
 
 class Graph extends Component {
+  
     render() {
         var dtick_val = Number((Math.max(...Object.values(this.props.b))/10).toPrecision(1));
         var width = window.innerWidth * .90
@@ -10,14 +11,16 @@ class Graph extends Component {
         return (
             <div>
                 <Plotly data = {[{
-                    type: 'bar', 
+                    type: 'bar',
                     x: Object.keys(this.props.b),
                     y: Object.values(this.props.b),
                     name: 'Insurance',
                     marker: {
                       color: 'lightblue',
                       width: 1
-                    }
+                    },
+                    hovertemplate: 
+                      'Price: %{y:$,.2f}<extra></extra>'
                 }]}
                 layout = { {
                     title: "Insurance Pricing (what you would pay)",
