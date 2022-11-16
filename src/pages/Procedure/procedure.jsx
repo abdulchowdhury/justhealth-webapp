@@ -74,7 +74,7 @@ const Procedure = (props) => {
   var numPrice;
   function change(x) { // takes insurance coverage and subtracts from charge
       b[x[0]] = (numPrice - x[1]);
-      if (b[x[0]] < 0) {
+      if (b[x[0]] <= 0) {
         delete b[x[0]];
         b[x[0] + ' (fully covered)'] = 0.00;
       }
