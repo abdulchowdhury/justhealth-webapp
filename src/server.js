@@ -69,22 +69,21 @@ app.post("/api/getCrowdsourced", (req,res)=>{
     });   
 });
 
+app.post("/api/getProcedures", (req, res) => {
+    console.log("you're in procedures server.js")
+    // var searchProcedures = 
+    //searchValues = [search,search,search,search]
+    
+    connection.query("SELECT * FROM Procedure_Names WHERE Med_Procedure_Description LIKE ?", ["%" + req.query.userInput + "%"], (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(result)
+            res.json({success: true, message: "Procedures data", result})
+        }
+    })
+});
 
 app.listen(PORT, function() {
     console.log(`Listening on ${PORT}...`);
-});
-
-app.post("/api/service.js", (req, res) => {
-    search = req.query.search
-    console.log(search)
-    var searchEmployees = `SELECT * FROM employees WHERE (employeeNo LIKE '%${search}%' OR name LIKE '%${search}%' OR email LIKE '%${search}%' OR contact LIKE '%${search}%') AND isDeleted='0' `
-    //searchValues = [search,search,search,search]
-    console.log(searchEmployees)
-    db.query(searchEmployees, function (errQuery, resQuery) {
-        if (errQuery) {
-            res.send(errQuery)
-        } else {
-            res.send(resQuery)
-        }
-    })
 });

@@ -11,6 +11,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useNavigate } from "react-router-dom"
 import 'react-dropdown/style.css';
+import Axios from 'axios';
+import Select from "react-dropdown-select";
+
 
 export default function Pricing () {
   let navigate = useNavigate()
@@ -39,56 +42,67 @@ const handleSubmit = (event) => {
   navigate(`${path}`)
 }
 
-// get search bar element
 const searchInput = document.getElementById("searchInput");
+console.log("This is search input:" + searchInput);
 
 // store name elements in array-like object
 const namesFromDOM = document.getElementsByClassName("name");
 
 // listen for user events
-if (searchInput){
-  searchInput.addEventListener("keyup", (event) => {
-    const { value } = event.target;
-    
-    // get user search input converted to lowercase
-    const searchQuery = value.toLowerCase();
-    
-    for (const nameElement of namesFromDOM) {
-        // store name text and convert to lowercase
-        let name = nameElement.textContent.toLowerCase();
-        
-        // compare current name to search input
-        if (name.includes(searchQuery)) {
-            // found name matching search, display it
-            nameElement.style.display = "block";
-        } else {
-            // no match, don't display name
-            nameElement.style.display = "none";
-        }
-    }
-});
+const [dick, setDick] = useState("")
+
+
+function queryProcedures(userInput) {
+  console.log("hi, you're about to query procedures");
+  console.log(userInput);
+  Axios.post("http://localhost:3002/api/getProcedures", {}, {
+      params: {
+        userInput: userInput
+      }
+    }).then((data)=>{
+      console.log(data.data.result);
+      console.log("checkpoint");
+      // console.log(procedureNames);
+      callBackFunction(data.data.result);
+  })
+
 }
 
-const searchData = (event) => {
-  this.search = event.target.value
-  console.log(this.search)
-  console.log(this.filter)
-  this.empService.searchData(this.search).subscribe((res) => {
-    console.log("Filter Response", res);
-    if (res) {
-      this.employees = res
-      if (res.length === 0) {
-        this.noData = true
-      } else {
-        this.noData = false
-      }
-    }
-  },
-    (err) => {
-      console.log(err);
-      console.log("error")
-    })
+async function searchProcedureNames(userInput) {
+  // const { value } = event.target;
+  console.log(userInput);
+  // get user search input converted to lowercase
+  if (userInput.length > 3) {
+    console.log("hello you're about to query");
+    const searchQuery = userInput.toLowerCase();
+    queryProcedures(searchQuery);
+  }
 }
+
+let resList;
+let results1 = [];
+function callBackFunction(res) {
+  // resList = document.getElementById("results");
+  // for (const procedures of res) {
+  //   resList.innerHTML += `<li class="name" Procedure_Code=${procedures.Procedure_Code}>${procedures.Med_Procedure_Description}</li>`;
+  // }
+
+  for (const val of res) {
+    results1.push({label: val.Med_Procedure_Description, value: val.Procedure_Code});
+  }
+
+  console.log(results1[0]);
+}
+
+const Countries = [
+  { label: "Albania", value: 355 },
+  { label: "Argentina", value: 54 },
+  { label: "Austria", value: 43 },
+  { label: "Cocos Islands", value: 61 },
+  { label: "Kuwait", value: 965 },
+  { label: "Sweden", value: 46 },
+  { label: "Venezuela", value: 58 }
+];
 
 return (
     <div className="Procedures">
@@ -98,34 +112,27 @@ return (
 
       <div className="Searchbar">
       <div id="container">
-        <div id="searchInput">
-        <input onKeyPress={ searchData.bind(this) }
-          type="text" class="form-control" 
-          placeholder="Search"
-          aria-label="Searchbox" 
-          aria-describedby="basic-addon1" />
-
-          <br></br><br></br><text>Most common procedures</text>
-          <ul id="results">
-            <li class="name">Appendectomy</li>
-            <li class="name">Breast biopsy</li>
-            <li class="name">Carotid endarterectomy</li>
-            <li class="name">Cataract surgery</li>
-            <li class="name">Cesarean section</li>
-            <li class="name">Cholecystectomy</li>
-            <li class="name">Coronary artery bypass</li>
-            <li class="name">Dilation and curettage</li>
-            <li class="name">Free skin graft</li>
-            <li class="name">Hemorrhoidectomy</li>
-            <li class="name">Hysterectomy</li>
-            <li class="name">Hysteroscopy</li>
-            <li class="name">Inguinal hernia repair</li>   
-        </ul>
-
-        </div>
-      </div>
+        <TextField 
+          id="searchInput"
+          variant="outlined"
+          fullWidth
+          onChange={(e) => {
+            searchProcedureNames(e.target.value)
+          }}
+          label= "Procedure name"
+        />
+        
+        {/* <ul id="results"> </ul>  */}
+    </div>
 
         <body> </body>
+
+        <div>
+          <Select 
+          options={ results1 } 
+          onChange={(values) => this.setValues(values)}/>
+        </div>
+
         <center>
         <TextField
           id="input-with-icon-adornment"
@@ -189,5 +196,7 @@ return (
     </div>
     );
   }
+  // get search bar element
+
   
   // name, costs, hospital, date, provider
