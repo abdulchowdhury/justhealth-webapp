@@ -29,16 +29,18 @@ export default function Pricing () {
 
 useEffect(() => {
     let pid = searchParams.get("pid")
-    setProcedure(`${searchParams.get("pid")}`)
-    setZip(`${searchParams.get("zip")}`)
-    setInsurance(`${searchParams.get("insurance")}`)
-    if (!(pid == "" || pid == undefined)) {
-      queryAllHospitals(pid)
+    if (!(pid == undefined || pid == "")) {
+      setProcedure(`${searchParams.get("pid")}`)
+      setZip(`${searchParams.get("zip")}`)
+      setInsurance(`${searchParams.get("insurance")}`)
+      let insurance = searchParams.get("insurance")
+      queryAllHospitals(pid, insurance)
       setDone(true);
     }
   }, []);
 
-const queryAllHospitals = async (pid) => {
+const queryAllHospitals = async (pid, ins) => {
+  setInsurance(ins)
   const newRows = []
   await Axios.post("http://localhost:3002/api/Grady", {}, {
       params: {
@@ -48,8 +50,7 @@ const queryAllHospitals = async (pid) => {
     if (data.data.result.length !== 0) {
       setGradyData(data.data.result);
       insure(data.data.result[0]);
-      console.log(typeof(insurance));
-      if (insurance === "" || ((insurances.toString()).indexOf(insurance.toUpperCase()) !== -1)) {
+      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
         newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost:data.data.result[0].Charge})
       }
       insurances = [];
@@ -63,7 +64,7 @@ const queryAllHospitals = async (pid) => {
     if (data.data.result.length !== 0) {
       setNorthsideAtlantaData(data.data.result)
       insure(data.data.result[0]);
-      if (insurance === "" || ((insurances.toString()).indexOf(insurance.toUpperCase()) !== -1)) {
+      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
         newRows.push({hospital:"Northside Atlanta Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: data.data.result[0].Charge})
       }
       insurances = [];
@@ -77,7 +78,7 @@ const queryAllHospitals = async (pid) => {
     if (data.data.result.length !== 0) {
       setNorthsideDuluthData(data.data.result)
       insure(data.data.result[0]);
-      if (insurance === "" || ((insurances.toString()).indexOf(insurance.toUpperCase()) !== -1)) {
+      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
         newRows.push({hospital:"Northside Duluth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: data.data.result[0].Charge})
       }
       insurances = [];
@@ -109,7 +110,7 @@ function insure(item) {
 const handleSubmit = async (event) => {
   event.preventDefault();
   setRows([])
-  queryAllHospitals(procedure);
+  queryAllHospitals(procedure, insurance);
   setDone(true);
 
 }
