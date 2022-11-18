@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Component } from 'react';
 import TextField from "@mui/material/TextField";
 import * as React from 'react';
@@ -27,6 +26,8 @@ export default function Pricing () {
   const [GradyData, setGradyData] = useState([])
   const [NorthsideAtlantaData, setNorthsideAtlantaData] = useState([])
   const [NorthsideDuluthData, setNorthsideDuluthData] = useState([])
+  const [NorthsideForsythData, setNorthsideForsythData] = useState([])
+  const [NorthsideGwinnettData, setNorthsideGwinnettData] = useState([])
   const [done, setDone] = useState(false)
   const [rows, setRows] = useState([{hospital:"", insurance:"", cost:""}]);
   var insurances = [];
@@ -94,6 +95,34 @@ const queryAllHospitals = async (pid, ins) => {
       insurances = [];
     }
   })
+  await Axios.post("http://localhost:3002/api/NorthsideForsyth", {}, {
+      params: {
+        pid: pid
+      }
+    }).then(async (data)=>{
+    if (data.data.result.length !== 0) {
+      setNorthsideForsythData(data.data.result)
+      insure(data.data.result[0]);
+      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
+        newRows.push({hospital:"Northside Forsyth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(data.data.result[0].Charge)})
+      }
+      insurances = [];
+    }
+  })
+  await Axios.post("http://localhost:3002/api/NorthsideGwinnett", {}, {
+      params: {
+        pid: pid
+      }
+    }).then(async (data)=>{
+    if (data.data.result.length !== 0) {
+      setNorthsideGwinnettData(data.data.result)
+      insure(data.data.result[0]);
+      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
+        newRows.push({hospital:"Northside Gwinnett Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(data.data.result[0].Charge)})
+      }
+      insurances = [];
+    }
+  })
   // if (GradyData === "no data") {
   //   handleSubmit(event)
   // }
@@ -132,6 +161,10 @@ const redirect = (hospital) => {
     queryString += "&hospital=NorthsideAtlanta"
   } else if (hospital === "Northside Duluth Hospital") {
     queryString += "&hospital=NorthsideDuluth"
+  } else if (hospital === "Northside Forsyth Hospital") {
+    queryString += "&hospital=NorthsideForsyth"
+  } else if (hospital === "Northside Gwinnett Hospital") {
+    queryString += "&hospital=NorthsideGwinnett"
   }
   let path = "/Procedure/" + queryString
   navigate(`${path}`)

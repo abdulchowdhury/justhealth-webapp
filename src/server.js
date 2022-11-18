@@ -70,6 +70,30 @@ app.post("/api/NorthsideDuluth", (req,res)=>{
     });   
 });
 
+//Northside Forsyth data
+app.post("/api/NorthsideForsyth", (req,res)=>{
+    connection.query("SELECT * FROM Northside_Hospital_Forsyth_Data where Procedure_Code = ?", [req.query.pid], (err,result)=>{
+        if(err) {
+            console.log(err)
+        } else {
+            res.json({success: true, message: "single procedure at Northside Forsyth", result})
+        }
+    });   
+});
+
+//Northside Gwinnett data
+app.post("/api/NorthsideGwinnett", (req,res)=>{
+    connection.query("SELECT * FROM Northside_Hospital_Gwinnett_Data where Procedure_Code = ?", [req.query.pid], (err,result)=>{
+        if(err) {
+            console.log(err)
+        } else {
+            res.json({success: true, message: "single procedure at Northside Gwinnett", result})
+        }
+    });   
+});
+
+
+
 
 //input 
 app.post("/api/input", (req,res)=>{
