@@ -128,9 +128,8 @@ const Procedure = (props) => {
          */}
 
         <h2>Analytics:</h2>
-        <p>Ticket Price: {price}</p>
+        <p>Ticket Price: {dollar.format(price)}</p>
         <p>Hopitals nearby prices here</p>
-        <p>Cost timeline here</p>
         <p>Average Cost reported by users: {getCAvg()}</p>
         <h3>Average Cost: {dollar.format(avgCost)}</h3>
         <p>Note: If insurance is not listed, it does not cover this procedure.</p>

@@ -41,6 +41,12 @@ useEffect(() => {
 
 const queryAllHospitals = async (pid, ins) => {
   setInsurance(ins)
+  let formatting_options = {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+  }
+  let dollar = Intl.NumberFormat('en-US', formatting_options);
   const newRows = []
   await Axios.post("http://localhost:3002/api/Grady", {}, {
       params: {
@@ -51,7 +57,7 @@ const queryAllHospitals = async (pid, ins) => {
       setGradyData(data.data.result);
       insure(data.data.result[0]);
       if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
-        newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost:data.data.result[0].Charge})
+        newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost:dollar.format(data.data.result[0].Charge)})
       }
       insurances = [];
     }
@@ -65,7 +71,7 @@ const queryAllHospitals = async (pid, ins) => {
       setNorthsideAtlantaData(data.data.result)
       insure(data.data.result[0]);
       if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
-        newRows.push({hospital:"Northside Atlanta Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: data.data.result[0].Charge})
+        newRows.push({hospital:"Northside Atlanta Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(data.data.result[0].Charge)})
       }
       insurances = [];
     }
@@ -79,7 +85,7 @@ const queryAllHospitals = async (pid, ins) => {
       setNorthsideDuluthData(data.data.result)
       insure(data.data.result[0]);
       if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
-        newRows.push({hospital:"Northside Duluth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: data.data.result[0].Charge})
+        newRows.push({hospital:"Northside Duluth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(data.data.result[0].Charge)})
       }
       insurances = [];
     }
