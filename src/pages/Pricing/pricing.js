@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Component } from 'react';
 import TextField from "@mui/material/TextField";
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
@@ -8,11 +10,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useNavigate } from "react-router-dom"
+import 'react-dropdown/style.css';
+import Select from "react-dropdown-select";
 import Axios from 'axios';
 import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSearchParams } from 'react-router-dom';
- 
+
 export default function Pricing () {
   let navigate = useNavigate()
 
@@ -133,23 +137,91 @@ const redirect = (hospital) => {
   navigate(`${path}`)
 }
 
+const searchInput = document.getElementById("searchInput");
+console.log("This is search input:" + searchInput);
+
+// store name elements in array-like object
+const namesFromDOM = document.getElementsByClassName("name");
+
+// listen for user events
+const [dick, setDick] = useState("")
+
+
+function queryProcedures(userInput) {
+  console.log("hi, you're about to query procedures");
+  console.log(userInput);
+  Axios.post("http://localhost:3002/api/getProcedures", {}, {
+      params: {
+        userInput: userInput
+      }
+    }).then((data)=>{
+      console.log(data.data.result);
+      console.log("checkpoint");
+      // console.log(procedureNames);
+      callBackFunction(data.data.result);
+  })
+
+}
+
+async function searchProcedureNames(userInput) {
+  // const { value } = event.target;
+  console.log(userInput);
+  // get user search input converted to lowercase
+  if (userInput.length > 3) {
+    console.log("hello you're about to query");
+    const searchQuery = userInput.toLowerCase();
+    queryProcedures(searchQuery);
+  }
+}
+
+let resList;
+let results1 = [];
+function callBackFunction(res) {
+  // resList = document.getElementById("results");
+  // for (const procedures of res) {
+  //   resList.innerHTML += `<li class="name" Procedure_Code=${procedures.Procedure_Code}>${procedures.Med_Procedure_Description}</li>`;
+  // }
+
+  // RIGHT HERE IM GONNA MAKE CHANGES
+  for (const val of res) {
+    results1.push({label: val.Med_Procedure_Description, value: val.Procedure_Code});
+  }
+
+  console.log(results1[0]);
+}
 
 return (
     <div className="Procedures">
       <br></br>
       <body></body>
       <form onSubmit={handleSubmit}>
+
       <div className="Searchbar">
-        <TextField
-          id="input-with-icon-adornment"
+      <div id="container">
+        <TextField 
+          id="searchInput"
           variant="outlined"
           fullWidth
           onChange={(e) => {
-            setProcedure(e.target.value);
+            searchProcedureNames(e.target.value)
           }}
-          label= "Search Procedures"
+          label= "Procedure name"
         />
+        
+        {/* <ul id="results"> </ul>  */}
+    </div>
+
         <body> </body>
+
+        <div>
+          <Select 
+          options={ results1 } 
+          onChange={ (e) => {
+            searchProcedureNames(e.target.value)
+          } }
+          placeholder="Suggested Procedures"/>
+        </div>
+
         <center>
         <TextField
           id="input-with-icon-adornment"
@@ -173,7 +245,6 @@ return (
 
         <button type="submit">Search</button>
         </center>
-
 
       </div>
       </form>
@@ -211,5 +282,7 @@ return (
     </div>
     );
   }
+  // get search bar element
+
   
   // name, costs, hospital, date, provider
