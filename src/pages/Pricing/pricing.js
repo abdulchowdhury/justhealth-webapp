@@ -87,22 +87,13 @@ function callBackFunction(res) {
   //   resList.innerHTML += `<li class="name" Procedure_Code=${procedures.Procedure_Code}>${procedures.Med_Procedure_Description}</li>`;
   // }
 
+  // RIGHT HERE IM GONNA MAKE CHANGES
   for (const val of res) {
     results1.push({label: val.Med_Procedure_Description, value: val.Procedure_Code});
   }
 
   console.log(results1[0]);
 }
-
-const Countries = [
-  { label: "Albania", value: 355 },
-  { label: "Argentina", value: 54 },
-  { label: "Austria", value: 43 },
-  { label: "Cocos Islands", value: 61 },
-  { label: "Kuwait", value: 965 },
-  { label: "Sweden", value: 46 },
-  { label: "Venezuela", value: 58 }
-];
 
 return (
     <div className="Procedures">
@@ -130,7 +121,10 @@ return (
         <div>
           <Select 
           options={ results1 } 
-          onChange={(values) => this.setValues(values)}/>
+          onChange={ (e) => {
+            searchProcedureNames(e.target.value)
+          } }
+          placeholder="Suggested Procedures"/>
         </div>
 
         <center>
