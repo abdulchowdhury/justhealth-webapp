@@ -19,7 +19,7 @@ const Home = () => {
     event.preventDefault();
     
     let queryString = `?pid=${procedure}&insurance=${insurance}&zip=${zip}`
-    let path = "/Procedure/" + queryString
+    let path = "/Pricing/" + queryString
     navigate(`${path}`)
   }
   
