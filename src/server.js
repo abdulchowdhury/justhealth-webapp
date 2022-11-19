@@ -118,15 +118,11 @@ app.post("/api/getCrowdsourced", (req,res)=>{
 });
 
 app.post("/api/getProcedures", (req, res) => {
-    console.log("you're in procedures server.js")
-    // var searchProcedures = 
-    //searchValues = [search,search,search,search]
     
     connection.query("SELECT * FROM Procedure_Names WHERE Med_Procedure_Description LIKE ?", ["%" + req.query.userInput + "%"], (err, result) => {
         if (err) {
             console.log(err)
         } else {
-            console.log(result)
             res.json({success: true, message: "Procedures data", result})
         }
     })
