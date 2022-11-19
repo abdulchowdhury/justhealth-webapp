@@ -10,12 +10,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useNavigate } from "react-router-dom"
-import 'react-dropdown/style.css';
-import Select from "react-dropdown-select";
 import Axios from 'axios';
 import { Button } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from 'react-router-dom';
+import Select from 'react-select';
+
 
 export default function Pricing () {
   let navigate = useNavigate()
@@ -30,6 +30,11 @@ export default function Pricing () {
   const [done, setDone] = useState(false)
   const [rows, setRows] = useState([{hospital:"", insurance:"", cost:""}]);
   var insurances = [];
+  const [isClearable, setIsClearable] = useState(true);
+  const [isSearchable, setIsSearchable] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRtl, setIsRtl] = useState(false);
 
 useEffect(() => {
     let pid = searchParams.get("pid")
@@ -208,18 +213,24 @@ return (
           label= "Procedure name"
         />
         
-        {/* <ul id="results"> </ul>  */}
+        <ul id="results"> </ul> 
     </div>
 
         <body> </body>
 
         <div>
-          <Select 
-          options={ results1 } 
-          onChange={ (e) => {
-            searchProcedureNames(e.target.value)
-          } }
-          placeholder="Suggested Procedures"/>
+        <Select
+          className="basic-single"
+          classNamePrefix="select"
+          defaultValue={"Search Procedures Here..."}
+          isDisabled={isDisabled} 
+          isLoading={isLoading}
+          isClearable={isClearable}
+          isRtl={isRtl}
+          isSearchable={isSearchable}
+          name="color"
+          options={results1}
+      />
         </div>
 
         <center>
