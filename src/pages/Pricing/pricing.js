@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Component } from 'react';
 import TextField from "@mui/material/TextField";
 import * as React from 'react';
@@ -16,6 +15,7 @@ import Axios from 'axios';
 import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSearchParams } from 'react-router-dom';
+import {infoBubble} from './infoBubble'
 
 export default function Pricing () {
   let navigate = useNavigate()
@@ -25,8 +25,11 @@ export default function Pricing () {
   const [zip, setZip] = useState("")
   const [insurance, setInsurance] = useState("")
   const [GradyData, setGradyData] = useState([])
+  const [dropdownOptions, setDropdownOptions] = useState([])
   const [NorthsideAtlantaData, setNorthsideAtlantaData] = useState([])
   const [NorthsideDuluthData, setNorthsideDuluthData] = useState([])
+  const [NorthsideForsythData, setNorthsideForsythData] = useState([])
+  const [NorthsideGwinnettData, setNorthsideGwinnettData] = useState([])
   const [done, setDone] = useState(false)
   const [rows, setRows] = useState([{hospital:"", insurance:"", cost:""}]);
   var insurances = [];
@@ -94,6 +97,34 @@ const queryAllHospitals = async (pid, ins) => {
       insurances = [];
     }
   })
+  await Axios.post("http://localhost:3002/api/NorthsideForsyth", {}, {
+      params: {
+        pid: pid
+      }
+    }).then(async (data)=>{
+    if (data.data.result.length !== 0) {
+      setNorthsideForsythData(data.data.result)
+      insure(data.data.result[0]);
+      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
+        newRows.push({hospital:"Northside Forsyth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(data.data.result[0].Charge)})
+      }
+      insurances = [];
+    }
+  })
+  await Axios.post("http://localhost:3002/api/NorthsideGwinnett", {}, {
+      params: {
+        pid: pid
+      }
+    }).then(async (data)=>{
+    if (data.data.result.length !== 0) {
+      setNorthsideGwinnettData(data.data.result)
+      insure(data.data.result[0]);
+      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
+        newRows.push({hospital:"Northside Gwinnett Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(data.data.result[0].Charge)})
+      }
+      insurances = [];
+    }
+  })
   // if (GradyData === "no data") {
   //   handleSubmit(event)
   // }
@@ -132,32 +163,22 @@ const redirect = (hospital) => {
     queryString += "&hospital=NorthsideAtlanta"
   } else if (hospital === "Northside Duluth Hospital") {
     queryString += "&hospital=NorthsideDuluth"
+  } else if (hospital === "Northside Forsyth Hospital") {
+    queryString += "&hospital=NorthsideForsyth"
+  } else if (hospital === "Northside Gwinnett Hospital") {
+    queryString += "&hospital=NorthsideGwinnett"
   }
   let path = "/Procedure/" + queryString
   navigate(`${path}`)
 }
 
-const searchInput = document.getElementById("searchInput");
-console.log("This is search input:" + searchInput);
-
-// store name elements in array-like object
-const namesFromDOM = document.getElementsByClassName("name");
-
-// listen for user events
-const [dick, setDick] = useState("")
-
 
 function queryProcedures(userInput) {
-  console.log("hi, you're about to query procedures");
-  console.log(userInput);
   Axios.post("http://localhost:3002/api/getProcedures", {}, {
       params: {
         userInput: userInput
       }
     }).then((data)=>{
-      console.log(data.data.result);
-      console.log("checkpoint");
-      // console.log(procedureNames);
       callBackFunction(data.data.result);
   })
 
@@ -165,29 +186,20 @@ function queryProcedures(userInput) {
 
 async function searchProcedureNames(userInput) {
   // const { value } = event.target;
-  console.log(userInput);
   // get user search input converted to lowercase
   if (userInput.length > 3) {
-    console.log("hello you're about to query");
     const searchQuery = userInput.toLowerCase();
     queryProcedures(searchQuery);
   }
 }
 
-let resList;
-let results1 = [];
 function callBackFunction(res) {
-  // resList = document.getElementById("results");
-  // for (const procedures of res) {
-  //   resList.innerHTML += `<li class="name" Procedure_Code=${procedures.Procedure_Code}>${procedures.Med_Procedure_Description}</li>`;
-  // }
-
-  // RIGHT HERE IM GONNA MAKE CHANGES
+  let results1 = [];
   for (const val of res) {
     results1.push({label: val.Med_Procedure_Description, value: val.Procedure_Code});
   }
+  setDropdownOptions(results1)
 
-  console.log(results1[0]);
 }
 
 return (
@@ -196,57 +208,56 @@ return (
       <body></body>
       <form onSubmit={handleSubmit}>
 
-      <div className="Searchbar">
-      <div id="container">
-        <TextField 
-          id="searchInput"
-          variant="outlined"
-          fullWidth
-          onChange={(e) => {
-            searchProcedureNames(e.target.value)
-          }}
-          label= "Procedure name"
-        />
-        
-        {/* <ul id="results"> </ul>  */}
-    </div>
-
-        <body> </body>
-
-        <div>
-          <Select 
-          options={ results1 } 
-          onChange={ (e) => {
-            searchProcedureNames(e.target.value)
-          } }
-          placeholder="Suggested Procedures"/>
-        </div>
-
-        <center>
-        <TextField
-          id="input-with-icon-adornment"
-          variant="outlined"
+        <div className="Searchbar">
+        <div id="container">
+          <TextField 
+            id="searchInput"
+            variant="outlined"
+            fullWidth
+            onChange={(e) => {
+              searchProcedureNames(e.target.value)
+              setProcedure(e.target.value)
+            }}
+            label= "Procedure name or code"
+          />
           
-          onChange={(e) => {
-            setZip(e.target.value);
-          }}
-          label= "Zip Code"
-        />
-        
-        <TextField
-          id="input-with-icon-adornment"
-          variant="outlined"
-          
-          onChange={(e) => {
-            setInsurance(e.target.value);
-          }}
-          label= "Insurance Provider"
-        />
-
-        <button type="submit">Search</button>
-        </center>
-
+          {/* <ul id="results"> </ul>  */}
       </div>
+          <div>
+            <Select 
+            options={ dropdownOptions } 
+            onChange={ (choice) => {
+              setProcedure(choice[0].value)
+              
+            } }
+            placeholder="Suggested Procedures"/>
+          </div>
+
+          <center>
+          <TextField
+            id="input-with-icon-adornment"
+            variant="outlined"
+            
+            onChange={(e) => {
+              setZip(e.target.value);
+            }}
+            label= "Zip Code"
+          />
+          
+          <TextField
+            id="input-with-icon-adornment"
+            variant="outlined"
+            
+            onChange={(e) => {
+              setInsurance(e.target.value);
+            }}
+            label= "Insurance Provider"
+          />
+
+          <button type="submit">Search</button>
+          </center>
+
+        </div>
       </form>
       
       <h1>
@@ -282,7 +293,3 @@ return (
     </div>
     );
   }
-  // get search bar element
-
-  
-  // name, costs, hospital, date, provider

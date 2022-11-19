@@ -70,6 +70,30 @@ app.post("/api/NorthsideDuluth", (req,res)=>{
     });   
 });
 
+//Northside Forsyth data
+app.post("/api/NorthsideForsyth", (req,res)=>{
+    connection.query("SELECT * FROM Northside_Hospital_Forsyth_Data where Procedure_Code = ?", [req.query.pid], (err,result)=>{
+        if(err) {
+            console.log(err)
+        } else {
+            res.json({success: true, message: "single procedure at Northside Forsyth", result})
+        }
+    });   
+});
+
+//Northside Gwinnett data
+app.post("/api/NorthsideGwinnett", (req,res)=>{
+    connection.query("SELECT * FROM Northside_Hospital_Gwinnett_Data where Procedure_Code = ?", [req.query.pid], (err,result)=>{
+        if(err) {
+            console.log(err)
+        } else {
+            res.json({success: true, message: "single procedure at Northside Gwinnett", result})
+        }
+    });   
+});
+
+
+
 
 //input 
 app.post("/api/input", (req,res)=>{
@@ -94,15 +118,11 @@ app.post("/api/getCrowdsourced", (req,res)=>{
 });
 
 app.post("/api/getProcedures", (req, res) => {
-    console.log("you're in procedures server.js")
-    // var searchProcedures = 
-    //searchValues = [search,search,search,search]
     
     connection.query("SELECT * FROM Procedure_Names WHERE Med_Procedure_Description LIKE ?", ["%" + req.query.userInput + "%"], (err, result) => {
         if (err) {
             console.log(err)
         } else {
-            console.log(result)
             res.json({success: true, message: "Procedures data", result})
         }
     })

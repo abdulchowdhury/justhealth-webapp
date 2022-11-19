@@ -3,6 +3,7 @@ import Graph from '../../components/Graph';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useState} from 'react';
+import infoBubble from '../Pricing/infoBubble';
 
 
 const Procedure = (props) => {
@@ -15,7 +16,7 @@ const Procedure = (props) => {
   const hospital = searchParams.get("hospital")
   const b = [];
 
-  //currently don't use these in the query, but could later
+  //currently don't use zip in the query, but could later
   const insurance = searchParams.get("insurance")
   const zip = searchParams.get("zip")
 
@@ -122,18 +123,19 @@ const Procedure = (props) => {
     <body>
     <div>
       <h1>{data[0].Med_Procedure_Description} at {hospital}</h1>
-        {/* 
-        data like data.charge are prices, but are strings with symbols like '$' and ',' so for
-        any calculations to take place, they have to be parsed specially
-         */}
+      <h2>Procedure Code: {pid}</h2>
 
-        <h2>Analytics:</h2>
-        <p>Ticket Price: {dollar.format(price)}</p>
-        <p>Hopitals nearby prices here</p>
-        <p>Average Cost reported by users: {getCAvg()}</p>
-        <h3>Average Cost: {dollar.format(avgCost)}</h3>
-        <p>Note: If insurance is not listed, it does not cover this procedure.</p>
-        <Graph b={b} insurance={insurance}/>
+      <h2><u>Analytics</u></h2>
+      <p>Ticket Price: {dollar.format(price)} {infoBubble("What is a ticket price?", "The default, total cost of a procedure before any insurance reiembursements or cash discounts.")}</p>
+      <p>Average Cost reported by users: {getCAvg()}</p>
+      <h3>Average Cost: {dollar.format(avgCost)} {infoBubble("How was this calculated?","We calculate the average cost using only the prices from insurances that actually cover this procedure and the cash price.")}</h3>
+      <Graph b={b} insurance={insurance}/>
+      <h2>FAQ</h2>
+      <p><i>Where's my insurance on this graph?</i></p>
+      <p>If your insurance is not listed, it does not cover this procedure.</p>
+      <br/>
+      <p><i>Where does this data come from?</i></p>
+      <p>Data was pulled directly from the pricing data this hospital released to comply with the Hospital Transparency Act of 2021.</p>
         
     </div>
     </body>
