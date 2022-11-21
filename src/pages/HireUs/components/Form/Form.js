@@ -99,7 +99,7 @@ const Form = () => {
           container
           spacing={4}
         >
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <Typography variant={'subtitle2'} sx={{ marginBottom: 2 }}>
               Please enter your full name *
             </Typography>
@@ -116,8 +116,8 @@ const Form = () => {
               // }
               // helperText={formik.touched.firstName && formik.errors.firstName}
             />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          </Grid> */}
+          <Grid item xs={12}>
             <Typography variant={'subtitle2'} sx={{ marginBottom: 2 }}>
               Please enter the type of procedure *
             </Typography>
@@ -135,7 +135,7 @@ const Form = () => {
               // helperText={formik.touched.firstName && formik.errors.firstName}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <Typography variant={'subtitle2'} sx={{ marginBottom: 2 }}>
               Please enter the total accured costs *
             </Typography>
@@ -153,7 +153,7 @@ const Form = () => {
               // helperText={formik.touched.firstName && formik.errors.firstName}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <Typography variant={'subtitle2'} sx={{ marginBottom: 2 }}>
               Please enter the date of the procedure *
             </Typography>
@@ -201,6 +201,7 @@ const Form = () => {
               name="insurance"
               fullWidth
               onChange={(e)=>setInsurance(e.target.value)}
+              sx={{ marginBottom: 2 }}
               //value={formik.values.firstName}
               // error={
               //   formik.touched.firstName && Boolean(formik.errors.firstName)
@@ -217,7 +218,7 @@ const Form = () => {
             flexDirection={'column'}
           >
             <Button sx={{ height: 54, width: 800}} size={'large'} variant={'contained'} type={'submit'}>
-              Send costs
+              Submit
             </Button>
             <Typography
               variant={'subtitle2'}

@@ -28,7 +28,7 @@ const Headline = () => {
         </Typography>
       </Box>
       <Box>
-        <Typography variant="h6" align={'center'} color={'textSecondary'}>
+        <Typography variant="h6" align={'center'} color={'textSecondary'} marginBottom={-8}>
           Help us provide more precise pricing on procedures by telling us how much you spent on your last visit!
         </Typography>
       </Box>
