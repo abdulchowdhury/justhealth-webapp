@@ -22,6 +22,7 @@ const HomeNew = () => {
         data-aos={'fade-right'}
         sx={{
           fontWeight: 900,
+          ml: 3
         }}
       >
         <div> we make prices transparent, </div>
@@ -34,6 +35,10 @@ const HomeNew = () => {
           component="p"
           color="textPrimary"
           data-aos={'fade-right'}
+          sx={{
+            fontWeight: 900,
+            ml: 3
+          }}
         >
           Stop wasting countless hours browsing through hospital websites 
           trying to find procedure prices with hidden fees and start searching now!

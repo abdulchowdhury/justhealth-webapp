@@ -118,7 +118,7 @@ const Form = () => {
             />
           </Grid> */}
           <Grid item xs={12}>
-            <Typography variant={'subtitle2'} sx={{ marginBottom: 2 }}>
+            <Typography variant={'subtitle2'} sx={{ marginBottom: 2, marginTop: -1 }}>
               Please enter the type of procedure *
             </Typography>
             <TextField
@@ -217,17 +217,9 @@ const Form = () => {
             alignItems={'center'}
             flexDirection={'column'}
           >
-            <Button sx={{ height: 54, width: 800}} size={'large'} variant={'contained'} type={'submit'}>
+            <Button sx={{ height: 54, width: 800, fontWeight: 800, backgroundColor: '#1a2b40'}} size={'large'} variant={'contained'} type={'submit'} >
               Submit
             </Button>
-            <Typography
-              variant={'subtitle2'}
-              color={'textSecondary'}
-              sx={{ marginTop: 2 }}
-              align={'center'}
-            >
-              {/* We'll get back to you in 1-2 business days. */}
-            </Typography>
           </Grid>
         </Box>
       </form>

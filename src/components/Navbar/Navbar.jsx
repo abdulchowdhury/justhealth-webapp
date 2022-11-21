@@ -13,14 +13,16 @@ import {
   Menu,
   Button,
 } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
 import React, { useState } from 'react';
 import logo from '../../Assets/jh-logo.png';
 import SearchIcon from '@mui/icons-material/Search';
-//import './Header.scss';
+import './Navbar.css';
 import MenuIcon from '@mui/icons-material/Menu';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import NearMeOutlinedIcon from '@mui/icons-material/NearMeOutlined';
+import { size } from 'mathjs';
 
 const pages = ['Pricing', 'Crowdsource'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -30,55 +32,54 @@ const Logo = styled('img')(({ theme }) => ({
   minWidth: '4rem',
 }));
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: '50px',
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: 300,
-  marginLeft: 0,
-  width: '100%',
-  // minWidth:'300px',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
+// const Search = styled('div')(({ theme }) => ({
+//   position: 'relative',
+//   borderRadius: '50px',
+//   backgroundColor: alpha(theme.palette.common.white, 0.15),
+//   '&:hover': {
+//     backgroundColor: alpha(theme.palette.common.white, 0.25),
+//   },
+//   marginRight: 300,
+//   marginLeft: 0,
+//   width: '100%',
+//   // minWidth:'300px',
+//   [theme.breakpoints.up('sm')]: {
+//     marginLeft: theme.spacing(3),
+//     width: 'auto',
+//   },
+// }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
+// const SearchIconWrapper = styled('div')(({ theme }) => ({
+//   padding: theme.spacing(0, 2),
+//   height: '100%',
+//   position: 'absolute',
+//   pointerEvents: 'none',
+//   display: 'flex',
+//   alignItems: 'center',
+//   justifyContent: 'center',
+// }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
+// const StyledInputBase = styled(InputBase)(({ theme }) => ({
+//   color: 'inherit',
+//   '& .MuiInputBase-input': {
+//     padding: theme.spacing(1, 1, 1, 0),
+//     // vertical padding + font size from searchIcon
+//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+//     transition: theme.transitions.create('width'),
+//     width: '100%',
+//     [theme.breakpoints.up('md')]: {
+//       width: '20ch',
+//     },
+//   },
+// }));
 
 const Navbar = () => {
-  const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -92,14 +93,20 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position='static' className='header' style={{ background: '#150c17' }}>
+    <AppBar position='static' className='header' style={{ background: '#142233', marginBottom: 20, padding: 0}}>
       <Toolbar className='toolbar'>
-        <Logo src={logo} 
+        <nav>
+        <a href="/">
+        <Logo 
+        src={logo}
+        
         sx={{
-          mr: 2,
-          ml: 3,
+          mr: 95,
+          ml: -3,
         }}
         />
+        </a>
+        </nav>
         {/* <Search sx={{ display: { xs: 'none', md: 'flex' } }}>
           <SearchIconWrapper>
             <SearchIcon />
@@ -114,7 +121,7 @@ const Navbar = () => {
 
         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
           <IconButton
-            size='large'
+            size='small'
             aria-label='account of current user'
             aria-controls='menu-appbar'
             aria-haspopup='true'
@@ -143,7 +150,7 @@ const Navbar = () => {
           >
             {pages.map((page) => (
               <MenuItem key={page} onClick={handleCloseNavMenu}>
-                <Typography textAlign='center'>{page}</Typography>
+                <Button href={`/${page}`} textAlign='center'>{page} </Button>
               </MenuItem>
             ))}
           </Menu>
@@ -170,20 +177,22 @@ const Navbar = () => {
           {pages.map((page) => (
             <Button
               key={page}
-              onClick={handleCloseNavMenu}
+              href={`/${page}`}
+              // onClick={handleCloseNavMenu}
               sx={{
                 my: 2,
+                mr: 3,
                 color: 'white',
                 display: 'block',
                 textTransform: 'none',
-                fontWeight: 400,
+                fontWeight: 900,
               }}
             >
               {page}
             </Button>
           ))}
         </Box>
-        <Box sx={{ flexGrow: 1 }}>
+        {/* <Box sx={{ flexGrow: 1 }}>
           <Tooltip title='Help'>
             <IconButton disableRipple={true} style={{ color: 'white' }}>
               <QuestionMarkIcon />
@@ -195,13 +204,13 @@ const Navbar = () => {
           <IconButton disableRipple={true} style={{ color: 'white' }}>
             <NearMeOutlinedIcon />
           </IconButton>
-        </Box>
+        </Box> */}
 
         {/* Profile menu */}
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title='Open settings'>
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
+              <PersonIcon  sx={{ color: '#c3cfde', fontSize: 30}}/>
             </IconButton>
           </Tooltip>
           <Menu
