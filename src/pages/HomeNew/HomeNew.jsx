@@ -11,7 +11,21 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import Background from '../../Assets/home-background.svg'
 import "./HomeNew.css"
+import Container from '../../common/Container.js';
+
 const HomeNew = () => {
+  let navigate = useNavigate()
+  const [procedure, setProcedure] = useState("");
+  const [zip, setZip] = useState("");
+  const [insurance, setInsurance] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    let queryString = `?pid=${procedure}&insurance=${insurance}&zip=${zip}`
+    let path = "/Pricing/" + queryString
+    navigate(`${path}`)
+  }
 //   const theme = useTheme();
 
 //   const GridItemHeadlineBlock = () => (
@@ -220,7 +234,98 @@ const HomeNew = () => {
 <div>
 {/* <div  style={{ backgroundImage: `url(${Background})`, backgroundRepeat: "no-repeat", alignItems: "center" }}> */}
 
-<img src={Background} width={1200} className="svg" />
+<img src={Background} width={1200} className="svg" marginBottom={-100}/>
+<Container maxWidth={800} paddingBottom={'0 !important'} 
+sx={{marginTop: -47}}
+>
+<Box>
+      <form onSubmit={handleSubmit}>
+        <Box
+          component={Grid}
+          marginBottom={{ xs: 10, sm: 0 }}
+          container
+          spacing={4}
+        >
+          {/* <Grid item xs={12} sm={6}>
+            <Typography variant={'subtitle2'} sx={{ marginBottom: 2 }}>
+              Please enter your full name *
+            </Typography>
+            <TextField
+              label="Full name"
+              variant="outlined"
+              id="name"
+              name="name"
+              fullWidth
+              onChange={(e)=>setName(e.target.value)}
+              //value={formik.values.firstName}
+              // error={
+              //   formik.touched.firstName && Boolean(formik.errors.firstName)
+              // }
+              // helperText={formik.touched.firstName && formik.errors.firstName}
+            />
+          </Grid> */}
+          <Grid item xs={12}>
+            <TextField
+              sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
+              label="Procedure name"
+              variant="outlined"
+              id="procedure"
+              fullWidth
+              onChange={(e) => setProcedure(e.target.value)}
+              //value={formik.values.firstName}
+              // error={
+              //   formik.touched.firstName && Boolean(formik.errors.firstName)
+              // }
+              // helperText={formik.touched.firstName && formik.errors.firstName}
+            />
+          </Grid>
+          
+          <Grid item xs={6}>
+            <TextField
+            sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
+              label="Insurance provider"
+              variant="outlined"
+              id="insurance"
+              fullWidth
+              onChange={(e) => setInsurance(e.target.value)}
+              //value={formik.values.firstName}
+              // error={
+              //   formik.touched.firstName && Boolean(formik.errors.firstName)
+              // }
+              // helperText={formik.touched.firstName && formik.errors.firstName}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              sx={{backgroundColor: '#f2efe6', marginBottom: -5, borderRadius: 2}}
+              label="ZipCode"
+              variant="outlined"
+              id="zip"
+              fullWidth
+              onChange={(e) => setZip(e.target.value)}
+              //value={formik.values.firstName}
+              // error={
+              //   formik.touched.firstName && Boolean(formik.errors.firstName)
+              // }
+              // helperText={formik.touched.firstName && formik.errors.firstName}
+            />
+          </Grid>
+          <Grid
+            item
+            container
+            xs={12}
+            justifyContent={'center'}
+            alignItems={'center'}
+            flexDirection={'column'}
+          >
+            <Button sx={{ height: 54, width: 500, fontWeight: 800, backgroundColor: '#22C55E'}} size={'large'} variant={'contained'} type={'submit'} >
+              Search
+            </Button>
+          </Grid>
+        </Box>
+      </form>
+    </Box>
+    </Container>
 
 
 </div>

@@ -101,7 +101,7 @@ const Navbar = () => {
         src={logo}
         
         sx={{
-          mr: 95,
+          mr: 101,
           ml: -3,
         }}
         />

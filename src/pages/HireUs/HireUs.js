@@ -25,7 +25,6 @@ const HireUs = () => {
         <Form />
       </Container>
       <Container>
-        <Divider />
       </Container>
       <Container paddingTop={'0 !important'}>
         {/* <Partners themeMode={themeMode} /> */}
