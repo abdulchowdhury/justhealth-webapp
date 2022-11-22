@@ -23,7 +23,7 @@ function App() {
         <Route path="/layout" element={<Layout />} />
         <Route path="/Pricing" element={<Pricing />} />
         <Route path="/Procedure/*" element={<Procedure />}/>
-        <Route path="/Crowdsource" element={<HireUs />} />
+        <Route path="/Patient Input" element={<HireUs />} />
         <Route path="/Course" element={<Course />} />
         <Route path="/HomeNew" element={<HomeNew />} />
         <Route path="*" element={<NoPage />} />
