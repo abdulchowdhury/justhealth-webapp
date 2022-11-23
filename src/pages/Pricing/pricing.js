@@ -52,12 +52,13 @@ useEffect(() => {
       setZip(`${searchParams.get("zip")}`)
       setInsurance(`${searchParams.get("insurance")}`)
       let insurance = searchParams.get("insurance")
-      queryAllHospitals(pid, insurance)
+      let zip = searchParams.get("zip")
+      queryAllHospitals(pid, insurance, zip)
       setDone(true);
     }
   }, []);
 
-const queryAllHospitals = async (pid, ins) => {
+const queryAllHospitals = async (pid, ins, zipc) => {
   setInsurance(ins)
   let formatting_options = {
     style: 'currency',
@@ -75,11 +76,11 @@ const queryAllHospitals = async (pid, ins) => {
       setGradyData(data.data.result);
       insure(data.data.result[0]);
       set(data.data.result[0]);
-      if (zip === "") {
+      if (zipc === "") {
         zipCodeDistance = 0 + " Miles";
         setvalidZip(false);
       } else {
-        getDist(zip, gradyZip);
+        getDist(zipc, gradyZip);
         if (typeof(zipCodeDistance) !== 'number') {
           zipCodeDistance = 0 + " Miles";
           setvalidZip(false);
@@ -105,11 +106,11 @@ const queryAllHospitals = async (pid, ins) => {
       setNorthsideAtlantaData(data.data.result)
       insure(data.data.result[0]);
       set(data.data.result[0]);
-      if (zip === "") {
+      if (zipc === "") {
         zipCodeDistance = 0 + " Miles";
         setvalidZip(false);
       } else {
-        getDist(zip, northsideatlantaZip);
+        getDist(zipc, northsideatlantaZip);
         if (typeof(zipCodeDistance) !== 'number') {
           zipCodeDistance = 0 + " Miles";
           setvalidZip(false);
@@ -135,11 +136,11 @@ const queryAllHospitals = async (pid, ins) => {
       setNorthsideDuluthData(data.data.result)
       insure(data.data.result[0]);
       set(data.data.result[0]);
-      if (zip === "") {
+      if (zipc === "") {
         zipCodeDistance = 0 + " Miles";
         setvalidZip(false);
       } else {
-        getDist(zip, northsideduluthZip);
+        getDist(zipc, northsideduluthZip);
         if (typeof(zipCodeDistance) !== 'number') {
           zipCodeDistance = 0 + " Miles";
           setvalidZip(false);
@@ -165,11 +166,11 @@ const queryAllHospitals = async (pid, ins) => {
       setNorthsideForsythData(data.data.result)
       insure(data.data.result[0]);
       set(data.data.result[0]);
-      if (zip === "") {
+      if (zipc === "") {
         zipCodeDistance = 0 + " Miles";
         setvalidZip(false);
       } else {
-        getDist(zip, northsideforsythZip);
+        getDist(zipc, northsideforsythZip);
         if (typeof(zipCodeDistance) !== 'number') {
           zipCodeDistance = 0 + " Miles";
           setvalidZip(false);
@@ -195,11 +196,11 @@ const queryAllHospitals = async (pid, ins) => {
       setNorthsideGwinnettData(data.data.result)
       insure(data.data.result[0]);
       set(data.data.result[0]);
-      if (zip === "") {
+      if (zipc === "") {
         zipCodeDistance = 0 + " Miles";
         setvalidZip(false);
       } else {
-        getDist(zip, northsidegwinnettZip);
+        getDist(zipc, northsidegwinnettZip);
         if (typeof(zipCodeDistance) !== 'number') {
           zipCodeDistance = 0 + " Miles";
           setvalidZip(false);
@@ -278,7 +279,7 @@ function getDist(zipcode1, zipcode2) {
 const handleSubmit = async (event) => {
   event.preventDefault();
   setRows([])
-  queryAllHospitals(procedure, insurance);
+  queryAllHospitals(procedure, insurance, zip);
   setDone(true);
 
 }
