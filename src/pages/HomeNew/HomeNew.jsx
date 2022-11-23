@@ -268,7 +268,7 @@ sx={{marginTop: -47}}
             <TextField
               sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
               label="Procedure name"
-              variant="outlined"
+              variant="filled"
               id="procedure"
               fullWidth
               onChange={(e) => setProcedure(e.target.value)}
@@ -284,7 +284,7 @@ sx={{marginTop: -47}}
             <TextField
             sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
               label="Insurance provider"
-              variant="outlined"
+              variant="filled"
               id="insurance"
               fullWidth
               onChange={(e) => setInsurance(e.target.value)}
@@ -299,7 +299,7 @@ sx={{marginTop: -47}}
             <TextField
               sx={{backgroundColor: '#f2efe6', marginBottom: -5, borderRadius: 2}}
               label="ZipCode"
-              variant="outlined"
+              variant="filled"
               id="zip"
               fullWidth
               onChange={(e) => setZip(e.target.value)}
@@ -318,7 +318,7 @@ sx={{marginTop: -47}}
             alignItems={'center'}
             flexDirection={'column'}
           >
-            <Button sx={{ height: 54, width: 500, fontWeight: 800, backgroundColor: '#22C55E'}} size={'large'} variant={'contained'} type={'submit'} >
+            <Button sx={{ height: 54, width: 500, fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} size={'large'} variant={'contained'} type={'submit'} >
               Search
             </Button>
           </Grid>

@@ -217,7 +217,7 @@ const Form = () => {
             alignItems={'center'}
             flexDirection={'column'}
           >
-            <Button sx={{ height: 54, width: 800, fontWeight: 800, backgroundColor: '#1a2b40'}} size={'large'} variant={'contained'} type={'submit'} >
+            <Button sx={{ height: 54, width: 700, fontWeight: 800, backgroundColor: '#1a2b40', ":hover":{background: '#111A29'}}} size={'large'} variant={'contained'} type={'submit'} >
               Submit
             </Button>
           </Grid>

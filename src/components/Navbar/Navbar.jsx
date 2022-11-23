@@ -182,7 +182,7 @@ const Navbar = () => {
               sx={{
                 my: 2,
                 mr: 3,
-                color: 'white',
+                color: '#dfe6f0',
                 display: 'block',
                 textTransform: 'none',
                 fontWeight: 900,
