@@ -19,6 +19,8 @@ import {infoBubble} from './infoBubble'
 
 export default function Pricing () {
   let navigate = useNavigate()
+  const zipCodeData = require('zipcode-city-distance');
+  var zipCodeDistance;
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [procedure, setProcedure] = useState("")
@@ -32,7 +34,16 @@ export default function Pricing () {
   const [NorthsideGwinnettData, setNorthsideGwinnettData] = useState([])
   const [done, setDone] = useState(false)
   const [rows, setRows] = useState([{hospital:"", insurance:"", cost:""}]);
+  const [validZip , setvalidZip] = useState(false);
+  //const [sortPrice, setSortPrice] = useState(false);
   var insurances = [];
+  var b = [];
+  var numPrice;
+  const gradyZip = '30303';
+  const northsideatlantaZip = '30342';
+  const northsideduluthZip = '30096';
+  const northsideforsythZip ='30041';
+  const northsidegwinnettZip = '30046'
 
 useEffect(() => {
     let pid = searchParams.get("pid")
@@ -63,10 +74,26 @@ const queryAllHospitals = async (pid, ins) => {
     if (data.data.result.length !== 0) {
       setGradyData(data.data.result);
       insure(data.data.result[0]);
-      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
-        newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost:dollar.format(data.data.result[0].Charge)})
+      set(data.data.result[0]);
+      if (zip === "") {
+        zipCodeDistance = 0 + " Miles";
+        setvalidZip(false);
+      } else {
+        getDist(zip, gradyZip);
+        if (typeof(zipCodeDistance) !== 'number') {
+          zipCodeDistance = 0 + " Miles";
+          setvalidZip(false);
+        } else {
+          zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
+          setvalidZip(true);
+        }
+      }
+      
+      if ((ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1))) {
+        newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost:dollar.format(avgCost), distance: zipCodeDistance})
       }
       insurances = [];
+      b = [];
     }
   })
   await Axios.post("http://localhost:3002/api/NorthsideAtlanta", {}, {
@@ -77,10 +104,26 @@ const queryAllHospitals = async (pid, ins) => {
     if (data.data.result.length !== 0) {
       setNorthsideAtlantaData(data.data.result)
       insure(data.data.result[0]);
+      set(data.data.result[0]);
+      if (zip === "") {
+        zipCodeDistance = 0 + " Miles";
+        setvalidZip(false);
+      } else {
+        getDist(zip, northsideatlantaZip);
+        if (typeof(zipCodeDistance) !== 'number') {
+          zipCodeDistance = 0 + " Miles";
+          setvalidZip(false);
+        } else {
+          zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
+          setvalidZip(true);
+        }
+      }
+      
       if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
-        newRows.push({hospital:"Northside Atlanta Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(data.data.result[0].Charge)})
+        newRows.push({hospital:"Northside Atlanta Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
       }
       insurances = [];
+      b = [];
     }
   })
   await Axios.post("http://localhost:3002/api/NorthsideDuluth", {}, {
@@ -91,10 +134,26 @@ const queryAllHospitals = async (pid, ins) => {
     if (data.data.result.length !== 0) {
       setNorthsideDuluthData(data.data.result)
       insure(data.data.result[0]);
+      set(data.data.result[0]);
+      if (zip === "") {
+        zipCodeDistance = 0 + " Miles";
+        setvalidZip(false);
+      } else {
+        getDist(zip, northsideduluthZip);
+        if (typeof(zipCodeDistance) !== 'number') {
+          zipCodeDistance = 0 + " Miles";
+          setvalidZip(false);
+        } else {
+          zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
+          setvalidZip(true);
+        }
+      }
+      
       if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
-        newRows.push({hospital:"Northside Duluth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(data.data.result[0].Charge)})
+        newRows.push({hospital:"Northside Duluth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
       }
       insurances = [];
+      b = [];
     }
   })
   await Axios.post("http://localhost:3002/api/NorthsideForsyth", {}, {
@@ -105,10 +164,26 @@ const queryAllHospitals = async (pid, ins) => {
     if (data.data.result.length !== 0) {
       setNorthsideForsythData(data.data.result)
       insure(data.data.result[0]);
+      set(data.data.result[0]);
+      if (zip === "") {
+        zipCodeDistance = 0 + " Miles";
+        setvalidZip(false);
+      } else {
+        getDist(zip, northsideforsythZip);
+        if (typeof(zipCodeDistance) !== 'number') {
+          zipCodeDistance = 0 + " Miles";
+          setvalidZip(false);
+        } else {
+          zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
+          setvalidZip(true);
+        }
+      }
+      
       if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
-        newRows.push({hospital:"Northside Forsyth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(data.data.result[0].Charge)})
+        newRows.push({hospital:"Northside Forsyth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
       }
       insurances = [];
+      b = [];
     }
   })
   await Axios.post("http://localhost:3002/api/NorthsideGwinnett", {}, {
@@ -119,16 +194,37 @@ const queryAllHospitals = async (pid, ins) => {
     if (data.data.result.length !== 0) {
       setNorthsideGwinnettData(data.data.result)
       insure(data.data.result[0]);
+      set(data.data.result[0]);
+      if (zip === "") {
+        zipCodeDistance = 0 + " Miles";
+        setvalidZip(false);
+      } else {
+        getDist(zip, northsidegwinnettZip);
+        if (typeof(zipCodeDistance) !== 'number') {
+          zipCodeDistance = 0 + " Miles";
+          setvalidZip(false);
+        } else {
+          zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
+          setvalidZip(true);
+        }
+      }
+      
       if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
-        newRows.push({hospital:"Northside Gwinnett Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(data.data.result[0].Charge)})
+        newRows.push({hospital:"Northside Gwinnett Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
       }
       insurances = [];
+      b = [];
     }
   })
   // if (GradyData === "no data") {
   //   handleSubmit(event)
   // }
-  setRows(newRows)
+  //if (sortPrice !== true) {
+    setRows(newRows.sort((a,b) => (parseFloat(a.distance) - parseFloat(b.distance))));
+  //}
+  // } else {
+  //   setRows(newRows.sort((a,b) => (parseFloat(a.cost) - parseFloat(b.cost))));
+  // }
 }
 
 function isNum(c) { // checks if digit is num
@@ -146,7 +242,38 @@ function insure(item) {
   }
 }
 
+function set(arr) { // takes data and only finds prices and takes out $ and takes out the prices that are $0
+  for (const i in arr) {
+    if (typeof(i) === 'string' && typeof((arr[i])) == 'string' && isNum((arr[i]).substring(0,1))) {
+      if(((arr[i]) !== '0') && i !== "Charge" && i !== "Payor_Rate_Max" && i !== "Payor_Rate_Min" && i !== "Procedure_Code") {
+         b.push(parseFloat(arr[i]));
+      } else if (i === "Charge") {
+          numPrice = arr[i];
+      }
+    }
+  }
+  calc(b);
+}
+var avgCost;
+function calc(arr) {
+  var count = 0;
+  var sum = 0.0;
+  var temp;
+  for (const i in arr) {
+    if (numPrice - arr[i] <= 0) {
+      temp = 0;
+    } else {
+      temp = numPrice - arr[i];
+    }
+    sum = sum + temp;
+    count++;
+  }
+  avgCost = sum/count;
+}
 
+function getDist(zipcode1, zipcode2) {
+  zipCodeDistance = zipCodeData.zipCodeDistance(zipcode1, zipcode2,'M');
+}
 
 const handleSubmit = async (event) => {
   event.preventDefault();
@@ -254,6 +381,20 @@ return (
             label= "Insurance Provider"
           />
 
+        {/* <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={(sortPrice === true)}
+              onChange={(event) =>{
+                setSortPrice(!sortPrice);
+              }
+              }
+            />
+           Sort by Price
+          </label>
+          </div> */}
+
           <button type="submit">Search</button>
           </center>
 
@@ -265,12 +406,13 @@ return (
           <table>
               <TableContainer component={Paper}>
               {done ? (<Table sx={{ minWidth: 1050 }} aria-label="simple table">
-                  <TableHead>
+              <TableHead>
                     <TableRow
                     key={"Labels"}>
                       <TableCell  align="left">Hospital</TableCell>
                       <TableCell  align="center">Insurances Accepted</TableCell>
-                      <TableCell  align="right">Ticket Cost</TableCell>
+                      {validZip === true ? (<TableCell  align="center">Distance </TableCell>) : ""}
+                      <TableCell  align="right">Average Cost</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -281,7 +423,8 @@ return (
                               >
                         <TableCell align="left"><Button onClick={() => {redirect(row.hospital)}}>{row.hospital}</Button></TableCell>
                         <TableCell align="center"><div><ul>{row.insurance}</ul></div></TableCell>
-                        <TableCell align="right">{row.cost}</TableCell>
+                        {row.distance !== "0 Miles" ? (<TableCell align="center">{row.distance}</TableCell>) : ""}
+                        <TableCell align="right">{(row.cost)}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
