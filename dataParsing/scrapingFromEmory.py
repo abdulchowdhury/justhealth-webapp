@@ -125,7 +125,7 @@ cursor.execute(sql)
 
   # Commit your changes in the database
 conn.commit()
-for row in jsonData["Gross Charges"][:10000]:
+for row in jsonData["Gross Charges"][:1000]:
   row = json.loads(json.dumps(row))
   colString = ""
   vals = []
