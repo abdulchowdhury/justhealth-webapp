@@ -1,9 +1,9 @@
-
 import Axios from 'axios';
 import Graph from '../../components/Graph';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useState} from 'react';
+import infoBubble from '../Pricing/infoBubble';
 
 
 const Procedure = (props) => {
@@ -13,9 +13,10 @@ const Procedure = (props) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const pid = searchParams.get("pid")
+  const hospital = searchParams.get("hospital")
   const b = [];
 
-  //currently don't use these in the query, but could later
+  //currently don't use zip in the query, but could later
   const insurance = searchParams.get("insurance")
   const zip = searchParams.get("zip")
 
@@ -27,7 +28,9 @@ const Procedure = (props) => {
   }, []);
 
   const queryOnLoad = () => {
-    Axios.post("http://localhost:3002/api/spsh", {}, {
+    let url = "http://localhost:3002/api/"
+    url += hospital
+    Axios.post(url, {}, {
         params: {
           pid: pid
         }
@@ -43,13 +46,19 @@ const Procedure = (props) => {
     })
   }
 
+  function isNum(c) { // checks if digit is num
+    return c >= '0' && c <= '9';
+  }
+
   function set(item) { // takes data and only finds prices and takes out $ and takes out the prices that are $0
-    if (typeof(item[1]) === 'string' && item[1].substring(0,1) === '$') {
-      if((item[1]).substring(1,2) !== '0' && item[0] !== "Charge") {
-        const index = item[0].indexOf('_');
-        b[(item[0]).substring(0,index)] = (item[1]).substring(1);
+    if (typeof(item[1]) === 'string' && isNum(item[1].substring(0,1))) {
+      if(((item[1]).substring(0,1) !== '0') && item[0] !== "Charge" && item[0] !== "Payor_Rate_Max" && item[0] !== "Payor_Rate_Min" && item[0] !== "Procedure_Code") {
+        const name = (item[0].replace(/_/g," "));
+        if (name !== null || name !== "") {
+          b[name] = item[1];
+        }
       } if (item[0] === "Charge") {
-        numPrice = parseFloat(((item[1]).substring(1)).replace(/,/g, ''));;
+        numPrice = item[1];
       }
     }
   }
@@ -66,7 +75,7 @@ const Procedure = (props) => {
   var numPrice;
   function change(x) { // takes insurance coverage and subtracts from charge
       b[x[0]] = (numPrice - x[1]);
-      if (b[x[0]] < 0) {
+      if (b[x[0]] <= 0) {
         delete b[x[0]];
         b[x[0] + ' (fully covered)'] = 0.00;
       }
@@ -80,6 +89,8 @@ const Procedure = (props) => {
   }
   Object.entries(data[0]).forEach(set); // loops through for data formating
   Object.entries(b).forEach(num); // loops through to make float
+  // console.log(Object.entries(data[0]));
+  // console.log(Object.entries(b));
   Object.entries(b).forEach(change); // loops through to get difference between cost and coverage
 
   if (Object.keys(b).includes(insurance)) {
@@ -111,20 +122,20 @@ const Procedure = (props) => {
   return (
     <body>
     <div>
-      <h1>{data[0].Med_Procedure_Description}</h1>
-        {/* 
-        data like data.charge are prices, but are strings with symbols like '$' and ',' so for
-        any calculations to take place, they have to be parsed specially
-         */}
+      <h1>{data[0].Med_Procedure_Description} at {hospital}</h1>
+      <h2>Procedure Code: {pid}</h2>
 
-        <h2>Analytics:</h2>
-        <p>Ticket Price: {price}</p>
-        <p>Hopitals nearby prices here</p>
-        <p>Cost timeline here</p>
-        <p>Average Cost reported by users: {getCAvg()}</p>
-        <h3>Average Cost: {dollar.format(avgCost)}</h3>
-        <p>Note: If insurance is not listed, it does not cover this procedure.</p>
-        <Graph b={b} insurance={insurance}/>
+      <h2><u>Analytics</u></h2>
+      <p>Ticket Price: {dollar.format(price)} {infoBubble("What is a ticket price?", "The default, total cost of a procedure before any insurance reiembursements or cash discounts.")}</p>
+      <p>Average Cost reported by users: {getCAvg()}</p>
+      <h3>Average Cost: {dollar.format(avgCost)} {infoBubble("How was this calculated?","We calculate the average cost using only the prices from insurances that actually cover this procedure and the cash price.")}</h3>
+      <Graph b={b} insurance={insurance}/>
+      <h2>FAQ</h2>
+      <p><i>Where's my insurance on this graph?</i></p>
+      <p>If your insurance is not listed, it does not cover this procedure.</p>
+      <br/>
+      <p><i>Where does this data come from?</i></p>
+      <p>Data was pulled directly from the pricing data this hospital released to comply with the Hospital Transparency Act of 2021.</p>
         
     </div>
     </body>
@@ -135,4 +146,4 @@ Procedure.defaultProps = {
     pName: "Default"
 }
 
-export default Procedure;
+export default Procedure

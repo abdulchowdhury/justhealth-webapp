@@ -1,10 +1,35 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./pages/Layout";
+import Home from "./pages/Home/Home";
+import Pricing from "./pages/Pricing/pricing"
+import Input from "./pages/InputPage/Input";
+import NoPage from "./pages/NoPage";
+import ResponsiveAppBar from "./components/Navbar/Navbar";
+import Procedure from "./pages/Procedure/procedure";
+
+export default function App() {
+  return (
+    <div>
+      <ResponsiveAppBar></ResponsiveAppBar>
+      <BrowserRouter>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/layout" element={<Layout />} />
+        <Route path="/Crowdsource" element={<Input />} />
+        <Route path="/Pricing/*" element={<Pricing />} />
+        <Route path="/Procedure/*" element={<Procedure />}/>
+        <Route path="*" element={<NoPage />} />
+      </Routes>
+    </BrowserRouter>
+    </div>
+  );
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

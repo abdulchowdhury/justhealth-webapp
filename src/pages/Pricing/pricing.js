@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Component } from 'react';
 import TextField from "@mui/material/TextField";
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
@@ -9,109 +9,427 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useNavigate } from "react-router-dom"
+import 'react-dropdown/style.css';
+import Select from "react-dropdown-select";
+import Axios from 'axios';
+import { Button } from "@mui/material";
+import { useState, useEffect } from "react";
+import { useSearchParams } from 'react-router-dom';
+import {infoBubble} from './infoBubble'
 
- 
 export default function Pricing () {
   let navigate = useNavigate()
+  const zipCodeData = require('zipcode-city-distance');
+  var zipCodeDistance;
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const [procedure, setProcedure] = useState("")
   const [zip, setZip] = useState("")
   const [insurance, setInsurance] = useState("")
+  const [GradyData, setGradyData] = useState([])
+  const [dropdownOptions, setDropdownOptions] = useState([])
+  const [NorthsideAtlantaData, setNorthsideAtlantaData] = useState([])
+  const [NorthsideDuluthData, setNorthsideDuluthData] = useState([])
+  const [NorthsideForsythData, setNorthsideForsythData] = useState([])
+  const [NorthsideGwinnettData, setNorthsideGwinnettData] = useState([])
+  const [done, setDone] = useState(false)
+  const [rows, setRows] = useState([{hospital:"", insurance:"", cost:""}]);
+  const [validZip , setvalidZip] = useState(false);
+  //const [sortPrice, setSortPrice] = useState(false);
+  var insurances = [];
+  var b = [];
+  var numPrice;
+  const gradyZip = '30303';
+  const northsideatlantaZip = '30342';
+  const northsideduluthZip = '30096';
+  const northsideforsythZip ='30041';
+  const northsidegwinnettZip = '30046'
 
-function createData(name, costs, hospital, date, provider) {
-  return { name, costs, hospital, date, provider };
+useEffect(() => {
+    let pid = searchParams.get("pid")
+    if (!(pid == undefined || pid == "")) {
+      setProcedure(`${searchParams.get("pid")}`)
+      setZip(`${searchParams.get("zip")}`)
+      setInsurance(`${searchParams.get("insurance")}`)
+      let insurance = searchParams.get("insurance")
+      let zip = searchParams.get("zip")
+      queryAllHospitals(pid, insurance, zip)
+      setDone(true);
+    }
+  }, []);
+
+const queryAllHospitals = async (pid, ins, zipc) => {
+  setInsurance(ins)
+  let formatting_options = {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+  }
+  let dollar = Intl.NumberFormat('en-US', formatting_options);
+  const newRows = []
+  await Axios.post("http://localhost:3002/api/Grady", {}, {
+      params: {
+        pid: pid
+      }
+    }).then(async (data)=>{
+    if (data.data.result.length !== 0) {
+      setGradyData(data.data.result);
+      insure(data.data.result[0]);
+      set(data.data.result[0]);
+      if (zipc === "") {
+        zipCodeDistance = 0 + " Miles";
+        setvalidZip(false);
+      } else {
+        getDist(zipc, gradyZip);
+        if (typeof(zipCodeDistance) !== 'number') {
+          zipCodeDistance = 0 + " Miles";
+          setvalidZip(false);
+        } else {
+          zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
+          setvalidZip(true);
+        }
+      }
+      
+      if ((ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1))) {
+        newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost:dollar.format(avgCost), distance: zipCodeDistance})
+      }
+      insurances = [];
+      b = [];
+    }
+  })
+  await Axios.post("http://localhost:3002/api/NorthsideAtlanta", {}, {
+      params: {
+        pid: pid
+      }
+    }).then(async (data)=>{
+    if (data.data.result.length !== 0) {
+      setNorthsideAtlantaData(data.data.result)
+      insure(data.data.result[0]);
+      set(data.data.result[0]);
+      if (zipc === "") {
+        zipCodeDistance = 0 + " Miles";
+        setvalidZip(false);
+      } else {
+        getDist(zipc, northsideatlantaZip);
+        if (typeof(zipCodeDistance) !== 'number') {
+          zipCodeDistance = 0 + " Miles";
+          setvalidZip(false);
+        } else {
+          zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
+          setvalidZip(true);
+        }
+      }
+      
+      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
+        newRows.push({hospital:"Northside Atlanta Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
+      }
+      insurances = [];
+      b = [];
+    }
+  })
+  await Axios.post("http://localhost:3002/api/NorthsideDuluth", {}, {
+      params: {
+        pid: pid
+      }
+    }).then(async (data)=>{
+    if (data.data.result.length !== 0) {
+      setNorthsideDuluthData(data.data.result)
+      insure(data.data.result[0]);
+      set(data.data.result[0]);
+      if (zipc === "") {
+        zipCodeDistance = 0 + " Miles";
+        setvalidZip(false);
+      } else {
+        getDist(zipc, northsideduluthZip);
+        if (typeof(zipCodeDistance) !== 'number') {
+          zipCodeDistance = 0 + " Miles";
+          setvalidZip(false);
+        } else {
+          zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
+          setvalidZip(true);
+        }
+      }
+      
+      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
+        newRows.push({hospital:"Northside Duluth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
+      }
+      insurances = [];
+      b = [];
+    }
+  })
+  await Axios.post("http://localhost:3002/api/NorthsideForsyth", {}, {
+      params: {
+        pid: pid
+      }
+    }).then(async (data)=>{
+    if (data.data.result.length !== 0) {
+      setNorthsideForsythData(data.data.result)
+      insure(data.data.result[0]);
+      set(data.data.result[0]);
+      if (zipc === "") {
+        zipCodeDistance = 0 + " Miles";
+        setvalidZip(false);
+      } else {
+        getDist(zipc, northsideforsythZip);
+        if (typeof(zipCodeDistance) !== 'number') {
+          zipCodeDistance = 0 + " Miles";
+          setvalidZip(false);
+        } else {
+          zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
+          setvalidZip(true);
+        }
+      }
+      
+      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
+        newRows.push({hospital:"Northside Forsyth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
+      }
+      insurances = [];
+      b = [];
+    }
+  })
+  await Axios.post("http://localhost:3002/api/NorthsideGwinnett", {}, {
+      params: {
+        pid: pid
+      }
+    }).then(async (data)=>{
+    if (data.data.result.length !== 0) {
+      setNorthsideGwinnettData(data.data.result)
+      insure(data.data.result[0]);
+      set(data.data.result[0]);
+      if (zipc === "") {
+        zipCodeDistance = 0 + " Miles";
+        setvalidZip(false);
+      } else {
+        getDist(zipc, northsidegwinnettZip);
+        if (typeof(zipCodeDistance) !== 'number') {
+          zipCodeDistance = 0 + " Miles";
+          setvalidZip(false);
+        } else {
+          zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
+          setvalidZip(true);
+        }
+      }
+      
+      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
+        newRows.push({hospital:"Northside Gwinnett Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
+      }
+      insurances = [];
+      b = [];
+    }
+  })
+  // if (GradyData === "no data") {
+  //   handleSubmit(event)
+  // }
+  //if (sortPrice !== true) {
+    setRows(newRows.sort((a,b) => (parseFloat(a.distance) - parseFloat(b.distance))));
+  //}
+  // } else {
+  //   setRows(newRows.sort((a,b) => (parseFloat(a.cost) - parseFloat(b.cost))));
+  // }
 }
 
+function isNum(c) { // checks if digit is num
+  return c >= '0' && c <= '9';
+}
 
-const rows = [
-  createData(procedure, 159, 6.0, 24, 4.0),
-  createData(procedure, 237, 9.0, 37, 4.3),
-  createData(procedure, 262, 16.0, 24, 6.0),
-  createData(procedure, 305, 3.7, 67, 4.3),
-  createData(procedure, 356, 16.0, 49, 3.9),
-];
+function insure(item) {
+  for (const items in item) {
+    if (typeof(items) === 'string' && typeof((item[items])) == 'string' && isNum((item[items]).substring(0,1))) {
+      if(((item[items]) !== '0') && items !== "Charge" && items !== "Payor_Rate_Max" && items !== "Payor_Rate_Min" && items !== "Procedure_Code" && items !== "Cash_Discount") {
+        const name = (items.replace(/_/g," "));
+        insurances.push(name.toUpperCase());
+      }
+    }
+  }
+}
 
-const handleSubmit = (event) => {
+function set(arr) { // takes data and only finds prices and takes out $ and takes out the prices that are $0
+  for (const i in arr) {
+    if (typeof(i) === 'string' && typeof((arr[i])) == 'string' && isNum((arr[i]).substring(0,1))) {
+      if(((arr[i]) !== '0') && i !== "Charge" && i !== "Payor_Rate_Max" && i !== "Payor_Rate_Min" && i !== "Procedure_Code") {
+         b.push(parseFloat(arr[i]));
+      } else if (i === "Charge") {
+          numPrice = arr[i];
+      }
+    }
+  }
+  calc(b);
+}
+var avgCost;
+function calc(arr) {
+  var count = 0;
+  var sum = 0.0;
+  var temp;
+  for (const i in arr) {
+    if (numPrice - arr[i] <= 0) {
+      temp = 0;
+    } else {
+      temp = numPrice - arr[i];
+    }
+    sum = sum + temp;
+    count++;
+  }
+  avgCost = sum/count;
+}
+
+function getDist(zipcode1, zipcode2) {
+  zipCodeDistance = zipCodeData.zipCodeDistance(zipcode1, zipcode2,'M');
+}
+
+const handleSubmit = async (event) => {
   event.preventDefault();
+  setRows([])
+  queryAllHospitals(procedure, insurance, zip);
+  setDone(true);
+
+}
+const redirect = (hospital) => {
   let queryString = `?pid=${procedure}&insurance=${insurance}&zip=${zip}`
+  if (hospital === "Grady Memorial Hospital") {
+    queryString += "&hospital=Grady"
+  } else if (hospital === "Northside Atlanta Hospital") {
+    queryString += "&hospital=NorthsideAtlanta"
+  } else if (hospital === "Northside Duluth Hospital") {
+    queryString += "&hospital=NorthsideDuluth"
+  } else if (hospital === "Northside Forsyth Hospital") {
+    queryString += "&hospital=NorthsideForsyth"
+  } else if (hospital === "Northside Gwinnett Hospital") {
+    queryString += "&hospital=NorthsideGwinnett"
+  }
   let path = "/Procedure/" + queryString
   navigate(`${path}`)
 }
 
+
+function queryProcedures(userInput) {
+  Axios.post("http://localhost:3002/api/getProcedures", {}, {
+      params: {
+        userInput: userInput
+      }
+    }).then((data)=>{
+      callBackFunction(data.data.result);
+  })
+
+}
+
+async function searchProcedureNames(userInput) {
+  // const { value } = event.target;
+  // get user search input converted to lowercase
+  if (userInput.length > 3) {
+    const searchQuery = userInput.toLowerCase();
+    queryProcedures(searchQuery);
+  }
+}
+
+function callBackFunction(res) {
+  let results1 = [];
+  for (const val of res) {
+    results1.push({label: val.Med_Procedure_Description, value: val.Procedure_Code});
+  }
+  setDropdownOptions(results1)
+
+}
 
 return (
     <div className="Procedures">
       <br></br>
       <body></body>
       <form onSubmit={handleSubmit}>
-      <div className="Searchbar">
-        <TextField
-          id="input-with-icon-adornment"
-          variant="outlined"
-          fullWidth
-          onChange={(e) => {
-            setProcedure(e.target.value);
-          }}
-          label= "Search Procedures"
-        />
-        <body> </body>
-        <center>
-        <TextField
-          id="input-with-icon-adornment"
-          variant="outlined"
+
+        <div className="Searchbar">
+        <div id="container">
+          <TextField 
+            id="searchInput"
+            variant="outlined"
+            fullWidth
+            onChange={(e) => {
+              searchProcedureNames(e.target.value)
+              setProcedure(e.target.value)
+            }}
+            label= "Procedure name or code"
+          />
           
-          onChange={(e) => {
-            setZip(e.target.value);
-          }}
-          label= "Zip Code"
-        />
-        
-        <TextField
-          id="input-with-icon-adornment"
-          variant="outlined"
-          
-          onChange={(e) => {
-            setInsurance(e.target.value);
-          }}
-          label= "Insurance Provider"
-        />
-
-        <button type="submit">Search</button>
-        </center>
-
-
+          {/* <ul id="results"> </ul>  */}
       </div>
+          <div>
+            <Select 
+            options={ dropdownOptions } 
+            onChange={ (choice) => {
+              setProcedure(choice[0].value)
+              
+            } }
+            placeholder="Suggested Procedures"/>
+          </div>
+
+          <center>
+          <TextField
+            id="input-with-icon-adornment"
+            variant="outlined"
+            
+            onChange={(e) => {
+              setZip(e.target.value);
+            }}
+            label= "Zip Code"
+          />
+          
+          <TextField
+            id="input-with-icon-adornment"
+            variant="outlined"
+            
+            onChange={(e) => {
+              setInsurance(e.target.value);
+            }}
+            label= "Insurance Provider"
+          />
+
+        {/* <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={(sortPrice === true)}
+              onChange={(event) =>{
+                setSortPrice(!sortPrice);
+              }
+              }
+            />
+           Sort by Price
+          </label>
+          </div> */}
+
+          <button type="submit">Search</button>
+          </center>
+
+        </div>
       </form>
       
       <h1>
       <center>
           <table>
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 1050 }} aria-label="simple table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell align="right">Procedures</TableCell>
-                      <TableCell align="right">Costs</TableCell>
-                      <TableCell align="right">Hospital&nbsp;</TableCell>
-                      <TableCell align="right">Date&nbsp;</TableCell>
-                      <TableCell align="right">Providers&nbsp;</TableCell>
+              {done ? (<Table sx={{ minWidth: 1050 }} aria-label="simple table">
+              <TableHead>
+                    <TableRow
+                    key={"Labels"}>
+                      <TableCell  align="left">Hospital</TableCell>
+                      <TableCell  align="center">Insurances Accepted</TableCell>
+                      {validZip === true ? (<TableCell  align="center">Distance </TableCell>) : ""}
+                      <TableCell  align="right">Average Cost</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {rows.map((row) => (
                       <TableRow
-                        key={row.name}
+                        key={row.hospital}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                               >
-                        <TableCell align="right">{procedure}</TableCell>
-                        <TableCell align="right">{row.costs}</TableCell>
-                        <TableCell align="right">{row.hospital}</TableCell>
-                        <TableCell align="right">{row.date}</TableCell>
-                        <TableCell align="right">{row.provider}</TableCell>
+                        <TableCell align="left"><Button onClick={() => {redirect(row.hospital)}}>{row.hospital}</Button></TableCell>
+                        <TableCell align="center"><div><ul>{row.insurance}</ul></div></TableCell>
+                        {row.distance !== "0 Miles" ? (<TableCell align="center">{row.distance}</TableCell>) : ""}
+                        <TableCell align="right">{(row.cost)}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
-                </Table>
+                </Table>): ""}
       </TableContainer>
           </table>
           </center>
@@ -119,5 +437,3 @@ return (
     </div>
     );
   }
-  
-  // name, costs, hospital, date, provider

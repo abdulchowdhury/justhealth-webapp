@@ -24,7 +24,7 @@ import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNone
 import NearMeOutlinedIcon from '@mui/icons-material/NearMeOutlined';
 import { size } from 'mathjs';
 
-const pages = ['Pricing', 'Patient Input'];
+const pages = ['Pricing', 'Crowdsource'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Logo = styled('img')(({ theme }) => ({
