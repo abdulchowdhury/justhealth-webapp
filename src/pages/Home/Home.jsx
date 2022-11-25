@@ -2,6 +2,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Axios from 'axios'
+import React from 'react';
+import Grid from '@mui/material/Grid';
+import Background from '../../Assets/home-background.svg'
+import "./Home.css"
+import Button from '@mui/material/Button';
+import Container from '../../common/Container.js';
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
@@ -22,77 +28,86 @@ const Home = () => {
     let path = "/Pricing/" + queryString
     navigate(`${path}`)
   }
+
+return (
+    
+  <div>
+  {/* <div  style={{ backgroundImage: `url(${Background})`, backgroundRepeat: "no-repeat", alignItems: "center" }}> */}
   
-    
-  const surgerySamples = [
-      { title: "hip surgery", specialty: 'orthopedic' },
-      { title: "heart surgery", specialty: 'cardiologist' },
-      { title: "fractured arm", specialty: 'orthopedic' },
-      { title: "wisdom tooth removal", specialty: 'dentist' },
-      { title: "corrective vision", specialty: 'ophthalmologist' },
-      { title: "teeth whitening", specialty: 'dentist' }
-]
+  <img src={Background} width={1200} className="svg" marginBottom={-100}/>
+  <Container maxWidth={800} paddingBottom={'0 !important'} 
+  sx={{marginTop: -47}}
+  >
+  <Box>
+        <form onSubmit={handleSubmit}>
+          <Box
+            component={Grid}
+            marginBottom={{ xs: 10, sm: 0 }}
+            container
+            spacing={4}
+          >
 
-  return (
-    <div>
-
-      <div class="Parent">
-
-        <div className="MissionStatment">
-          
-          <h1> making prices transparent </h1>
-          <h2> so you can focus on <h2> justhealth </h2> </h2>
-
-          {/* search bar for procedures ---- dropbpx for insurance provdier
-              number input for zipcode
-              search button */}
-          
-         
-
-            <form onSubmit={handleSubmit}>
-              <label for="procedure">
-              <Box
-                sx={{
-                width: 400,
-                maxWidth: '100%',
-              }}>
-              <TextField onChange={(e) => setProcedure(e.target.value)} fullWidth label="Procedure" id="procedure" />
-              </Box>
-              </label>
-
-              <label for="insurance">
-              <Box
-                sx={{
-                width: 400,
-                maxWidth: '100%',
-              }}>
-              <TextField onChange={(e) => setInsurance(e.target.value)} fullWidth label="Insurance Provider" id="insurance" />
-              </Box>
-              </label>
-
-              <label for="zip">
-              <Box
-                sx={{
-                width: 400,
-                maxWidth: '100%',
-              }}>
-              <TextField onChange={(e) => setZip(e.target.value)} fullWidth label="ZipCode" id="zip" />
-              </Box>
-                
-              </label>
-
-              <button type="submit">Search</button>
-          </form>
-
-
-
-        </div>
-
-      </div>
-      
-    </div>
-    
-  )
+            <Grid item xs={12}>
+              <TextField
+                sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
+                label="Procedure name"
+                variant="filled"
+                id="procedure"
+                fullWidth
+                onChange={(e) => setProcedure(e.target.value)}
+                //value={formik.values.firstName}
+                // error={
+                //   formik.touched.firstName && Boolean(formik.errors.firstName)
+                // }
+                // helperText={formik.touched.firstName && formik.errors.firstName}
+              />
+            </Grid>
+            
+            <Grid item xs={6}>
+              <TextField
+              sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
+                label="Insurance provider"
+                variant="filled"
+                id="insurance"
+                fullWidth
+                onChange={(e) => setInsurance(e.target.value)}
+                //value={formik.values.firstName}
+                // error={
+                //   formik.touched.firstName && Boolean(formik.errors.firstName)
+                // }
+                // helperText={formik.touched.firstName && formik.errors.firstName}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                sx={{backgroundColor: '#f2efe6', marginBottom: -5, borderRadius: 2}}
+                label="ZipCode"
+                variant="filled"
+                id="zip"
+                fullWidth
+                onChange={(e) => setZip(e.target.value)}
+              />
+            </Grid>
+            <Grid
+              item
+              container
+              xs={12}
+              justifyContent={'center'}
+              alignItems={'center'}
+              flexDirection={'column'}
+            >
+              <Button sx={{ height: 54, width: 500, fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} size={'large'} variant={'contained'} type={'submit'} >
+                Search
+              </Button>
+            </Grid>
+          </Box>
+        </form>
+      </Box>
+      </Container>
+  
+  
+  </div>
+    );
   };
   
   export default Home;

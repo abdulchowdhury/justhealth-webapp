@@ -12,6 +12,7 @@ import Input from "./pages/InputPage/Input";
 import NoPage from "./pages/NoPage";
 import ResponsiveAppBar from "./components/Navbar/Navbar";
 import Procedure from "./pages/Procedure/procedure";
+import HireUs from "./pages/HireUs/HireUs"
 
 export default function App() {
   return (
@@ -21,7 +22,7 @@ export default function App() {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/layout" element={<Layout />} />
-        <Route path="/Crowdsource" element={<Input />} />
+        <Route path="/Crowdsource" element={<HireUs />} />
         <Route path="/Pricing/*" element={<Pricing />} />
         <Route path="/Procedure/*" element={<Procedure />}/>
         <Route path="*" element={<NoPage />} />

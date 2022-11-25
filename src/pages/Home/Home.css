@@ -1,4 +1,7 @@
-.Parent {
-    justify-content: center;
+.svg {
+    display: flex;
+    height: 80vh;
+    width: 100vw; 
     align-items: center;
+    justify-content: center;
 }
