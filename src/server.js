@@ -118,8 +118,7 @@ app.post("/api/getCrowdsourced", (req,res)=>{
 });
 
 app.post("/api/getProcedures", (req, res) => {
-    
-    connection.query("SELECT * FROM Procedure_Names WHERE Med_Procedure_Description LIKE ?", ["%" + req.query.userInput + "%"], (err, result) => {
+    connection.query("SELECT * FROM Procedure_Names WHERE Med_Procedure_Description LIKE ? AND Procedure_Code IS NOT NULL", ["%" + req.query.userInput + "%"], (err, result) => {
         if (err) {
             console.log(err)
         } else {

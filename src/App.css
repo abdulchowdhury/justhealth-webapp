@@ -1,0 +1,26 @@
+.suggestion{
+    cursor: pointer;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    padding-left: 10px;
+}
+
+/* .suggestion p {
+    margin-left: 10px;
+    height: 20px;
+    vertical-align: middle;
+} */
+
+.suggestion:hover{
+    background-color: grey;
+}
+
+ul.no-bullets {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+  }
+
+nav ul{max-height:200px;}
+nav ul{overflow:hidden; overflow-y:scroll;}

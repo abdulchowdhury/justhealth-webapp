@@ -23,7 +23,7 @@
     "mysql": "^2.18.1",
     "namor": "^2.0.4",
     "npm-cli": "^0.1.0",
-    "plotly.js": "^1.44.4",
+    "plotly.js": "^1.58.5",
     "plotly.js-dist": "^2.16.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -36,14 +36,15 @@
     "react-scripts": "^5.0.1",
     "react-select": "^5.6.1",
     "react-slick": "^0.29.0",
+    "react-spinners": "^0.13.6",
     "react-syntax-highlighter": "^15.5.0",
     "react-table": "^7.8.0",
     "react-visibility-sensor": "^5.1.1",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4",
-    "zipcode-city-distance": "^1.0.6",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zipcode-city-distance": "^1.0.6"
   },
   "scripts": {
     "start": "react-scripts start",

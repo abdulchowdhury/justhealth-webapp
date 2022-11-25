@@ -16,6 +16,9 @@ import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSearchParams } from 'react-router-dom';
 import {infoBubble} from './infoBubble'
+import LoadingSpinner from "../../components/LoadingSpinner";
+import "../../App.css";
+
 
 export default function Pricing () {
   let navigate = useNavigate()
@@ -23,7 +26,8 @@ export default function Pricing () {
   var zipCodeDistance;
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [procedure, setProcedure] = useState("")
+  const [procedureID, setProcedureID] = useState("")
+  const [procedureName, setProcedureName] = useState("")
   const [zip, setZip] = useState("")
   const [insurance, setInsurance] = useState("")
   const [GradyData, setGradyData] = useState([])
@@ -35,6 +39,7 @@ export default function Pricing () {
   const [done, setDone] = useState(false)
   const [rows, setRows] = useState([{hospital:"", insurance:"", cost:""}]);
   const [validZip , setvalidZip] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   //const [sortPrice, setSortPrice] = useState(false);
   var insurances = [];
   var b = [];
@@ -48,7 +53,7 @@ export default function Pricing () {
 useEffect(() => {
     let pid = searchParams.get("pid")
     if (!(pid == undefined || pid == "")) {
-      setProcedure(`${searchParams.get("pid")}`)
+      setProcedureID(`${searchParams.get("pid")}`)
       setZip(`${searchParams.get("zip")}`)
       setInsurance(`${searchParams.get("insurance")}`)
       let insurance = searchParams.get("insurance")
@@ -279,12 +284,12 @@ function getDist(zipcode1, zipcode2) {
 const handleSubmit = async (event) => {
   event.preventDefault();
   setRows([])
-  queryAllHospitals(procedure, insurance, zip);
+  queryAllHospitals(procedureID, insurance, zip);
   setDone(true);
 
 }
 const redirect = (hospital) => {
-  let queryString = `?pid=${procedure}&insurance=${insurance}&zip=${zip}`
+  let queryString = `?pid=${procedureID}&insurance=${insurance}&zip=${zip}`
   if (hospital === "Grady Memorial Hospital") {
     queryString += "&hospital=Grady"
   } else if (hospital === "Northside Atlanta Hospital") {
@@ -315,19 +320,28 @@ function queryProcedures(userInput) {
 async function searchProcedureNames(userInput) {
   // const { value } = event.target;
   // get user search input converted to lowercase
+  setProcedureName(userInput);
   if (userInput.length > 3) {
+    setIsLoading(true);
     const searchQuery = userInput.toLowerCase();
     queryProcedures(searchQuery);
+  } else {
+    setDropdownOptions([])
   }
 }
 
 function callBackFunction(res) {
+  setIsLoading(false);
   let results1 = [];
   for (const val of res) {
     results1.push({label: val.Med_Procedure_Description, value: val.Procedure_Code});
   }
   setDropdownOptions(results1)
+}
 
+
+const onSuggestHandler = (dropDownValues) => {
+    console.log("ahhhhhh")
 }
 
 return (
@@ -337,29 +351,48 @@ return (
       <form onSubmit={handleSubmit}>
 
         <div className="Searchbar">
-        <div id="container">
-          <TextField 
-            id="searchInput"
-            variant="outlined"
-            fullWidth
-            onChange={(e) => {
-              searchProcedureNames(e.target.value)
-              setProcedure(e.target.value)
-            }}
-            label= "Procedure name or code"
-          />
+          <div id="container">
+            <TextField 
+              id="searchInput"
+              variant="outlined"
+              fullWidth
+              value={procedureName}
+              onChange={(e) => {
+                searchProcedureNames(e.target.value)
+                setProcedureID(e.target.value)
+              }}
+              onBlur={() => {
+                setDropdownOptions([]);
+              }}
+              label= "Procedure name or code"
+            />
+            {isLoading ? <LoadingSpinner /> : 
+            <nav>
+              <ul className = "no-bullets">
+                {dropdownOptions && dropdownOptions.map((dropdownOption, index) =>
+                  <li key = {index} value = {dropdownOption.value} className = "suggestion" onClick={() => onSuggestHandler(dropdownOption)}>
+                    {dropdownOption.label}
+                  </li>
+                )}
+              </ul>
+            </nav>
+            }
+            {/* <ul id="results"> </ul>  */}
+         </div>
           
-          {/* <ul id="results"> </ul>  */}
-      </div>
-          <div>
+            
+        
+          {/* <div>
             <Select 
             options={ dropdownOptions } 
             onChange={ (choice) => {
               setProcedure(choice[0].value)
               
             } }
-            placeholder="Suggested Procedures"/>
-          </div>
+            // placeholder="Suggested Procedures"
+            />
+          </div> */}
+          
 
           <center>
           <TextField

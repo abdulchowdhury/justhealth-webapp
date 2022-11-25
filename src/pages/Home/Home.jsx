@@ -8,11 +8,10 @@ import Background from '../../Assets/home-background.svg'
 import "./Home.css"
 import Button from '@mui/material/Button';
 import Container from '../../common/Container.js';
+import Select from "react-dropdown-select";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
-
-
 
 const Home = () => {
 
@@ -20,6 +19,7 @@ const Home = () => {
   const [procedure, setProcedure] = useState("");
   const [zip, setZip] = useState("");
   const [insurance, setInsurance] = useState("");
+  const [dropdownOptions, setDropdownOptions] = useState([])
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,6 +27,31 @@ const Home = () => {
     let queryString = `?pid=${procedure}&insurance=${insurance}&zip=${zip}`
     let path = "/Pricing/" + queryString
     navigate(`${path}`)
+  }
+
+  function queryProcedures(userInput) {
+    Axios.post("http://localhost:3002/api/getProcedures", {}, {
+        params: {
+          userInput: userInput
+        }
+      }).then((data)=>{
+        callBackFunction(data.data.result);
+    })
+  }
+  
+  async function searchProcedureNames(userInput) {
+    if (userInput.length > 3) {
+      const searchQuery = userInput.toLowerCase();
+      queryProcedures(searchQuery);
+    }
+  }
+  
+  function callBackFunction(res) {
+    let results1 = [];
+    for (const val of res) {
+      results1.push({label: val.Med_Procedure_Description, value: val.Procedure_Code});
+    }
+    setDropdownOptions(results1)
   }
 
 return (
@@ -54,13 +79,24 @@ return (
                 variant="filled"
                 id="procedure"
                 fullWidth
-                onChange={(e) => setProcedure(e.target.value)}
+                onChange={(e) => {
+                  searchProcedureNames(e.target.value)
+                  setProcedure(e.target.value)
+                }}
                 //value={formik.values.firstName}
                 // error={
                 //   formik.touched.firstName && Boolean(formik.errors.firstName)
                 // }
                 // helperText={formik.touched.firstName && formik.errors.firstName}
               />
+              <Select 
+                options={ dropdownOptions } 
+                onChange={ (choice) => {
+                  setProcedure(choice[0].value)
+                  
+                } }
+                placeholder="Suggested Procedures"/>
+              
             </Grid>
             
             <Grid item xs={6}>
