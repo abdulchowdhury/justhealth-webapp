@@ -16,11 +16,21 @@
     background-color: grey;
 }
 
-ul.no-bullets {
+ul.no-bullets, ul.no-bullets-home {
     list-style-type: none; /* Remove bullets */
     padding: 0; /* Remove padding */
     margin: 0; /* Remove margins */
-  }
+}
 
-nav ul{max-height:200px;}
+
+ul.no-bullets-home li {
+    border-radius: 2px;
+    background-color: #f2efe6;
+}
+
+
+nav ul.no-bullets{max-height:200px;}
+nav ul.no-bullets-home{
+    max-height:50px;
+}
 nav ul{overflow:hidden; overflow-y:scroll;}

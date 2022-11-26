@@ -10,7 +10,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useNavigate } from "react-router-dom"
 import 'react-dropdown/style.css';
-import Select from "react-dropdown-select";
 import Axios from 'axios';
 import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
@@ -326,6 +325,7 @@ async function searchProcedureNames(userInput) {
     const searchQuery = userInput.toLowerCase();
     queryProcedures(searchQuery);
   } else {
+    setIsLoading(false);
     setDropdownOptions([])
   }
 }
@@ -340,8 +340,10 @@ function callBackFunction(res) {
 }
 
 
-const onSuggestHandler = (dropDownValues) => {
-    console.log("ahhhhhh")
+const onSuggestHandler = (dropdownOption) => {
+    setProcedureName(dropdownOption.label);
+    setProcedureID(dropdownOption.value);
+    setDropdownOptions([]);
 }
 
 return (
@@ -370,29 +372,14 @@ return (
             <nav>
               <ul className = "no-bullets">
                 {dropdownOptions && dropdownOptions.map((dropdownOption, index) =>
-                  <li key = {index} value = {dropdownOption.value} className = "suggestion" onClick={() => onSuggestHandler(dropdownOption)}>
+                  <li key = {dropdownOption.label} value = {dropdownOption.value} className = "suggestion" onMouseDown={() => {onSuggestHandler(dropdownOption)}}>
                     {dropdownOption.label}
                   </li>
                 )}
               </ul>
             </nav>
             }
-            {/* <ul id="results"> </ul>  */}
-         </div>
-          
-            
-        
-          {/* <div>
-            <Select 
-            options={ dropdownOptions } 
-            onChange={ (choice) => {
-              setProcedure(choice[0].value)
-              
-            } }
-            // placeholder="Suggested Procedures"
-            />
-          </div> */}
-          
+          </div>
 
           <center>
           <TextField
