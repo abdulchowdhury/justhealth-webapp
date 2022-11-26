@@ -1,3 +1,4 @@
+import { Opacity } from '@mui/icons-material';
 import { responsiveProperty } from '@mui/material/styles/cssUtils';
 import React, {Component} from 'react';
 import Plotly from 'react-plotly.js';
@@ -5,6 +6,17 @@ import Plotly from 'react-plotly.js';
 class Graph extends Component {
   
     render() {
+      function getColor(data) {
+        insurance = insurance.toUpperCase();
+        if (insurance === "" || insurance === " ") {
+          return 'lightblue';
+        }
+        if (data.indexOf(insurance) !== -1){
+          return 'red'
+        }
+        return 'lightblue';
+      }
+        var insurance = (this.props.insurance);
         var dtick_val = Number((Math.max(...Object.values(this.props.b))/10).toPrecision(1));
         var width = window.innerWidth * .90
         var height = window.innerHeight * .75
@@ -16,8 +28,8 @@ class Graph extends Component {
                     y: Object.values(this.props.b),
                     name: 'Insurance',
                     marker: {
-                      color: 'lightblue',
-                      width: 1
+                      color: (Object.keys(this.props.b)).map(d => getColor(d)),
+                      width: 1,
                     },
                     hovertemplate: 
                       'Price: %{y:$,.2f}<extra></extra>'
@@ -27,6 +39,7 @@ class Graph extends Component {
                     width: `${width}`,
                     height: `${height}`,
                     xaxis: {
+                      automargin: true,
                       categoryorder: 'total ascending',
                       title: {
                         text: 'Insurances',
@@ -40,6 +53,7 @@ class Graph extends Component {
                     yaxis: {
                         tickmode: "linear",
                         tick0: 0,
+                        automargin: true,
                         dtick: `${dtick_val}`,
                       title: {
                         text: 'Prices',

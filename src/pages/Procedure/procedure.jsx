@@ -52,7 +52,7 @@ const Procedure = (props) => {
 
   function set(item) { // takes data and only finds prices and takes out $ and takes out the prices that are $0
     if (typeof(item[1]) === 'string' && isNum(item[1].substring(0,1))) {
-      if(((item[1]).substring(0,1) !== '0') && item[0] !== "Charge" && item[0] !== "Payor_Rate_Max" && item[0] !== "Payor_Rate_Min" && item[0] !== "Procedure_Code") {
+      if(((item[1]).substring(0,1) !== '0') && item[0] !== "Charge" && item[0] !== "Payor_Rate_Max" && item[0] !== "Payor_Rate_Min" && item[0] !== "Procedure_Code"  && item[0] !== "Med_Procedure_Description") {
         const name = (item[0].replace(/_/g," "));
         if (name !== null || name !== "") {
           b[name] = item[1];

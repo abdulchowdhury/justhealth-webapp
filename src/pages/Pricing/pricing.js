@@ -239,7 +239,7 @@ function isNum(c) { // checks if digit is num
 function insure(item) {
   for (const items in item) {
     if (typeof(items) === 'string' && typeof((item[items])) == 'string' && isNum((item[items]).substring(0,1))) {
-      if(((item[items]) !== '0') && items !== "Charge" && items !== "Payor_Rate_Max" && items !== "Payor_Rate_Min" && items !== "Procedure_Code" && items !== "Cash_Discount") {
+      if(((item[items]) !== '0') && items !== "Charge" && items !== "Payor_Rate_Max" && items !== "Payor_Rate_Min" && items !== "Procedure_Code" && items !== "Cash_Discount"  && items !== "Med_Procedure_Description") {
         const name = (items.replace(/_/g," "));
         insurances.push(name.toUpperCase());
       }
@@ -250,7 +250,7 @@ function insure(item) {
 function set(arr) { // takes data and only finds prices and takes out $ and takes out the prices that are $0
   for (const i in arr) {
     if (typeof(i) === 'string' && typeof((arr[i])) == 'string' && isNum((arr[i]).substring(0,1))) {
-      if(((arr[i]) !== '0') && i !== "Charge" && i !== "Payor_Rate_Max" && i !== "Payor_Rate_Min" && i !== "Procedure_Code") {
+      if(((arr[i]) !== '0') && i !== "Charge" && i !== "Payor_Rate_Max" && i !== "Payor_Rate_Min" && i !== "Procedure_Code" && i !== "Med_Procedure_Description") {
          b.push(parseFloat(arr[i]));
       } else if (i === "Charge") {
           numPrice = arr[i];
