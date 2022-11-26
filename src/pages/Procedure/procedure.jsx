@@ -94,7 +94,7 @@ const Procedure = (props) => {
   Object.entries(b).forEach(change); // loops through to get difference between cost and coverage
 
   if (Object.keys(b).includes(insurance)) {
-    alert("match")
+    //alert("match")
   }
 
   Object.values(b).forEach(avg); // loops through for average
@@ -129,6 +129,7 @@ const Procedure = (props) => {
       <p>Ticket Price: {dollar.format(price)} {infoBubble("What is a ticket price?", "The default, total cost of a procedure before any insurance reiembursements or cash discounts.")}</p>
       <p>Average Cost reported by users: {getCAvg()}</p>
       <h3>Average Cost: {dollar.format(avgCost)} {infoBubble("How was this calculated?","We calculate the average cost using only the prices from insurances that actually cover this procedure and the cash price.")}</h3>
+      <h3>Your Insurance provider is highlighted in red if you did not input an insurance then the amount you would pay in cash is highlighted in red.</h3>
       <Graph b={b} insurance={insurance}/>
       <h2>FAQ</h2>
       <p><i>Where's my insurance on this graph?</i></p>

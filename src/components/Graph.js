@@ -10,7 +10,11 @@ class Graph extends Component {
         insurance = insurance.toUpperCase();
 
         if (insurance === undefined || insurance === "" || insurance === " ") {
-          return 'lightblue';
+          if (data === "Cash Discount") {
+            return 'red';
+          } else {
+            return 'lightblue';
+          }
         }
         if ((data.toUpperCase()).indexOf(insurance) !== -1) {
           return 'red'
