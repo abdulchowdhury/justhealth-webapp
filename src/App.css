@@ -22,6 +22,9 @@ ul.no-bullets, ul.no-bullets-home {
     margin: 0; /* Remove margins */
 }
 
+ul.no-bullets li {
+    border-radius: 2px;
+}
 
 ul.no-bullets-home li {
     border-radius: 2px;
