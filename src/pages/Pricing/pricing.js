@@ -349,8 +349,7 @@ const onSuggestHandler = (dropdownOption) => {
 return (
     <div className="Procedures">
       <br></br>
-      <body></body>
-      <form onSubmit={handleSubmit}>
+       <form onSubmit={handleSubmit}>
 
         <div className="Searchbar">
           <div id="container">
@@ -424,7 +423,6 @@ return (
       
       <h1>
       <center>
-          <table>
               <TableContainer component={Paper}>
               {done ? (<Table sx={{ minWidth: 1050 }} aria-label="simple table">
               <TableHead>
@@ -443,7 +441,7 @@ return (
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                               >
                         <TableCell align="left"><Button onClick={() => {redirect(row.hospital)}}>{row.hospital}</Button></TableCell>
-                        <TableCell align="center"><div><ul>{row.insurance}</ul></div></TableCell>
+                        <TableCell align="center"><ul>{row.insurance}</ul></TableCell>
                         {row.distance !== "0 Miles" ? (<TableCell align="center">{row.distance}</TableCell>) : ""}
                         <TableCell align="right">{(row.cost)}</TableCell>
                       </TableRow>
@@ -451,7 +449,6 @@ return (
                   </TableBody>
                 </Table>): ""}
       </TableContainer>
-          </table>
           </center>
           </h1>
     </div>

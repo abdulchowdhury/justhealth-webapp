@@ -150,7 +150,7 @@ const Navbar = () => {
           >
             {pages.map((page) => (
               <MenuItem key={page} onClick={handleCloseNavMenu}>
-                <Button href={`/${page}`} textAlign='center'>{page} </Button>
+                <Button href={`/${page}`} textalign='center'>{page} </Button>
               </MenuItem>
             ))}
           </Menu>
@@ -231,7 +231,7 @@ const Navbar = () => {
           >
             {settings.map((setting) => (
               <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign='center'>{setting}</Typography>
+                <Typography textalign='center'>{setting}</Typography>
               </MenuItem>
             ))}
           </Menu>
