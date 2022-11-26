@@ -8,13 +8,25 @@ class Graph extends Component {
     render() {
       function getColor(data) {
         insurance = insurance.toUpperCase();
-        if (insurance === "" || insurance === " ") {
+
+        if (insurance === undefined || insurance === "" || insurance === " ") {
           return 'lightblue';
         }
-        if (data.indexOf(insurance) !== -1){
+        if ((data.toUpperCase()).indexOf(insurance) !== -1) {
           return 'red'
         }
         return 'lightblue';
+      }
+      function getName(data) {
+        insurance = insurance.toUpperCase();
+        if (insurance === undefined || insurance === "" || insurance === " ") {
+          return data;
+        }
+        if ((data.toUpperCase()).indexOf(insurance) !== -1) {
+          data = "USER'S INSURANCE: "  + data
+          return data;
+        }
+        return data;
       }
         var insurance = (this.props.insurance);
         var dtick_val = Number((Math.max(...Object.values(this.props.b))/10).toPrecision(1));
@@ -24,7 +36,7 @@ class Graph extends Component {
             <div>
                 <Plotly data = {[{
                     type: 'bar',
-                    x: Object.keys(this.props.b),
+                    x: (Object.keys(this.props.b)).map(d => getName(d)),
                     y: Object.values(this.props.b),
                     name: 'Insurance',
                     marker: {
