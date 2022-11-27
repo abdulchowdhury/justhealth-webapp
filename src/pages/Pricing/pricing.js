@@ -287,7 +287,6 @@ const handleSubmit = async (event) => {
   event.preventDefault();
   setWaited(false)
   setRows([])
-  console.log(procedureID, insurance, zip)
   queryAllHospitals(procedureID, insurance, zip);
   setDone(true);
   delay(1500).then(() => setWaited(true))

@@ -8,16 +8,15 @@ class Graph extends Component {
     render() {
       function getColor(data) {
         insurance = insurance.toUpperCase();
-
-        if (insurance === undefined || insurance === "" || insurance === " ") {
+        if (insurance === undefined || insurance === "" || insurance === " " || insurance === "NULL") {
           if (data === "Cash Discount") {
-            return 'red';
+            return 'navy';
           } else {
             return 'lightblue';
           }
         }
         if ((data.toUpperCase()).indexOf(insurance) !== -1) {
-          return 'red'
+          return 'navy'
         }
         return 'lightblue';
       }
@@ -27,7 +26,7 @@ class Graph extends Component {
           return data;
         }
         if ((data.toUpperCase()).indexOf(insurance) !== -1) {
-          data = "USER'S INSURANCE: "  + data
+          //data = "Your insurance: "  + data (getting rid of this for now for UI purposes)
           return data;
         }
         return data;
@@ -51,7 +50,7 @@ class Graph extends Component {
                       'Price: %{y:$,.2f}<extra></extra>'
                 }]}
                 layout = { {
-                    title: "Insurance Pricing (what you would pay)",
+                    title: "Insurance Pricing",
                     width: `${width}`,
                     height: `${height}`,
                     xaxis: {
