@@ -41,6 +41,7 @@ export default function Pricing () {
   const [rows, setRows] = useState([{hospital:"", insurance:"", cost:""}]);
   const [validZip , setvalidZip] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [waited, setWaited] = useState(false);
   //const [sortPrice, setSortPrice] = useState(false);
   var insurances = [];
   var b = [];
@@ -284,9 +285,11 @@ function getDist(zipcode1, zipcode2) {
 
 const handleSubmit = async (event) => {
   event.preventDefault();
+  setWaited(false)
   setRows([])
   queryAllHospitals(procedureID, insurance, zip);
   setDone(true);
+  delay(1500).then(() => setWaited(true))
 
 }
 const redirect = (hospital) => {
@@ -346,6 +349,10 @@ const onSuggestHandler = (dropdownOption) => {
     setProcedureName(dropdownOption.label);
     setProcedureID(dropdownOption.value);
     setDropdownOptions([]);
+}
+
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
 }
 
 return (
@@ -436,7 +443,7 @@ return (
       <h1>
       <center>
               <TableContainer component={Paper}>
-              {done ? (<Table sx={{ minWidth: 1050 }} aria-label="simple table">
+              {done && rows.length > 0 ? (<Table sx={{ minWidth: 1050 }} aria-label="simple table">
               <TableHead>
                     <TableRow
                     key={"Labels"}>
@@ -460,7 +467,8 @@ return (
                     ))}
                   </TableBody>
                 </Table>): ""}
-      </TableContainer>
+                </TableContainer>
+                {rows.length === 0 && done && waited ? (<h3>Sorry, no results found.</h3>):""}
           </center>
           </h1>
     </div>
