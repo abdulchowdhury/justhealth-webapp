@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 
 const validationSchema = yup.object({
   firstName: yup
@@ -70,6 +71,9 @@ const Form = () => {
   const [cost, setCost] = useState(0.0);
   const [date, setDate] = useState("");
   const [hospital, setHospital] = useState("");
+  const [procedureName, setProcedureName] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
+  const [dropdownOptions, setDropdownOptions] = useState([]);
   let navigate = useNavigate()
 
   const handleSubmit = (event) => {
@@ -86,10 +90,50 @@ const Form = () => {
     }).then(()=>{
       alert(`inputted ${name}, ${procedure}, ${insurance}, ${cost}, ${hospital}, ${date}`);
       navigate('/')
-
   });
-  //---------------------------------------------------------------
 }
+
+  function queryProcedures(userInput) {
+    Axios.post("http://localhost:3002/api/getProcedures", {}, {
+        params: {
+          userInput: userInput
+        }
+      }).then((data)=>{
+        callBackFunction(data.data.result);
+    })
+  
+  }
+  
+  async function searchProcedureNames(userInput) {
+    // const { value } = event.target;
+    // get user search input converted to lowercase
+    setProcedureName(userInput);
+    if (userInput.length > 3) {
+      setIsLoading(true);
+      const searchQuery = userInput.toLowerCase();
+      queryProcedures(searchQuery);
+    } else {
+      setIsLoading(false);
+      setDropdownOptions([])
+    }
+  }
+  
+  function callBackFunction(res) {
+    setIsLoading(false);
+    let results1 = [];
+    for (const val of res) {
+      results1.push({label: val.Med_Procedure_Description, value: val.Procedure_Code});
+    }
+    setDropdownOptions(results1)
+  }
+  
+  
+  const onSuggestHandler = (dropdownOption) => {
+      setProcedureName(dropdownOption.label);
+      setProcedure(dropdownOption.value);
+      setDropdownOptions([]);
+  }
+  //--------------------------------------------------------------
   return (
     <Box>
       <form onSubmit={handleSubmit}>
@@ -119,21 +163,33 @@ const Form = () => {
           </Grid> */}
           <Grid item xs={12}>
             <Typography variant={'subtitle2'} sx={{ marginBottom: 2, marginTop: -1 }}>
-              Please enter the type of procedure *
+              Please enter the procedure code or name *
             </Typography>
-            <TextField
-              label="Procedure type"
+            <TextField 
+              id="searchInput"
               variant="outlined"
-              id="procedure"
-              name="procedure"
               fullWidth
-              onChange={(e)=>setProcedure(e.target.value)}
-              //value={formik.values.firstName}
-              // error={
-              //   formik.touched.firstName && Boolean(formik.errors.firstName)
-              // }
-              // helperText={formik.touched.firstName && formik.errors.firstName}
+              value={procedureName}
+              onChange={(e) => {
+                searchProcedureNames(e.target.value)
+                setProcedure(e.target.value)
+              }}
+              onBlur={() => {
+                setDropdownOptions([]);
+              }}
+              label= "Procedure name or code"
             />
+            {isLoading ? <LoadingSpinner /> : 
+            <nav>
+              <ul className = "no-bullets-home">
+                {dropdownOptions && dropdownOptions.map((dropdownOption, index) =>
+                  <li key = {dropdownOption.label} value = {dropdownOption.value} className = "suggestion" onMouseDown={() => {onSuggestHandler(dropdownOption)}}>
+                    {dropdownOption.label}
+                  </li>
+                )}
+              </ul>
+            </nav>
+            }
           </Grid>
           <Grid item xs={12}>
             <Typography variant={'subtitle2'} sx={{ marginBottom: 2 }}>
