@@ -121,7 +121,7 @@ const Procedure = (props) => {
 
   return (
     <body>
-    <div>
+    <div style={{margin:15}}>
       <h1>{data[0].Med_Procedure_Description} at {hospital}</h1>
       <h2>Procedure Code: {pid}</h2>
 
