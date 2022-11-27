@@ -151,7 +151,8 @@ const Procedure = (props) => {
           <h2>FAQ</h2>
           <p><i>Where's my insurance on this graph?</i></p>
           <p>If your insurance is not listed, it does not cover this procedure, otherwise your insurance provider's price is highlighted. <br></br>If you did not input an insurance, then the amount you would pay in cash is highlighted.</p>
-          <br/>
+          <p><i>What is Cash Discount?</i></p>
+          <p>Cash Discount is the amount you would pay if you don't use any insurance.</p>
           <p><i>Where does this data come from?</i></p>
           <p>Data was pulled directly from the pricing data this hospital released to comply with the Hospital Transparency Act of 2021.</p>
         </Grid>
