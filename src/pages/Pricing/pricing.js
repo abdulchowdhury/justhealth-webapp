@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom"
 import 'react-dropdown/style.css';
 import Axios from 'axios';
 import { Button } from "@mui/material";
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import { useState, useEffect } from "react";
 import { useSearchParams } from 'react-router-dom';
 import {infoBubble} from './infoBubble'
@@ -39,6 +41,7 @@ export default function Pricing () {
   const [rows, setRows] = useState([{hospital:"", insurance:"", cost:""}]);
   const [validZip , setvalidZip] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [waited, setWaited] = useState(false);
   //const [sortPrice, setSortPrice] = useState(false);
   var insurances = [];
   var b = [];
@@ -51,7 +54,7 @@ export default function Pricing () {
 
 useEffect(() => {
     let pid = searchParams.get("pid")
-    if (!(pid == undefined || pid == "")) {
+    if (!(pid === undefined || pid === "")) {
       setProcedureID(`${searchParams.get("pid")}`)
       setZip(`${searchParams.get("zip")}`)
       setInsurance(`${searchParams.get("insurance")}`)
@@ -282,9 +285,11 @@ function getDist(zipcode1, zipcode2) {
 
 const handleSubmit = async (event) => {
   event.preventDefault();
+  setWaited(false)
   setRows([])
   queryAllHospitals(procedureID, insurance, zip);
   setDone(true);
+  delay(1500).then(() => setWaited(true))
 
 }
 const redirect = (hospital) => {
@@ -346,17 +351,26 @@ const onSuggestHandler = (dropdownOption) => {
     setDropdownOptions([]);
 }
 
-return (
-    <div className="Procedures">
-      <br></br>
-       <form onSubmit={handleSubmit}>
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
 
-        <div className="Searchbar">
+return (
+    <div style = {{marginTop:0, marginRight:20, marginLeft:20}}className="Procedures">
+       <form onSubmit={handleSubmit}>
+       <div className="Searchbar">
+       <Grid 
+            container
+            spacing={0.5}
+            sx ={{backgroundColor:"#f7f5f0",borderRadius: 2, padding: 0.5}}
+          >
+        <Grid item xs ={6}>
           <div id="container">
             <TextField 
               id="searchInput"
-              variant="outlined"
+              variant="filled"
               fullWidth
+              sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
               value={procedureName}
               onChange={(e) => {
                 searchProcedureNames(e.target.value)
@@ -379,27 +393,31 @@ return (
             </nav>
             }
           </div>
+        </Grid>
 
-          <center>
+        <Grid item xs = {2}>
           <TextField
             id="input-with-icon-adornment"
-            variant="outlined"
-            
+            variant="filled"
+            sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
             onChange={(e) => {
               setZip(e.target.value);
             }}
             label= "Zip Code"
           />
-          
+        </Grid>
+
+        <Grid item xs = {2}>
           <TextField
             id="input-with-icon-adornment"
-            variant="outlined"
-            
+            variant="filled"
+            sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
             onChange={(e) => {
               setInsurance(e.target.value);
             }}
             label= "Insurance Provider"
           />
+        </Grid>
 
         {/* <div>
           <label>
@@ -414,17 +432,18 @@ return (
            Sort by Price
           </label>
           </div> */}
+          <Grid item xs = {2}>
+            <Button sx={{ height: 54, width:"100%", fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} variant={'contained'} type={"submit"}>Search</Button>
+          </Grid>
 
-          <button type="submit">Search</button>
-          </center>
-
+        </Grid>
         </div>
       </form>
       
       <h1>
       <center>
               <TableContainer component={Paper}>
-              {done ? (<Table sx={{ minWidth: 1050 }} aria-label="simple table">
+              {done && rows.length > 0 ? (<Table sx={{ minWidth: 1050 }} aria-label="simple table">
               <TableHead>
                     <TableRow
                     key={"Labels"}>
@@ -448,7 +467,8 @@ return (
                     ))}
                   </TableBody>
                 </Table>): ""}
-      </TableContainer>
+                </TableContainer>
+                {rows.length === 0 && done && waited ? (<h3>Sorry, no results found.</h3>):""}
           </center>
           </h1>
     </div>

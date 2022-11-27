@@ -127,6 +127,17 @@ app.post("/api/getProcedures", (req, res) => {
     })
 });
 
+
+app.post("/api/getHospitals", (req, res) => {
+    connection.query("SELECT name FROM Hospital_Locations WHERE name LIKE ?", ["%" + req.query.userInput + "%"], (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.json({success: true, message: "Hospital Names", result})
+        }
+    })
+});
+
 app.listen(PORT, function() {
     console.log(`Listening on ${PORT}...`);
 });
