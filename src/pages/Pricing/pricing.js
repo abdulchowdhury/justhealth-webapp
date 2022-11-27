@@ -97,7 +97,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
         }
       }
       
-      if ((ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1))) {
+      if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1))) {
         newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost:dollar.format(avgCost), distance: zipCodeDistance})
       }
       insurances = [];
@@ -127,7 +127,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
         }
       }
       
-      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
+      if (ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
         newRows.push({hospital:"Northside Atlanta Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
       }
       insurances = [];
@@ -157,7 +157,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
         }
       }
       
-      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
+      if (ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
         newRows.push({hospital:"Northside Duluth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
       }
       insurances = [];
@@ -187,7 +187,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
         }
       }
       
-      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
+      if (ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
         newRows.push({hospital:"Northside Forsyth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
       }
       insurances = [];
@@ -217,7 +217,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
         }
       }
       
-      if (ins === "" || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
+      if (ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
         newRows.push({hospital:"Northside Gwinnett Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
       }
       insurances = [];
@@ -287,6 +287,7 @@ const handleSubmit = async (event) => {
   event.preventDefault();
   setWaited(false)
   setRows([])
+  console.log(procedureID, insurance, zip)
   queryAllHospitals(procedureID, insurance, zip);
   setDone(true);
   delay(1500).then(() => setWaited(true))
