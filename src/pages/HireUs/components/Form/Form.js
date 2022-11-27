@@ -150,7 +150,7 @@ const Form = () => {
   async function searchHospitalNames(userInput) {
     // const { value } = event.target;
     // get user search input converted to lowercase
-    if (userInput.length > 3) {
+    if (userInput.length > 1) {
       setIsLoadingHospitals(true);
       const searchQuery = userInput.toLowerCase();
       queryHospitalNames(searchQuery);
