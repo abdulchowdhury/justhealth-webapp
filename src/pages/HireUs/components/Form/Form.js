@@ -12,6 +12,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import LoadingSpinner from "../../../../components/LoadingSpinner";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const validationSchema = yup.object({
   firstName: yup
@@ -76,7 +78,10 @@ const Form = () => {
   const [isLoadingHospitals, setIsLoadingHospitals] = useState(false);
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [dropdownOptionsHospitals, setDropdownOptionsHospitals] = useState([]);
-  let navigate = useNavigate()
+
+  let navigate = useNavigate()  
+
+  const MySwal = withReactContent(Swal)
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -90,7 +95,12 @@ const Form = () => {
         hospital: hospital
       }
     }).then(()=>{
-      alert(`inputted ${name}, ${procedure}, ${insurance}, ${cost}, ${hospital}, ${date}`);
+    MySwal.fire(
+      'Thank you!',
+      'We appreciate your help in making medical prices more transparent.',
+      'success'
+    )
+      //alert(`inputted ${procedure}, ${insurance}, ${cost}, ${hospital}, ${date}`);
       navigate('/')
   });
 }

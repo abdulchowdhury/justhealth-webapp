@@ -6,6 +6,8 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const Input = () => {
   const [procedure, setProcedure] = useState("");
@@ -13,23 +15,29 @@ const Input = () => {
   const [cost, setCost] = useState(0.0);
   const [date, setDate] = useState("");
   const [hospital, setHospital] = useState("");
+  const MySwal = withReactContent(Swal)
   let navigate = useNavigate()
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    Axios.post("http://localhost:3002/api/input", {}, {
-      params: {
-        procedure: procedure,
-        insurance: insurance,
-        cost: cost,
-        date: date,
-        hospital: hospital
-      }
-    }).then(()=>{
-      alert(`inputted ${procedure}, ${insurance}, ${cost}, ${hospital}, ${date}`);
+    // Axios.post("http://localhost:3002/api/input", {}, {
+    //   params: {
+    //     procedure: procedure,
+    //     insurance: insurance,
+    //     cost: cost,
+    //     date: date,
+    //     hospital: hospital
+    //   }
+    // }).then(()=>{
+      MySwal.fire(
+        'Good job!',
+        'You clicked the button!',
+        'success'
+      )
+      //alert(`inputted ${procedure}, ${insurance}, ${cost}, ${hospital}, ${date}`);
       navigate('/')
 
-  });
+  // });
   }
 
   return (
