@@ -6,9 +6,15 @@ import Plotly from 'react-plotly.js';
 class Graph extends Component {
   
     render() {
+      function checker(arr) {
+        if (((arr.toString().toUpperCase()).indexOf(insurance)) === -1) {
+          insurance = "Cash Discount";
+        }
+      }
+      
       function getColor(data) {
         insurance = insurance.toUpperCase();
-        if (insurance === undefined || insurance === "" || insurance === " " || insurance === "NULL") {
+        if (insurance === undefined || insurance === "" || insurance === " " || insurance === "NULL"  || insurance === "Cash Discount") {
           if (data === "Cash Discount") {
             return 'navy';
           } else {
@@ -32,6 +38,8 @@ class Graph extends Component {
         return data;
       }
         var insurance = (this.props.insurance);
+        insurance = insurance.toUpperCase();
+        checker(Object.keys(this.props.b));
         var dtick_val = Number((Math.max(...Object.values(this.props.b))/10).toPrecision(1));
         var width = window.innerWidth * .90
         var height = window.innerHeight * .75
