@@ -40,7 +40,7 @@ export default function Pricing () {
   const [NorthsideForsythData, setNorthsideForsythData] = useState([])
   const [NorthsideGwinnettData, setNorthsideGwinnettData] = useState([])
   const [done, setDone] = useState(false)
-  const [rows, setRows] = useState([{hospital:"", insurance:"", cost:""}]);
+  const [rows, setRows] = useState([{hospital:"", insurance:"", cost:"", avgPrice: ""}]);
   const [validZip , setvalidZip] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [waited, setWaited] = useState(false);
@@ -48,6 +48,8 @@ export default function Pricing () {
   var insurances = [];
   var vals = [];
   var b = [];
+  var avgCost;
+  var ac;
   var fullName = '';
   var numPrice;
   const gradyZip = '30303';
@@ -114,7 +116,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
           avgCost = dollar.format(avgCost);
         }
       }
-      newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost: (avgCost), distance: zipCodeDistance})
+      newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost: (avgCost), distance: zipCodeDistance, avg: dollar.format(ac)})
       insurances = [];
       vals = [];
       b = [];
@@ -156,7 +158,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
           avgCost = dollar.format(avgCost);
         }
       }
-      newRows.push({hospital:"Northside Atlanta Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: (avgCost), distance: zipCodeDistance})
+      newRows.push({hospital:"Northside Atlanta Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: (avgCost), distance: zipCodeDistance, avg: dollar.format(ac)})
       insurances = [];
       vals = [];
       b = [];
@@ -197,7 +199,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
           avgCost = dollar.format(avgCost);
         }
       }
-      newRows.push({hospital:"Northside Duluth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: (avgCost), distance: zipCodeDistance})
+      newRows.push({hospital:"Northside Duluth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: (avgCost), distance: zipCodeDistance, avg: dollar.format(ac)})
       insurances = [];
       vals = [];
       b = [];
@@ -238,7 +240,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
           avgCost = dollar.format(avgCost);
         }
       }
-      newRows.push({hospital:"Northside Forsyth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: (avgCost), distance: zipCodeDistance})
+      newRows.push({hospital:"Northside Forsyth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: (avgCost), distance: zipCodeDistance, avg: dollar.format(ac)})
       insurances = [];
       vals = [];
       b = [];
@@ -279,7 +281,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
           avgCost = dollar.format(avgCost);
         }
       }
-      newRows.push({hospital:"Northside Gwinnett Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: (avgCost), distance: zipCodeDistance})
+      newRows.push({hospital:"Northside Gwinnett Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: (avgCost), distance: zipCodeDistance, avg: dollar.format(ac)})
       insurances = [];
       vals = [];
       b = [];
@@ -324,7 +326,6 @@ function set(arr) { // takes data and only finds prices and takes out $ and take
   }
   calc(b);
 }
-var avgCost;
 function calc(arr) {
   var count = 0;
   var sum = 0.0;
@@ -338,7 +339,7 @@ function calc(arr) {
     sum = sum + temp;
     count++;
   }
-  avgCost = sum/count;
+  ac = sum/count;
 }
 
 function findName(arr, str) {
@@ -524,6 +525,7 @@ return (
                       <TableCell  align="center">Insurances Accepted</TableCell>
                       {validZip === true ? (<TableCell  align="center">Distance </TableCell>) : ""}
                       <TableCell  align="right">Price You Pay {infoBubble("How was this calculated?","If your insurance is accepted, this price will reflect their given price. Otherwise, if your insurance is not accepted or you didn't input one, the price will be the cash discount price, marked with a *")}</TableCell>
+                      <TableCell  align="right">Average Cost {infoBubble("How was this calculated?","We calculate the average cost using only the prices from insurances that actually cover this procedure and the cash price.")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -536,6 +538,7 @@ return (
                         <TableCell align="center"><ul>{row.insurance}</ul></TableCell>
                         {row.distance !== "0 Miles" ? (<TableCell align="center">{row.distance}</TableCell>) : ""}
                         <TableCell align="right">{(row.cost)}</TableCell>
+                        <TableCell align="right">{(row.avg)}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
