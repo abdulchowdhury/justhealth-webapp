@@ -1,3 +1,5 @@
+//npm install --save modulename --legacy-peer-deps
+
 import React from 'react';
 import './index.css';
 import reportWebVitals from './reportWebVitals';

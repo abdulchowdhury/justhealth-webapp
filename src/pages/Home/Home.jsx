@@ -80,7 +80,7 @@ return (
   
   <img src={Background} width={1200} className="svg" marginBottom={-100}/>
   <Container maxWidth={800} paddingBottom={'0 !important'} 
-  sx={{marginTop: -37}}//change to -47 if not Christian's laptop
+  sx={{marginTop: -47}} //change to -47 if not Christian's laptop
   >
   <Box>
         <form onSubmit={handleSubmit}>

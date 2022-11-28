@@ -433,13 +433,13 @@ return (
        <Grid 
             container
             spacing={0.5}
-            sx ={{backgroundColor:"#f7f5f0",borderRadius: 2, padding: 0.5}}
+            sx ={{backgroundColor:"#fff", borderRadius: 2, padding: 0.5}}
           >
         <Grid item xs ={6}>
           <div id="container">
             <TextField 
               id="searchInput"
-              variant="filled"
+              variant="outlined"
               fullWidth
               sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
               value={procedureName}
@@ -466,10 +466,10 @@ return (
           </div>
         </Grid>
 
-        <Grid item xs = {2}>
+        <Grid item xs = {2} sx={{padding: 0, marginRight: 0, marginLeft: 4}}>
           <TextField
             id="input-with-icon-adornment"
-            variant="filled"
+            variant="outlined"
             sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
             onChange={(e) => {
               setZip(e.target.value);
@@ -478,11 +478,11 @@ return (
           />
         </Grid>
 
-        <Grid item xs = {2}>
+        <Grid item xs = {2} sx={{padding: 0, marginLeft: -8}}>
           <TextField
             id="input-with-icon-adornment"
-            variant="filled"
-            sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
+            variant="outlined"
+            sx={{backgroundColor: '#f2efe6', borderRadius: 2, padding: 0}}
             onChange={(e) => {
               setInsurance(e.target.value);
             }}
