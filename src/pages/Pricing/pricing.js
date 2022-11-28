@@ -466,11 +466,12 @@ return (
           </div>
         </Grid>
 
-        <Grid item xs = {2} sx={{padding: 0, marginRight: 0, marginLeft: 4}}>
+        <Grid item xs = {2}>
           <TextField
             id="input-with-icon-adornment"
             variant="outlined"
             sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
+            fullWidth
             onChange={(e) => {
               setZip(e.target.value);
             }}
@@ -478,7 +479,7 @@ return (
           />
         </Grid>
 
-        <Grid item xs = {2} sx={{padding: 0, marginLeft: -8}}>
+        <Grid item xs = {2}>
           <TextField
             id="input-with-icon-adornment"
             variant="outlined"
@@ -486,6 +487,7 @@ return (
             onChange={(e) => {
               setInsurance(e.target.value);
             }}
+            fullWidth
             label= "Insurance Provider"
           />
         </Grid>
