@@ -16,13 +16,13 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 const validationSchema = yup.object({
-  firstName: yup
+  procedure: yup
     .string('Enter your first and last name')
     .trim()
     .min(2, 'Please enter a valid name')
     .max(50, 'Please enter a valid name')
     .required('Please specify your first and last name'),
-  lastName: yup
+  insurance: yup
     .string('Enter your last name')
     .trim()
     .min(2, 'Please enter a valid name')
@@ -40,7 +40,7 @@ const validationSchema = yup.object({
       /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)$/,
       'Please enter a valid phone number.',
     ),
-  budget: yup.string().required('Please specify your project budget'),
+  cost: yup.string().required('Please specify your project budget'),
   message: yup
     .string()
     .trim()
@@ -49,12 +49,15 @@ const validationSchema = yup.object({
 
 const Form = () => {
   const initialValues = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    budget: '',
-    message: '',
+    procedure: '',
+    insurance: '',
+    cost: '',
+    date: '',
+    hospital: '',
+    procedureName: '',
+    dropdownOptions: [],
+    dropdownOptionsHospitals: [],
+    
   };
 
   const onSubmit = (values) => {
@@ -66,28 +69,11 @@ const Form = () => {
     validationSchema: validationSchema,
     onSubmit,
   });
-//----------------------------------------------------------
-  const [name, setName] = useState("");
-  const [procedure, setProcedure] = useState("");
-  const [insurance, setInsurance] = useState("");
-  const [cost, setCost] = useState(0.0);
-  const [date, setDate] = useState("");
-  const [hospital, setHospital] = useState("");
-  const [procedureName, setProcedureName] = useState("")
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingHospitals, setIsLoadingHospitals] = useState(false);
-  const [dropdownOptions, setDropdownOptions] = useState([]);
-  const [dropdownOptionsHospitals, setDropdownOptionsHospitals] = useState([]);
-
-  let navigate = useNavigate()  
-
-  const MySwal = withReactContent(Swal)
 
   const handleSubmit = (event) => {
     event.preventDefault();
     Axios.post("http://localhost:3002/api/input", {}, {
       params: {
-        name: name,
         procedure: procedure,
         insurance: insurance,
         cost: cost,
@@ -104,6 +90,23 @@ const Form = () => {
       navigate('/')
   });
 }
+//----------------------------------------------------------
+  const [procedure, setProcedure] = useState("");
+  const [insurance, setInsurance] = useState("");
+  const [cost, setCost] = useState(0.0);
+  const [date, setDate] = useState("");
+  const [hospital, setHospital] = useState("");
+  const [procedureName, setProcedureName] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingHospitals, setIsLoadingHospitals] = useState(false);
+  const [dropdownOptions, setDropdownOptions] = useState([]);
+  const [dropdownOptionsHospitals, setDropdownOptionsHospitals] = useState([]);
+
+  let navigate = useNavigate()  
+
+  const MySwal = withReactContent(Swal)
+
+
 
   function queryProcedures(userInput) {
     Axios.post("http://localhost:3002/api/getProcedures", {}, {
@@ -194,24 +197,6 @@ const Form = () => {
           container
           spacing={4}
         >
-          {/* <Grid item xs={12} sm={6}>
-            <Typography variant={'subtitle2'} sx={{ marginBottom: 2 }}>
-              Please enter your full name *
-            </Typography>
-            <TextField
-              label="Full name"
-              variant="outlined"
-              id="name"
-              name="name"
-              fullWidth
-              onChange={(e)=>setName(e.target.value)}
-              //value={formik.values.firstName}
-              // error={
-              //   formik.touched.firstName && Boolean(formik.errors.firstName)
-              // }
-              // helperText={formik.touched.firstName && formik.errors.firstName}
-            />
-          </Grid> */}
           <Grid item xs={12}>
             <Typography variant={'subtitle2'} sx={{ marginBottom: 2, marginTop: -1 }}>
               Please enter the procedure code or name *
@@ -221,6 +206,7 @@ const Form = () => {
               variant="outlined"
               fullWidth
               value={procedureName}
+              
               onChange={(e) => {
                 searchProcedureNames(e.target.value)
                 setProcedure(e.target.value)
@@ -265,7 +251,6 @@ const Form = () => {
               Please enter the date of the procedure *
             </Typography>
             <TextField
-              // label="Procedure date"
               variant="outlined"
               type="date"
               id="date"
@@ -327,6 +312,9 @@ const Form = () => {
               fullWidth
               onChange={(e)=>setInsurance(e.target.value)}
               sx={{ marginBottom: 2 }}
+              error={
+                formik.touched.insurance && Boolean(formik.errors.insurance)
+              }
               //value={formik.values.firstName}
               // error={
               //   formik.touched.firstName && Boolean(formik.errors.firstName)

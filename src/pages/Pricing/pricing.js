@@ -19,6 +19,7 @@ import { useSearchParams } from 'react-router-dom';
 import {infoBubble} from './infoBubble'
 import LoadingSpinner from "../../components/LoadingSpinner";
 import "../../App.css";
+import { ImportContactsOutlined } from '@mui/icons-material';
 
 
 export default function Pricing () {
@@ -44,7 +45,9 @@ export default function Pricing () {
   const [waited, setWaited] = useState(false);
   //const [sortPrice, setSortPrice] = useState(false);
   var insurances = [];
+  var vals = [];
   var b = [];
+  var fullName = '';
   var numPrice;
   const gradyZip = '30303';
   const northsideatlantaZip = '30342';
@@ -97,10 +100,22 @@ const queryAllHospitals = async (pid, ins, zipc) => {
         }
       }
       
-      if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1))) {
-        newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost:dollar.format(avgCost), distance: zipCodeDistance})
+      if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
+        avgCost = data.data.result[0]["Charge"];
+        avgCost = dollar.format(avgCost) + "(*Insurance not Accepted*)";
+      } else {
+        fullName = findName(insurances,ins.toUpperCase());
+        if ((data.data.result[0]["Charge"] - vals[insurances.indexOf(fullName)]) <= 0) {
+          avgCost = 0;
+          avgCost = dollar.format(avgCost);
+        } else {
+          avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(vals[insurances.indexOf(fullName)]));
+          avgCost = dollar.format(avgCost);
+        }
       }
+      newRows.push({hospital:"Grady Memorial Hospital", insurance: (insurances.toString()).replace(/,/g,", ") , cost: (avgCost), distance: zipCodeDistance})
       insurances = [];
+      vals = [];
       b = [];
     }
   })
@@ -126,11 +141,23 @@ const queryAllHospitals = async (pid, ins, zipc) => {
           setvalidZip(true);
         }
       }
-      
-      if (ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
-        newRows.push({hospital:"Northside Atlanta Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
+
+      if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
+        avgCost = data.data.result[0]["Charge"];
+        avgCost = dollar.format(avgCost) + "(*Insurance not Accepted*)";
+      } else {
+        fullName = findName(insurances,ins.toUpperCase());
+        if ((data.data.result[0]["Charge"] - vals[insurances.indexOf(fullName)]) <= 0) {
+          avgCost = 0;
+          avgCost = dollar.format(avgCost);
+        } else {
+          avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(vals[insurances.indexOf(fullName)]));
+          avgCost = dollar.format(avgCost);
+        }
       }
+      newRows.push({hospital:"Northside Atlanta Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: (avgCost), distance: zipCodeDistance})
       insurances = [];
+      vals = [];
       b = [];
     }
   })
@@ -156,11 +183,22 @@ const queryAllHospitals = async (pid, ins, zipc) => {
           setvalidZip(true);
         }
       }
-      
-      if (ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
-        newRows.push({hospital:"Northside Duluth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
+      if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
+        avgCost = data.data.result[0]["Charge"];
+        avgCost = dollar.format(avgCost) + "(*Insurance not Accepted*)";
+      } else {
+        fullName = findName(insurances,ins.toUpperCase());
+        if ((data.data.result[0]["Charge"] - vals[insurances.indexOf(fullName)]) <= 0) {
+          avgCost = 0;
+          avgCost = dollar.format(avgCost);
+        } else {
+          avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(vals[insurances.indexOf(fullName)]));
+          avgCost = dollar.format(avgCost);
+        }
       }
+      newRows.push({hospital:"Northside Duluth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: (avgCost), distance: zipCodeDistance})
       insurances = [];
+      vals = [];
       b = [];
     }
   })
@@ -186,11 +224,22 @@ const queryAllHospitals = async (pid, ins, zipc) => {
           setvalidZip(true);
         }
       }
-      
-      if (ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
-        newRows.push({hospital:"Northside Forsyth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
+      if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
+        avgCost = data.data.result[0]["Charge"];
+        avgCost = dollar.format(avgCost) + "(*Insurance not Accepted*)";
+      } else {
+        fullName = findName(insurances,ins.toUpperCase());
+        if ((data.data.result[0]["Charge"] - vals[insurances.indexOf(fullName)]) <= 0) {
+          avgCost = 0;
+          avgCost = dollar.format(avgCost);
+        } else {
+          avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(vals[insurances.indexOf(fullName)]));
+          avgCost = dollar.format(avgCost);
+        }
       }
+      newRows.push({hospital:"Northside Forsyth Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: (avgCost), distance: zipCodeDistance})
       insurances = [];
+      vals = [];
       b = [];
     }
   })
@@ -216,11 +265,22 @@ const queryAllHospitals = async (pid, ins, zipc) => {
           setvalidZip(true);
         }
       }
-      
-      if (ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) !== -1)) {
-        newRows.push({hospital:"Northside Gwinnett Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: dollar.format(avgCost), distance: zipCodeDistance})
+      if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
+        avgCost = data.data.result[0]["Charge"];
+        avgCost = dollar.format(avgCost) + "(*Insurance not Accepted*)";
+      } else {
+        fullName = findName(insurances,ins.toUpperCase());
+        if ((data.data.result[0]["Charge"] - vals[insurances.indexOf(fullName)]) <= 0) {
+          avgCost = 0;
+          avgCost = dollar.format(avgCost);
+        } else {
+          avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(vals[insurances.indexOf(fullName)]));
+          avgCost = dollar.format(avgCost);
+        }
       }
+      newRows.push({hospital:"Northside Gwinnett Hospital", insurance: (insurances.toString()).replace(/,/g,", "), cost: (avgCost), distance: zipCodeDistance})
       insurances = [];
+      vals = [];
       b = [];
     }
   })
@@ -245,6 +305,7 @@ function insure(item) {
       if(((item[items]) !== '0') && items !== "Charge" && items !== "Payor_Rate_Max" && items !== "Payor_Rate_Min" && items !== "Procedure_Code" && items !== "Cash_Discount"  && items !== "Med_Procedure_Description") {
         const name = (items.replace(/_/g," "));
         insurances.push(name.toUpperCase());
+        vals.push(item[items]);
       }
     }
   }
@@ -277,6 +338,15 @@ function calc(arr) {
     count++;
   }
   avgCost = sum/count;
+}
+
+function findName(arr, str) {
+  for (const i in arr) {
+    if (arr[i].includes(str)) {
+      return arr[i];
+    }
+  }
+  return null;
 }
 
 function getDist(zipcode1, zipcode2) {
@@ -450,7 +520,7 @@ return (
                       <TableCell  align="left">Hospital</TableCell>
                       <TableCell  align="center">Insurances Accepted</TableCell>
                       {validZip === true ? (<TableCell  align="center">Distance </TableCell>) : ""}
-                      <TableCell  align="right">Average Cost</TableCell>
+                      <TableCell  align="right">Price You Pay</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
