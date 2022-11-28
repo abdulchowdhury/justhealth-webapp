@@ -16,10 +16,11 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { useState, useEffect } from "react";
 import { useSearchParams } from 'react-router-dom';
-import {infoBubble} from './infoBubble'
+import infoBubble from "./infoBubble"
 import LoadingSpinner from "../../components/LoadingSpinner";
 import "../../App.css";
 import { ImportContactsOutlined } from '@mui/icons-material';
+
 
 
 export default function Pricing () {
@@ -102,7 +103,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
         avgCost = data.data.result[0]["Charge"];
-        avgCost = dollar.format(avgCost) + "(*Insurance not Accepted*)";
+        avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
         if ((data.data.result[0]["Charge"] - vals[insurances.indexOf(fullName)]) <= 0) {
@@ -144,7 +145,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
 
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
         avgCost = data.data.result[0]["Charge"];
-        avgCost = dollar.format(avgCost) + "(*Insurance not Accepted*)";
+        avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
         if ((data.data.result[0]["Charge"] - vals[insurances.indexOf(fullName)]) <= 0) {
@@ -185,7 +186,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       }
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
         avgCost = data.data.result[0]["Charge"];
-        avgCost = dollar.format(avgCost) + "(*Insurance not Accepted*)";
+        avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
         if ((data.data.result[0]["Charge"] - vals[insurances.indexOf(fullName)]) <= 0) {
@@ -226,7 +227,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       }
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
         avgCost = data.data.result[0]["Charge"];
-        avgCost = dollar.format(avgCost) + "(*Insurance not Accepted*)";
+        avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
         if ((data.data.result[0]["Charge"] - vals[insurances.indexOf(fullName)]) <= 0) {
@@ -267,7 +268,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       }
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
         avgCost = data.data.result[0]["Charge"];
-        avgCost = dollar.format(avgCost) + "(*Insurance not Accepted*)";
+        avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
         if ((data.data.result[0]["Charge"] - vals[insurances.indexOf(fullName)]) <= 0) {
@@ -520,7 +521,7 @@ return (
                       <TableCell  align="left">Hospital</TableCell>
                       <TableCell  align="center">Insurances Accepted</TableCell>
                       {validZip === true ? (<TableCell  align="center">Distance </TableCell>) : ""}
-                      <TableCell  align="right">Price You Pay</TableCell>
+                      <TableCell  align="right">Price You Pay {infoBubble("How was this calculated?","If your insurance is accepted, this price will reflect their given price. Otherwise, if your insurance is not accepted or you didn't input one, the price will be the cash discount price, marked with a *")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
