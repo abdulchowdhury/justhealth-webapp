@@ -60,6 +60,9 @@ export default function Pricing () {
 
 useEffect(() => {
     let pid = searchParams.get("pid")
+    if (!pid) {
+      pid = "";
+    }
     if (!(pid === undefined || pid === "")) {
       setProcedureID(`${searchParams.get("pid")}`)
       setZip(`${searchParams.get("zip")}`)
