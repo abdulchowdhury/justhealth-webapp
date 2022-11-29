@@ -1,0 +1,39 @@
+.suggestion{
+    cursor: pointer;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    padding-left: 10px;
+}
+
+/* .suggestion p {
+    margin-left: 10px;
+    height: 20px;
+    vertical-align: middle;
+} */
+
+.suggestion:hover{
+    background-color: grey;
+}
+
+ul.no-bullets, ul.no-bullets-home {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+}
+
+ul.no-bullets li {
+    border-radius: 2px;
+}
+
+ul.no-bullets-home li {
+    border-radius: 2px;
+    background-color: #f2efe6;
+}
+
+
+nav ul.no-bullets{max-height:200px;}
+nav ul.no-bullets-home{
+    max-height:50px;
+}
+nav ul{overflow:hidden; overflow-y:scroll;}
