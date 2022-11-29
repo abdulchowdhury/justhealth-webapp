@@ -446,7 +446,7 @@ return (
               variant="outlined"
               fullWidth
               sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
-              value={procedureName}
+              value={procedureID}
               onChange={(e) => {
                 searchProcedureNames(e.target.value)
                 setProcedureID(e.target.value)
@@ -474,6 +474,7 @@ return (
           <TextField
             id="input-with-icon-adornment"
             variant="outlined"
+            value = {zip}
             sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
             fullWidth
             onChange={(e) => {
@@ -487,6 +488,7 @@ return (
           <TextField
             id="input-with-icon-adornment"
             variant="outlined"
+            value = {insurance}
             sx={{backgroundColor: '#f2efe6', borderRadius: 2, padding: 0}}
             onChange={(e) => {
               setInsurance(e.target.value);
