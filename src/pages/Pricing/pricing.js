@@ -356,6 +356,9 @@ function getDist(zipcode1, zipcode2) {
 }
 
 const handleSubmit = async (event) => {
+  let queryString = `?pid=${procedureID}&insurance=${insurance}&zip=${zip}`
+  let path = "/Pricing/" + queryString
+  navigate(`${path}`)
   event.preventDefault();
   setWaited(false)
   setRows([])
