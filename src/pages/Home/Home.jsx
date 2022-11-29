@@ -26,7 +26,7 @@ const Home = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    let queryString = `?pid=${procedureID}&insurance=${insurance}&zip=${zip}`
+    let queryString = `?pid=${procedureID}&insurance=${insurance}&zip=${zip}&name=${procedureName}`
     let path = "/Pricing/" + queryString
     navigate(`${path}`)
   }

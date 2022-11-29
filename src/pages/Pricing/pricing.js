@@ -65,6 +65,7 @@ useEffect(() => {
     }
     if (!(pid === undefined || pid === "")) {
       setProcedureID(`${searchParams.get("pid")}`)
+      setProcedureName(`${searchParams.get("name")}`)
       setZip(`${searchParams.get("zip")}`)
       setInsurance(`${searchParams.get("insurance")}`)
       let insurance = searchParams.get("insurance")
@@ -359,7 +360,7 @@ function getDist(zipcode1, zipcode2) {
 }
 
 const handleSubmit = async (event) => {
-  let queryString = `?pid=${procedureID}&insurance=${insurance}&zip=${zip}`
+  let queryString = `?pid=${procedureID}&insurance=${insurance}&zip=${zip}&name=${procedureName}`
   let path = "/Pricing/" + queryString
   navigate(`${path}`)
   event.preventDefault();
@@ -449,7 +450,7 @@ return (
               variant="outlined"
               fullWidth
               sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
-              value={procedureID}
+              value={procedureName}
               onChange={(e) => {
                 searchProcedureNames(e.target.value)
                 setProcedureID(e.target.value)
