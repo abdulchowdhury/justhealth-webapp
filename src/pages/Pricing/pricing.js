@@ -93,12 +93,12 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       insure(data.data.result[0]);
       set(data.data.result[0]);
       if (zipc === "") {
-        zipCodeDistance = 0 + " Miles";
+        zipCodeDistance = -1 + " Miles";
         setvalidZip(false);
       } else {
         getDist(zipc, gradyZip);
         if (typeof(zipCodeDistance) !== 'number') {
-          zipCodeDistance = 0 + " Miles";
+          zipCodeDistance = -1 + " Miles";
           setvalidZip(false);
         } else {
           zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
@@ -135,12 +135,12 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       insure(data.data.result[0]);
       set(data.data.result[0]);
       if (zipc === "") {
-        zipCodeDistance = 0 + " Miles";
+        zipCodeDistance = -1 + " Miles";
         setvalidZip(false);
       } else {
         getDist(zipc, northsideatlantaZip);
         if (typeof(zipCodeDistance) !== 'number') {
-          zipCodeDistance = 0 + " Miles";
+          zipCodeDistance = -1 + " Miles";
           setvalidZip(false);
         } else {
           zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
@@ -177,12 +177,12 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       insure(data.data.result[0]);
       set(data.data.result[0]);
       if (zipc === "") {
-        zipCodeDistance = 0 + " Miles";
+        zipCodeDistance = -1 + " Miles";
         setvalidZip(false);
       } else {
         getDist(zipc, northsideduluthZip);
         if (typeof(zipCodeDistance) !== 'number') {
-          zipCodeDistance = 0 + " Miles";
+          zipCodeDistance = -1 + " Miles";
           setvalidZip(false);
         } else {
           zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
@@ -218,12 +218,12 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       insure(data.data.result[0]);
       set(data.data.result[0]);
       if (zipc === "") {
-        zipCodeDistance = 0 + " Miles";
+        zipCodeDistance = -1 + " Miles";
         setvalidZip(false);
       } else {
         getDist(zipc, northsideforsythZip);
         if (typeof(zipCodeDistance) !== 'number') {
-          zipCodeDistance = 0 + " Miles";
+          zipCodeDistance = -1 + " Miles";
           setvalidZip(false);
         } else {
           zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
@@ -259,12 +259,12 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       insure(data.data.result[0]);
       set(data.data.result[0]);
       if (zipc === "") {
-        zipCodeDistance = 0 + " Miles";
+        zipCodeDistance = -1 + " Miles";
         setvalidZip(false);
       } else {
         getDist(zipc, northsidegwinnettZip);
         if (typeof(zipCodeDistance) !== 'number') {
-          zipCodeDistance = 0 + " Miles";
+          zipCodeDistance = -1 + " Miles";
           setvalidZip(false);
         } else {
           zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
@@ -544,7 +544,7 @@ return (
                               >
                         <TableCell align="left"><Button onClick={() => {redirect(row.hospital)}}>{row.hospital}</Button></TableCell>
                         <TableCell align="center"><ul>{row.insurance}</ul></TableCell>
-                        {row.distance !== "0 Miles" ? (<TableCell align="center">{row.distance}</TableCell>) : ""}
+                        {row.distance !== "-1 Miles" ? (<TableCell align="center">{row.distance}</TableCell>) : ""}
                         <TableCell align="right">{(row.cost)}</TableCell>
                         <TableCell align="right">{(row.avg)}</TableCell>
                       </TableRow>
