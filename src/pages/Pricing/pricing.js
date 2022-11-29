@@ -108,7 +108,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       }
       
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
-        avgCost = data.data.result[0]["Charge"];
+        avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(data.data.result[0]["Cash_Discount"]));
         avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
@@ -150,7 +150,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       }
 
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
-        avgCost = data.data.result[0]["Charge"];
+        avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(data.data.result[0]["Cash_Discount"]));
         avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
@@ -191,7 +191,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
         }
       }
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
-        avgCost = data.data.result[0]["Charge"];
+        avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(data.data.result[0]["Cash_Discount"]));
         avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
@@ -232,7 +232,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
         }
       }
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
-        avgCost = data.data.result[0]["Charge"];
+        avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(data.data.result[0]["Cash_Discount"]));
         avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
@@ -273,7 +273,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
         }
       }
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
-        avgCost = data.data.result[0]["Charge"];
+        avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(data.data.result[0]["Cash_Discount"]));
         avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
