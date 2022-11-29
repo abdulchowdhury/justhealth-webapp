@@ -24,7 +24,7 @@ export default function App() {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/layout" element={<Layout />} />
-        <Route path="/Crowdsource" element={<HireUs />} />
+        <Route path="/Patient Input" element={<HireUs />} />
         <Route path="/Pricing/*" element={<Pricing />} />
         <Route path="/Procedure/*" element={<Procedure />}/>
         <Route path="*" element={<NoPage />} />
