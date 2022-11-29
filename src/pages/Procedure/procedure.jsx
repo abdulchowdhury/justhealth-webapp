@@ -119,6 +119,26 @@ const Procedure = (props) => {
     return c_avg
   }
 
+  function getBest() {
+    let min = Number.MAX_VALUE;
+    let cash = 0;
+    let found = false
+    Object.entries(b).forEach(([key, value], index) => {
+      if (insurance !== "" && insurance !== null && insurance !== " " && insurance !== "." && ((key.toUpperCase().indexOf(insurance.toUpperCase())) !== -1)) {
+        found = true;
+        min = Math.min(min, value)
+      } else if (key === "Cash Discount") {
+        cash = value;
+      }
+    });
+    if (found) {
+      return (!(min < cash));
+    } else {
+      return false;
+    }
+    
+  }
+
 
   return (
     <body>
@@ -144,6 +164,9 @@ const Procedure = (props) => {
         <Grid item xs = {4}>
           <p>Crowdsourced Average<br></br> {getCAvg()} {infoBubble("How was this calculated?", "Currently, crowdsourced averages are calculated using user-inputted data across all hospitals and insurances for this procedure.")}</p>
         </Grid>
+        {getBest() ? (<Grid item xs = {12} alignContent = 'center'>
+          <h3><br></br> {"Paying with cash might be better for this procedure"}</h3>
+        </Grid>) : "" }
         <Grid item xs = {12}>
           <Graph b={b} insurance={insurance}/>
         </Grid>
