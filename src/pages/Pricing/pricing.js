@@ -65,6 +65,7 @@ useEffect(() => {
     }
     if (!(pid === undefined || pid === "")) {
       setProcedureID(`${searchParams.get("pid")}`)
+      setProcedureName(`${searchParams.get("name")}`)
       setZip(`${searchParams.get("zip")}`)
       setInsurance(`${searchParams.get("insurance")}`)
       let insurance = searchParams.get("insurance")
@@ -93,12 +94,12 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       insure(data.data.result[0]);
       set(data.data.result[0]);
       if (zipc === "") {
-        zipCodeDistance = 0 + " Miles";
+        zipCodeDistance = -1 + " Miles";
         setvalidZip(false);
       } else {
         getDist(zipc, gradyZip);
         if (typeof(zipCodeDistance) !== 'number') {
-          zipCodeDistance = 0 + " Miles";
+          zipCodeDistance = -1 + " Miles";
           setvalidZip(false);
         } else {
           zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
@@ -135,12 +136,12 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       insure(data.data.result[0]);
       set(data.data.result[0]);
       if (zipc === "") {
-        zipCodeDistance = 0 + " Miles";
+        zipCodeDistance = -1 + " Miles";
         setvalidZip(false);
       } else {
         getDist(zipc, northsideatlantaZip);
         if (typeof(zipCodeDistance) !== 'number') {
-          zipCodeDistance = 0 + " Miles";
+          zipCodeDistance = -1 + " Miles";
           setvalidZip(false);
         } else {
           zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
@@ -177,12 +178,12 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       insure(data.data.result[0]);
       set(data.data.result[0]);
       if (zipc === "") {
-        zipCodeDistance = 0 + " Miles";
+        zipCodeDistance = -1 + " Miles";
         setvalidZip(false);
       } else {
         getDist(zipc, northsideduluthZip);
         if (typeof(zipCodeDistance) !== 'number') {
-          zipCodeDistance = 0 + " Miles";
+          zipCodeDistance = -1 + " Miles";
           setvalidZip(false);
         } else {
           zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
@@ -218,12 +219,12 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       insure(data.data.result[0]);
       set(data.data.result[0]);
       if (zipc === "") {
-        zipCodeDistance = 0 + " Miles";
+        zipCodeDistance = -1 + " Miles";
         setvalidZip(false);
       } else {
         getDist(zipc, northsideforsythZip);
         if (typeof(zipCodeDistance) !== 'number') {
-          zipCodeDistance = 0 + " Miles";
+          zipCodeDistance = -1 + " Miles";
           setvalidZip(false);
         } else {
           zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
@@ -259,12 +260,12 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       insure(data.data.result[0]);
       set(data.data.result[0]);
       if (zipc === "") {
-        zipCodeDistance = 0 + " Miles";
+        zipCodeDistance = -1 + " Miles";
         setvalidZip(false);
       } else {
         getDist(zipc, northsidegwinnettZip);
         if (typeof(zipCodeDistance) !== 'number') {
-          zipCodeDistance = 0 + " Miles";
+          zipCodeDistance = -1 + " Miles";
           setvalidZip(false);
         } else {
           zipCodeDistance= (Math.round(zipCodeDistance* 10) / 10) + " Miles";
@@ -359,7 +360,7 @@ function getDist(zipcode1, zipcode2) {
 }
 
 const handleSubmit = async (event) => {
-  let queryString = `?pid=${procedureID}&insurance=${insurance}&zip=${zip}`
+  let queryString = `?pid=${procedureID}&insurance=${insurance}&zip=${zip}&name=${procedureName}`
   let path = "/Pricing/" + queryString
   navigate(`${path}`)
   event.preventDefault();
@@ -449,7 +450,7 @@ return (
               variant="outlined"
               fullWidth
               sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
-              value={procedureID}
+              value={procedureName}
               onChange={(e) => {
                 searchProcedureNames(e.target.value)
                 setProcedureID(e.target.value)
@@ -544,7 +545,7 @@ return (
                               >
                         <TableCell align="left"><Button onClick={() => {redirect(row.hospital)}}>{row.hospital}</Button></TableCell>
                         <TableCell align="center"><ul>{row.insurance}</ul></TableCell>
-                        {row.distance !== "0 Miles" ? (<TableCell align="center">{row.distance}</TableCell>) : ""}
+                        {row.distance !== "-1 Miles" ? (<TableCell align="center">{row.distance}</TableCell>) : ""}
                         <TableCell align="right">{(row.cost)}</TableCell>
                         <TableCell align="right">{(row.avg)}</TableCell>
                       </TableRow>
