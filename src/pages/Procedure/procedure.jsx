@@ -148,7 +148,7 @@ const Procedure = (props) => {
           <Graph b={b} insurance={insurance}/>
         </Grid>
         <Grid itme xs = {12}>
-          <h2>FAQ</h2>
+          <h2>Additional Infomation</h2>
           <p><i>Where's my insurance on this graph?</i></p>
           <p>If your insurance is not listed, it does not cover this procedure, otherwise your insurance provider's price is highlighted. <br></br>If you did not input an insurance, then the amount you would pay in cash is highlighted.</p>
           <p><i>What is Cash Discount?</i></p>

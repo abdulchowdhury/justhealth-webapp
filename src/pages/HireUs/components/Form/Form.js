@@ -230,7 +230,7 @@ const Form = () => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant={'subtitle2'} sx={{ marginBottom: 2 }}>
-              Please enter the total accured costs *
+              Please enter the total amount you paid *
             </Typography>
             <TextField
               label="Total costs"

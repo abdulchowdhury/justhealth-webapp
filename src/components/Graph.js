@@ -55,10 +55,10 @@ class Graph extends Component {
                       width: 1,
                     },
                     hovertemplate: 
-                      'Price: %{y:$,.2f}<extra></extra>'
+                      'Price You Pay: %{y:$,.2f}<extra></extra>'
                 }]}
                 layout = { {
-                    title: "Insurance Pricing",
+                    title: "Price You Pay based on Insurace",
                     width: `${width}`,
                     height: `${height}`,
                     xaxis: {
@@ -79,7 +79,7 @@ class Graph extends Component {
                         automargin: true,
                         dtick: `${dtick_val}`,
                       title: {
-                        text: 'Prices',
+                        text: 'Price You Pay',
                         font: {
                           family: 'Courier New, monospace',
                           size: 20,
