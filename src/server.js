@@ -10,18 +10,14 @@ const connection = mysql.createConnection({
 
 //IMPORTANT: RUN THIS FILE BEFORE STARTING REACT SERVER
 
-exports.handler = async (event) => {
-    const response = {
-        statusCode: 200,
-        headers: {
-            "Access-Control-Allow-Headers" : "Content-Type",
-            "Access-Control-Allow-Origin": "https://www.example.com",
-            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-        },
-        body: JSON.stringify('Hello from Lambda!'),
-    };
-    return response;
-};
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+  });
 
 connection.connect(function(err) {
     if(err) {
