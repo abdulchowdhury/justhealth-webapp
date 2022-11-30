@@ -1,8 +1,9 @@
 import { Opacity } from '@mui/icons-material';
 import { responsiveProperty } from '@mui/material/styles/cssUtils';
+import { boltzmannDependencies } from 'mathjs';
 import React, {Component} from 'react';
 import Plotly from 'react-plotly.js';
-
+import "./Graph.css"
 class Graph extends Component {
   
     render() {
@@ -44,7 +45,7 @@ class Graph extends Component {
         var width = window.innerWidth * .90
         var height = window.innerHeight * .75
         return (
-            <div>
+            <div className='graph-font'>
                 <Plotly data = {[{
                     type: 'bar',
                     x: (Object.keys(this.props.b)).map(d => getName(d)),
@@ -57,19 +58,32 @@ class Graph extends Component {
                     hovertemplate: 
                       'Price You Pay: %{y:$,.2f}<extra></extra>'
                 }]}
+                
                 layout = { {
-                    title: "Price You Pay based on Insurace",
+                    title: {
+                      text: "Price You Pay based on Insurace",
+                      font: {
+                        family: 'Tahoma',
+                        size: 20,
+                        color: '#141414',
+                      }
+                    },
                     width: `${width}`,
                     height: `${height}`,
                     xaxis: {
+                      font: {
+                        family: 'Tahoma',
+                        color: '#141414',
+                      },
                       automargin: true,
                       categoryorder: 'total ascending',
                       title: {
+                        margin: 200,
                         text: 'Insurances',
                         font: {
-                          family: 'Courier New, monospace',
+                          family: 'Tahoma',
                           size: 20,
-                          color: '#7f7f7f'
+                          color: '#141414'
                         }
                       },
                     },
@@ -81,9 +95,9 @@ class Graph extends Component {
                       title: {
                         text: 'Price You Pay',
                         font: {
-                          family: 'Courier New, monospace',
+                          family: 'Tahoma',
                           size: 20,
-                          color: '#7f7f7f'
+                          color: '#141414'
                         }
                       }
                     }

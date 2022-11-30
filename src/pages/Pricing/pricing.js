@@ -19,6 +19,7 @@ import { useSearchParams } from 'react-router-dom';
 import infoBubble from "./infoBubble"
 import LoadingSpinner from "../../components/LoadingSpinner";
 import "../../App.css";
+import "../../index.css"
 import { ImportContactsOutlined } from '@mui/icons-material';
 
 
@@ -435,7 +436,7 @@ function delay(time) {
 }
 
 return (
-    <div style = {{marginTop:0, marginRight:20, marginLeft:20}}className="Procedures">
+    <div style = {{marginTop:0, marginRight:20, marginLeft:20}} className="procedures">
        <form onSubmit={handleSubmit}>
        <div className="Searchbar">
        <Grid 
@@ -533,8 +534,8 @@ return (
                       <TableCell  align="left">Hospital</TableCell>
                       <TableCell  align="center">Insurances Accepted</TableCell>
                       {validZip === true ? (<TableCell  align="center">Distance </TableCell>) : ""}
-                      <TableCell  align="right" > Price You Pay {infoBubble("How was this calculated?","If your insurance is accepted, this price will reflect their given price. Otherwise, if your insurance is not accepted or you didn't input one, the price will be the cash discount price, marked with a *")}</TableCell>
-                      <TableCell  align="right">Average Cost {infoBubble("How was this calculated?","We calculate the average cost using only the prices from insurances that actually cover this procedure and the cash price.")}</TableCell>
+                      <TableCell align="right" > Price You Payyy {infoBubble("How was this calculated?","If your insurance is accepted, this price will reflect their given price. Otherwise, if your insurance is not accepted or you didn't input one, the price will be the cash discount price, marked with a *")}</TableCell>
+                      <TableCell align="right">Average Cost {infoBubble("How was this calculated?","We calculate the average cost using only the prices from insurances that actually cover this procedure and the cash price.")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

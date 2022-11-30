@@ -151,7 +151,7 @@ const Procedure = (props) => {
         <Grid item xs = {2}></Grid> {/**These empty grid cells are for padding */}
         <Grid item xs = {8}>
           <h1>{data[0].Med_Procedure_Description} at {hospital}</h1>
-          <p>Procedure Code: {pid}</p>
+          <p fontWeight = {900}>Procedure Code: {pid}</p>
         </Grid>
         <Grid item xs = {2}></Grid> {/**These empty grid cells are for padding */}
 
@@ -178,13 +178,16 @@ const Procedure = (props) => {
                 textTransform: 'none',
                 fontWeight: 900,
               }}>
-          <h2>Additional Infomation</h2>
-          <p ><i>Where's my insurance on this graph?</i></p>
-          <p>If your insurance is not listed, it does not cover this procedure, otherwise your insurance provider's price is highlighted. <br></br>If you did not input an insurance, then the amount you would pay in cash is highlighted.</p>
-          <p><i>What is Cash Discount?</i></p>
-          <p>Cash Discount is the amount you would pay if you don't use any insurance.</p>
-          <p><i>Where does this data come from?</i></p>
-          <p>Data was pulled directly from the pricing data this hospital released to comply with the Hospital Transparency Act of 2021.</p>
+          <h2 style={{fontWeight: 800, fontSize: 30}}>Additional Infomation</h2>
+          <div style={{padding: 3}}></div>
+          <p style={{fontWeight: 600, fontSize: 17}}>Where's my insurance on this graph?</p>
+          <p style={{fontWeight: 500, fontSize: 15}}>If your insurance is not listed, it does not cover this procedure, otherwise your insurance provider's price is highlighted. <br></br>If you did not input an insurance, then the amount you would pay in cash is highlighted.</p>
+          <div style={{padding: 3}}></div>
+          <p style={{fontWeight: 600, fontSize: 17}}>What is Cash Discount?</p>
+          <p style={{fontWeight: 500, fontSize: 15}}>Cash Discount is the amount you would pay if you don't use any insurance.</p>
+          <div style={{padding: 3}}></div>
+          <p style={{fontWeight: 600, fontSize: 17}}>Where does this data come from?</p>
+          <p style={{fontWeight: 500, fontSize: 15}}>Data was pulled directly from the pricing data this hospital released to comply with the Hospital Transparency Act of 2021.</p>
         </Grid>
       </Grid>
       </center>
