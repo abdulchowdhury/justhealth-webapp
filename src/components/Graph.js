@@ -79,7 +79,7 @@ class Graph extends Component {
                       categoryorder: 'total ascending',
                       title: {
                         margin: 200,
-                        text: 'Insurances',
+                        text: '<b>Insurances</b>',
                         font: {
                           family: 'Tahoma',
                           size: 20,
@@ -93,7 +93,7 @@ class Graph extends Component {
                         automargin: true,
                         dtick: `${dtick_val}`,
                       title: {
-                        text: 'Price You Pay',
+                        text: '<b>Price You Pay</b>',
                         font: {
                           family: 'Tahoma',
                           size: 20,
