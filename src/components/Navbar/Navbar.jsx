@@ -32,47 +32,6 @@ const Logo = styled('img')(({ theme }) => ({
   minWidth: '4rem',
 }));
 
-// const Search = styled('div')(({ theme }) => ({
-//   position: 'relative',
-//   borderRadius: '50px',
-//   backgroundColor: alpha(theme.palette.common.white, 0.15),
-//   '&:hover': {
-//     backgroundColor: alpha(theme.palette.common.white, 0.25),
-//   },
-//   marginRight: 300,
-//   marginLeft: 0,
-//   width: '100%',
-//   // minWidth:'300px',
-//   [theme.breakpoints.up('sm')]: {
-//     marginLeft: theme.spacing(3),
-//     width: 'auto',
-//   },
-// }));
-
-// const SearchIconWrapper = styled('div')(({ theme }) => ({
-//   padding: theme.spacing(0, 2),
-//   height: '100%',
-//   position: 'absolute',
-//   pointerEvents: 'none',
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-// }));
-
-// const StyledInputBase = styled(InputBase)(({ theme }) => ({
-//   color: 'inherit',
-//   '& .MuiInputBase-input': {
-//     padding: theme.spacing(1, 1, 1, 0),
-//     // vertical padding + font size from searchIcon
-//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-//     transition: theme.transitions.create('width'),
-//     width: '100%',
-//     [theme.breakpoints.up('md')]: {
-//       width: '20ch',
-//     },
-//   },
-// }));
-
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -107,18 +66,6 @@ const Navbar = () => {
         />
         </a>
         </nav>
-        {/* <Search sx={{ display: { xs: 'none', md: 'flex' } }}>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder='Search…'
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </Search> */}
-
-        {/* Menus */}
-
         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
           <IconButton
             size='small'
@@ -147,13 +94,14 @@ const Navbar = () => {
             sx={{
               display: { xs: 'block', md: 'none' },
             }}
-          >
+          > </Menu>
+          <Menu className='nav-center'> 
             {pages.map((page) => (
-              <MenuItem key={page} onClick={handleCloseNavMenu}>
+              <MenuItem key={page} onClick={handleCloseNavMenu} >
                 <Button href={`/${page}`} textalign='center'>{page} </Button>
               </MenuItem>
             ))}
-          </Menu>
+         </Menu>
         </Box>
         <Typography
           variant='h5'
