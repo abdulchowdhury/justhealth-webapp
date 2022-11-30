@@ -19,8 +19,7 @@ connection.connect(function(err) {
 })
 
 const app = express();
-
-app.listen(process.env.PORT);
+const PORT = process.env.PORT || 3000;
 
 app.use(cors())
 app.use(express.json())
