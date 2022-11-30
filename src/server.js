@@ -10,6 +10,19 @@ const connection = mysql.createConnection({
 
 //IMPORTANT: RUN THIS FILE BEFORE STARTING REACT SERVER
 
+exports.handler = async (event) => {
+    const response = {
+        statusCode: 200,
+        headers: {
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Origin": "https://www.example.com",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
+        body: JSON.stringify('Hello from Lambda!'),
+    };
+    return response;
+};
+
 connection.connect(function(err) {
     if(err) {
         console.log("Error: ", err);
@@ -19,7 +32,7 @@ connection.connect(function(err) {
 })
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 
 app.use(cors())
 app.use(express.json())
