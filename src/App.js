@@ -10,9 +10,12 @@ import Procedure from "./pages/Procedure/procedure";
 import HireUs from "./pages/HireUs/HireUs";
 import Course from "./pages/Course/Course";
 import HomeNew from "./pages/HomeNew/HomeNew";
+import Axios from 'axios';
 import { index } from "mathjs";
 import "./App.css";
 
+// axios.defaults.baseURL = "https://www.justhealth.fyi/";
+Axios.defaults.baseURL = "http://localhost:3002/";
 function App() {
   return (
     <div >

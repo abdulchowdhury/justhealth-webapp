@@ -13,6 +13,8 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 
+Axios.defaults.baseURL = "https://www.justhealth.fyi/";
+
 const Home = () => {
 
   let navigate = useNavigate()
@@ -33,7 +35,7 @@ const Home = () => {
 
   
 function queryProcedures(userInput) {
-  Axios.post("http://localhost:3002/api/getProcedures", {}, {
+  Axios.post("api/getProcedures", {}, {
       params: {
         userInput: userInput
       }

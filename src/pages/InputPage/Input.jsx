@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
+Axios.defaults.baseURL = "https://www.justhealth.fyi/";
 const Input = () => {
   const [procedure, setProcedure] = useState("");
   const [insurance, setInsurance] = useState("");
