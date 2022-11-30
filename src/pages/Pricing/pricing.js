@@ -545,7 +545,7 @@ return (
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                               >
                         <TableCell align="left"><Button onClick={() => {redirect(row.hospital)}}>{row.hospital}</Button></TableCell>
-                        <TableCell align="center"><ul>{row.insurance}</ul></TableCell>
+                        <TableCell align="center">{row.insurance}</TableCell>
                         {row.distance !== "-1 Miles" ? (<TableCell align="center">{row.distance}</TableCell>) : ""}
                         <TableCell align="right">{(row.cost)}</TableCell>
                         <TableCell align="right">{(row.avg)}</TableCell>
