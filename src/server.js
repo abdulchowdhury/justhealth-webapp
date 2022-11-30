@@ -14,7 +14,7 @@ connection.connect(function(err) {
     if(err) {
         console.log("Error: ", err);
     } else {
-        console.log("Server connection established");
+        console.log("Connection established");
     }
 })
 
