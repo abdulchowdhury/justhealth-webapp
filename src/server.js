@@ -19,7 +19,8 @@ connection.connect(function(err) {
 })
 
 const app = express();
-const  PORT = 80;
+
+app.listen(process.env.PORT);
 
 app.use(cors())
 app.use(express.json())
