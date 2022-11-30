@@ -119,6 +119,26 @@ const Procedure = (props) => {
     return c_avg
   }
 
+  function getBest() {
+    let min = Number.MAX_VALUE;
+    let cash = 0;
+    let found = false
+    Object.entries(b).forEach(([key, value], index) => {
+      if (insurance !== "" && insurance !== null && insurance !== " " && insurance !== "." && ((key.toUpperCase().indexOf(insurance.toUpperCase())) !== -1)) {
+        found = true;
+        min = Math.min(min, value)
+      } else if (key === "Cash Discount") {
+        cash = value;
+      }
+    });
+    if (found) {
+      return (!(min < cash));
+    } else {
+      return false;
+    }
+    
+  }
+
 
   return (
     <body>
@@ -131,7 +151,7 @@ const Procedure = (props) => {
         <Grid item xs = {2}></Grid> {/**These empty grid cells are for padding */}
         <Grid item xs = {8}>
           <h1>{data[0].Med_Procedure_Description} at {hospital}</h1>
-          <p>Procedure Code: {pid}</p>
+          <p fontWeight = {900}>Procedure Code: {pid}</p>
         </Grid>
         <Grid item xs = {2}></Grid> {/**These empty grid cells are for padding */}
 
@@ -144,17 +164,30 @@ const Procedure = (props) => {
         <Grid item xs = {4}>
           <p>Crowdsourced Average<br></br> {getCAvg()} {infoBubble("How was this calculated?", "Currently, crowdsourced averages are calculated using user-inputted data across all hospitals and insurances for this procedure.")}</p>
         </Grid>
+        {getBest() ? (<Grid item xs = {12} alignContent = 'center'>
+          <h3><br></br> {"Paying with cash might be better for this procedure"}</h3>
+        </Grid>) : "" }
         <Grid item xs = {12}>
           <Graph b={b} insurance={insurance}/>
         </Grid>
-        <Grid itme xs = {12}>
-          <h2>Additional Infomation</h2>
-          <p><i>Where's my insurance on this graph?</i></p>
-          <p>If your insurance is not listed, it does not cover this procedure, otherwise your insurance provider's price is highlighted. <br></br>If you did not input an insurance, then the amount you would pay in cash is highlighted.</p>
-          <p><i>What is Cash Discount?</i></p>
-          <p>Cash Discount is the amount you would pay if you don't use any insurance.</p>
-          <p><i>Where does this data come from?</i></p>
-          <p>Data was pulled directly from the pricing data this hospital released to comply with the Hospital Transparency Act of 2021.</p>
+        <Grid itme xs = {12} sx={{
+                my: 2,
+                mr: 3,
+                color: '#141414',
+                display: 'block',
+                textTransform: 'none',
+                fontWeight: 900,
+              }}>
+          <h2 style={{fontWeight: 800, fontSize: 30}}>Additional Infomation</h2>
+          <div style={{padding: 3}}></div>
+          <p style={{fontWeight: 600, fontSize: 17}}>Where's my insurance on this graph?</p>
+          <p style={{fontWeight: 500, fontSize: 15}}>If your insurance is not listed, it does not cover this procedure, otherwise your insurance provider's price is highlighted. <br></br>If you did not input an insurance, then the amount you would pay in cash is highlighted.</p>
+          <div style={{padding: 3}}></div>
+          <p style={{fontWeight: 600, fontSize: 17}}>What is Cash Discount?</p>
+          <p style={{fontWeight: 500, fontSize: 15}}>Cash Discount is the amount you would pay if you don't use any insurance.</p>
+          <div style={{padding: 3}}></div>
+          <p style={{fontWeight: 600, fontSize: 17}}>Where does this data come from?</p>
+          <p style={{fontWeight: 500, fontSize: 15}}>Data was pulled directly from the pricing data this hospital released to comply with the Hospital Transparency Act of 2021.</p>
         </Grid>
       </Grid>
       </center>

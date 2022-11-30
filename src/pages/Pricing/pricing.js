@@ -19,6 +19,7 @@ import { useSearchParams } from 'react-router-dom';
 import infoBubble from "./infoBubble"
 import LoadingSpinner from "../../components/LoadingSpinner";
 import "../../App.css";
+import "../../index.css"
 import { ImportContactsOutlined } from '@mui/icons-material';
 
 
@@ -65,6 +66,7 @@ useEffect(() => {
     }
     if (!(pid === undefined || pid === "")) {
       setProcedureID(`${searchParams.get("pid")}`)
+      setProcedureName(`${searchParams.get("name")}`)
       setZip(`${searchParams.get("zip")}`)
       setInsurance(`${searchParams.get("insurance")}`)
       let insurance = searchParams.get("insurance")
@@ -107,7 +109,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       }
       
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
-        avgCost = data.data.result[0]["Charge"];
+        avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(data.data.result[0]["Cash_Discount"]));
         avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
@@ -149,7 +151,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       }
 
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
-        avgCost = data.data.result[0]["Charge"];
+        avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(data.data.result[0]["Cash_Discount"]));
         avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
@@ -190,7 +192,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
         }
       }
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
-        avgCost = data.data.result[0]["Charge"];
+        avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(data.data.result[0]["Cash_Discount"]));
         avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
@@ -231,7 +233,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
         }
       }
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
-        avgCost = data.data.result[0]["Charge"];
+        avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(data.data.result[0]["Cash_Discount"]));
         avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
@@ -272,7 +274,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
         }
       }
       if ((ins === "" || ins === null || ((insurances.toString()).indexOf(ins.toUpperCase()) === -1))) {
-        avgCost = data.data.result[0]["Charge"];
+        avgCost = (parseFloat(data.data.result[0]["Charge"]) - parseFloat(data.data.result[0]["Cash_Discount"]));
         avgCost = dollar.format(avgCost) + "*";
       } else {
         fullName = findName(insurances,ins.toUpperCase());
@@ -359,7 +361,7 @@ function getDist(zipcode1, zipcode2) {
 }
 
 const handleSubmit = async (event) => {
-  let queryString = `?pid=${procedureID}&insurance=${insurance}&zip=${zip}`
+  let queryString = `?pid=${procedureID}&insurance=${insurance}&zip=${zip}&name=${procedureName}`
   let path = "/Pricing/" + queryString
   navigate(`${path}`)
   event.preventDefault();
@@ -434,7 +436,7 @@ function delay(time) {
 }
 
 return (
-    <div style = {{marginTop:0, marginRight:20, marginLeft:20}}className="Procedures">
+    <div style = {{marginTop:0, marginRight:20, marginLeft:20}} className="procedures">
        <form onSubmit={handleSubmit}>
        <div className="Searchbar">
        <Grid 
@@ -449,7 +451,7 @@ return (
               variant="outlined"
               fullWidth
               sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
-              value={procedureID}
+              value={procedureName}
               onChange={(e) => {
                 searchProcedureNames(e.target.value)
                 setProcedureID(e.target.value)
@@ -532,8 +534,8 @@ return (
                       <TableCell  align="left">Hospital</TableCell>
                       <TableCell  align="center">Insurances Accepted</TableCell>
                       {validZip === true ? (<TableCell  align="center">Distance </TableCell>) : ""}
-                      <TableCell  align="right">Price You Pay {infoBubble("How was this calculated?","If your insurance is accepted, this price will reflect their given price. Otherwise, if your insurance is not accepted or you didn't input one, the price will be the cash discount price, marked with a *")}</TableCell>
-                      <TableCell  align="right">Average Cost {infoBubble("How was this calculated?","We calculate the average cost using only the prices from insurances that actually cover this procedure and the cash price.")}</TableCell>
+                      <TableCell align="right" > Price You Pay {infoBubble("How was this calculated?","If your insurance is accepted, this price will reflect their given price. Otherwise, if your insurance is not accepted or you didn't input one, the price will be the cash discount price, marked with a *")}</TableCell>
+                      <TableCell align="right">Average Cost {infoBubble("How was this calculated?","We calculate the average cost using only the prices from insurances that actually cover this procedure and the cash price.")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

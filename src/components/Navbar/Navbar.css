@@ -4,3 +4,9 @@
   .toolbar {
     padding: 0 20rem;
   } */
+.nav-center {
+  position: relative;
+  top: 0;
+  left: 0;
+  transform: none;
+}
