@@ -1,9 +1,12 @@
 .svg {
     display: flex;
-    height: 80vh;
-    width: 100vw; 
-    align-items: center;
     justify-content: center;
+    margin-top: 2em;
+    width: 80%;
+    flex-wrap: wrap;
+    max-width: 1440px; /* whatever you desire */
+    margin-left: auto; /* center the container */
+    margin-right: auto; /* center the container */
 }
 
 

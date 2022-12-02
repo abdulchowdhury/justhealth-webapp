@@ -10,10 +10,25 @@ import Button from '@mui/material/Button';
 import Container from '../../common/Container.js';
 import LoadingSpinner from "../../components/LoadingSpinner";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
+function useWindowSize() {
+  const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
+  useEffect(() => {
+    const handleResize = () => {
+      setSize([window.innerHeight, window.innerWidth]);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+  return size;
+}
 
 const Home = () => {
+
+  const [height, width] = useWindowSize();
 
   let navigate = useNavigate()
   const [procedureID, setProcedureID] = useState("")
@@ -77,7 +92,9 @@ return (
     
   <div>
   {/* <div  style={{ backgroundImage: `url(${Background})`, backgroundRepeat: "no-repeat", alignItems: "center" }}> */}
-  
+  <br></br>
+    <br></br>
+    {/* <h3>width: {width} height: {height}</h3> */}
   <img src={Background} width={1200} className="svg" marginBottom={-100}/>
   <Container maxWidth={800} paddingBottom={'0 !important'} 
   sx={{marginTop: -47}} //change to -47 if not Christian's laptop

@@ -1,6 +1,6 @@
 //npm install --save modulename --legacy-peer-deps
 
-import React from 'react';
+import React, {useState} from 'react';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -12,15 +12,21 @@ import Home from "./pages/Home/Home";
 import Pricing from "./pages/Pricing/pricing"
 import Input from "./pages/InputPage/Input";
 import NoPage from "./pages/NoPage";
-import ResponsiveAppBar from "./components/Navbar/Navbar";
 import Procedure from "./pages/Procedure/procedure";
 import HireUs from "./pages/HireUs/HireUs"
+import Navbar from './components/faiz/Navbar/Navbar';
+import Sidebar from "./components/faiz/Sidebar/Sidebar";
+
 
 export default function App() {
+  const [isopen, setisopen] = useState(false);
+  const toggle = () => {
+    setisopen(!isopen);
+  };
   return (
-    <div>
-      <ResponsiveAppBar></ResponsiveAppBar>
-      <BrowserRouter>
+    <>
+      <Navbar toggle={toggle} />
+      <Sidebar isopen={isopen} toggle={toggle} />
       <Routes>
         <Route index element={<Home />} />
         <Route path="/layout" element={<Layout />} />
@@ -29,8 +35,7 @@ export default function App() {
         <Route path="/Procedure/*" element={<Procedure />}/>
         <Route path="*" element={<NoPage />} />
       </Routes>
-    </BrowserRouter>
-    </div>
+    </>
   );
 }
 
@@ -49,8 +54,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-      <CssBaseline />
+    <BrowserRouter>
       <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 
