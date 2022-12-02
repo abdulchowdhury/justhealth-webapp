@@ -6,7 +6,7 @@ import { useState} from 'react';
 import infoBubble from '../Pricing/infoBubble';
 import Grid from '@mui/material/Grid';
 
-Axios.defaults.baseURL = "https://www.justhealth.fyi/";
+
 const Procedure = (props) => {
 
   const [data, setData] = useState("no data")
@@ -29,7 +29,7 @@ const Procedure = (props) => {
   }, []);
 
   const queryOnLoad = () => {
-    let url = "api/"
+    let url = "http://localhost:3002/api/"
     url += hospital
     Axios.post(url, {}, {
         params: {
@@ -38,7 +38,7 @@ const Procedure = (props) => {
       }).then((data)=>{
       setData(data.data.result)
     })
-    Axios.post("api/getCrowdsourced", {}, {
+    Axios.post("http://localhost:3002/api/getCrowdsourced", {}, {
         params: {
           pid: pid
         }

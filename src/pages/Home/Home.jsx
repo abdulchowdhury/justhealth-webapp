@@ -4,18 +4,32 @@ import Box from '@mui/material/Box';
 import Axios from 'axios'
 import React from 'react';
 import Grid from '@mui/material/Grid';
-import Background from '../../Assets/home-background.svg'
+import Background from '../../Assets/homee.svg'
+import text from '../../Assets/helalthtext.svg'
 import "./Home.css"
 import Button from '@mui/material/Button';
 import Container from '../../common/Container.js';
 import LoadingSpinner from "../../components/LoadingSpinner";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
-
-Axios.defaults.baseURL = "https://www.justhealth.fyi/";
+function useWindowSize() {
+  const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
+  useEffect(() => {
+    const handleResize = () => {
+      setSize([window.innerHeight, window.innerWidth]);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+  return size;
+}
 
 const Home = () => {
+
+  const [height, width] = useWindowSize();
 
   let navigate = useNavigate()
   const [procedureID, setProcedureID] = useState("")
@@ -35,7 +49,7 @@ const Home = () => {
 
   
 function queryProcedures(userInput) {
-  Axios.post("api/getProcedures", {}, {
+  Axios.post("http://localhost:3002/api/getProcedures", {}, {
       params: {
         userInput: userInput
       }
@@ -79,27 +93,32 @@ return (
     
   <div>
   {/* <div  style={{ backgroundImage: `url(${Background})`, backgroundRepeat: "no-repeat", alignItems: "center" }}> */}
-  
-  <img src={Background} width={1200} className="svg" marginBottom={-100}/>
-  <Container maxWidth={800} paddingBottom={'0 !important'} 
-  sx={{marginTop: -47}} //change to -47 if not Christian's laptop
-  >
-  <Box>
+  <br></br>
+    <br></br>
+    {/* <h3>width: {width} height: {height}</h3> */}
+  <div>
+    <Box className='cards'>
+      <br></br>
+    <Box className='car'>
+      <img src={text} width={width} className="svg"/>
+    </Box>
+  <Box className='card' width={width/2}>
         <form onSubmit={handleSubmit}>
           <Box
             component={Grid}
             marginBottom={{ xs: 10, sm: 0 }}
             container
-            spacing={4}
+            spacing={1}
           >
 
           <Grid item xs={12}>
-            <TextField 
+            <TextField
               sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
               id="searchInput"
               variant="filled"
               fullWidth
               value={procedureName}
+              
               onChange={(e) => {
                 searchProcedureNames(e.target.value)
                 setProcedureID(e.target.value)
@@ -108,6 +127,7 @@ return (
                 setDropdownOptions([]);
               }}
               label= "Procedure name or code"
+              
             />
             {isLoading ? <LoadingSpinner /> : 
             <nav>
@@ -129,6 +149,7 @@ return (
                 variant="filled"
                 id="insurance"
                 fullWidth
+                
                 onChange={(e) => setInsurance(e.target.value)}
                 //value={formik.values.firstName}
                 // error={
@@ -144,6 +165,7 @@ return (
                 variant="filled"
                 id="zip"
                 fullWidth
+                
                 onChange={(e) => setZip(e.target.value)}
               />
             </Grid>
@@ -155,16 +177,15 @@ return (
               alignItems={'center'}
               flexDirection={'column'}
             >
-              <Button sx={{ height: 54, width: 500, fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} size={'large'} variant={'contained'} type={'submit'} >
+              <Button sx={{ marginBottom: 5, height: 54, width: width/4, fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} size={'large'} variant={'contained'} type={'submit'} >
                 Search
               </Button>
             </Grid>
           </Box>
         </form>
       </Box>
-      </Container>
-  
-  
+      </Box>
+      </div>
   </div>
     );
   };

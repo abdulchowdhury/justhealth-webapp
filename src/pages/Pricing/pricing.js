@@ -23,7 +23,7 @@ import "../../index.css"
 import { ImportContactsOutlined } from '@mui/icons-material';
 
 
-Axios.defaults.baseURL = "https://www.justhealth.fyi/";
+
 export default function Pricing () {
   let navigate = useNavigate()
   const zipCodeData = require('zipcode-city-distance');
@@ -85,7 +85,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
   }
   let dollar = Intl.NumberFormat('en-US', formatting_options);
   const newRows = []
-  await Axios.post("api/Grady", {}, {
+  await Axios.post("http://localhost:3002/api/Grady", {}, {
       params: {
         pid: pid
       }
@@ -127,7 +127,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       b = [];
     }
   })
-  await Axios.post("api/NorthsideAtlanta", {}, {
+  await Axios.post("http://localhost:3002/api/NorthsideAtlanta", {}, {
       params: {
         pid: pid
       }
@@ -169,7 +169,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       b = [];
     }
   })
-  await Axios.post("api/NorthsideDuluth", {}, {
+  await Axios.post("http://localhost:3002/api/NorthsideDuluth", {}, {
       params: {
         pid: pid
       }
@@ -210,7 +210,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       b = [];
     }
   })
-  await Axios.post("api/NorthsideForsyth", {}, {
+  await Axios.post("http://localhost:3002/api/NorthsideForsyth", {}, {
       params: {
         pid: pid
       }
@@ -251,7 +251,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       b = [];
     }
   })
-  await Axios.post("api/NorthsideGwinnett", {}, {
+  await Axios.post("http://localhost:3002/api/NorthsideGwinnett", {}, {
       params: {
         pid: pid
       }
@@ -391,7 +391,7 @@ const redirect = (hospital) => {
 
 
 function queryProcedures(userInput) {
-  Axios.post("api/getProcedures", {}, {
+  Axios.post("http://localhost:3002/api/getProcedures", {}, {
       params: {
         userInput: userInput
       }
@@ -437,6 +437,7 @@ function delay(time) {
 
 return (
     <div style = {{marginTop:0, marginRight:20, marginLeft:20}} className="procedures">
+      <br></br>
        <form onSubmit={handleSubmit}>
        <div className="Searchbar">
        <Grid 
@@ -531,11 +532,11 @@ return (
               <TableHead>
                     <TableRow
                     key={"Labels"}>
-                      <TableCell  align="left">Hospital</TableCell>
-                      <TableCell  align="center">Insurances Accepted</TableCell>
-                      {validZip === true ? (<TableCell  align="center">Distance </TableCell>) : ""}
-                      <TableCell align="right" > Price You Pay {infoBubble("How was this calculated?","If your insurance is accepted, this price will reflect their given price. Otherwise, if your insurance is not accepted or you didn't input one, the price will be the cash discount price, marked with a *")}</TableCell>
-                      <TableCell align="right">Average Cost {infoBubble("How was this calculated?","We calculate the average cost using only the prices from insurances that actually cover this procedure and the cash price.")}</TableCell>
+                      <TableCell  align="left"><b>Hospital</b></TableCell>
+                      <TableCell  align="center"><b>Insurances Accepted</b></TableCell>
+                      {validZip === true ? (<TableCell  align="center"><b>Distance</b></TableCell>) : ""}
+                      <TableCell align="right" > <b>Price You Pay</b> {infoBubble("How was this calculated?","If your insurance is accepted, this price will reflect their given price. Otherwise, if your insurance is not accepted or you didn't input one, the price will be the cash discount price, marked with a *")}</TableCell>
+                      <TableCell align="right"> <b>Average Cost</b> {infoBubble("How was this calculated?","We calculate the average cost using only the prices from insurances that actually cover this procedure and the cash price.")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -545,7 +546,7 @@ return (
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                               >
                         <TableCell align="left"><Button onClick={() => {redirect(row.hospital)}}>{row.hospital}</Button></TableCell>
-                        <TableCell align="center"><ul>{row.insurance}</ul></TableCell>
+                        <TableCell align="center">{row.insurance}</TableCell>
                         {row.distance !== "-1 Miles" ? (<TableCell align="center">{row.distance}</TableCell>) : ""}
                         <TableCell align="right">{(row.cost)}</TableCell>
                         <TableCell align="right">{(row.avg)}</TableCell>

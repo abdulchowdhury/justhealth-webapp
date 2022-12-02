@@ -1,9 +1,57 @@
 .svg {
     display: flex;
-    height: 80vh;
-    width: 100vw; 
-    align-items: center;
     justify-content: center;
+    margin-top: 2em;
+    width: 80%;
+    flex-wrap: wrap;
+    max-width: 1440px; /* whatever you desire */
+    margin-left: auto; /* center the container */
+    margin-right: auto; /* center the container */
+    margin-top: 0;
+}
+.card {
+    min-width:50px;
+    margin-left: auto; /* center the container */
+    margin-right: auto; /* center the container */
+    justify-content: center;
+    margin-bottom: 0;
+    background-color: #111a29;
+    border-radius: 25px;
+}
+.car {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0;
+    background-color: #111a29;
+    
+}
+.cards {
+    width: 90%;
+    margin-left: auto; /* center the container */
+    margin-right: auto; /* center the container */
+    justify-content: center;
+    margin-bottom: 0;
+    background-color: #111a29;
+    border-radius: 25px;
 }
 
+/* .line1 {
+position: absolute;
+width: 776.42px;
+height: 66px;
+left: 128.75px;
+top: 52.83px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 700;
+font-size: 50px;
+line-height: 66px;
+text-align: center;
+letter-spacing: -0.02em;
+
+color: #FFFFFF;
+} */
+
+  
 

@@ -15,7 +15,6 @@ import LoadingSpinner from "../../../../components/LoadingSpinner";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-Axios.defaults.baseURL = "https://www.justhealth.fyi/";
 const validationSchema = yup.object({
   procedure: yup
     .string('Enter your first and last name')
@@ -73,7 +72,7 @@ const Form = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    Axios.post("api/input", {}, {
+    Axios.post("http://localhost:3002/api/input", {}, {
       params: {
         procedure: procedure,
         insurance: insurance,
@@ -110,7 +109,7 @@ const Form = () => {
 
 
   function queryProcedures(userInput) {
-    Axios.post("api/getProcedures", {}, {
+    Axios.post("http://localhost:3002/api/getProcedures", {}, {
         params: {
           userInput: userInput
         }
@@ -151,7 +150,7 @@ const Form = () => {
   }
 
   function queryHospitalNames(userInput) {
-    Axios.post("api/getHospitals", {}, {
+    Axios.post("http://localhost:3002/api/getHospitals", {}, {
         params: {
           userInput: userInput
         }

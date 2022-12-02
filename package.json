@@ -30,6 +30,7 @@
     "react-dom": "^18.2.0",
     "react-dropdown": "^1.11.0",
     "react-dropdown-select": "^4.9.0",
+    "react-icons": "^4.7.1",
     "react-image-lightbox": "^5.1.4",
     "react-lazy-load-image-component": "^1.5.4",
     "react-plotly.js": "^2.6.0",
@@ -74,6 +75,5 @@
   },
   "devDependencies": {
     "react-router-dom": "^6.4.2"
-  },
-  "homepage": "./"
+  }
 }
