@@ -85,7 +85,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
   }
   let dollar = Intl.NumberFormat('en-US', formatting_options);
   const newRows = []
-  await Axios.post("http://localhost:3002/api/Grady", {}, {
+  await Axios.post("api/Grady", {}, {
       params: {
         pid: pid
       }
@@ -127,7 +127,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       b = [];
     }
   })
-  await Axios.post("http://localhost:3002/api/NorthsideAtlanta", {}, {
+  await Axios.post("api/NorthsideAtlanta", {}, {
       params: {
         pid: pid
       }
@@ -169,7 +169,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       b = [];
     }
   })
-  await Axios.post("http://localhost:3002/api/NorthsideDuluth", {}, {
+  await Axios.post("api/NorthsideDuluth", {}, {
       params: {
         pid: pid
       }
@@ -210,7 +210,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       b = [];
     }
   })
-  await Axios.post("http://localhost:3002/api/NorthsideForsyth", {}, {
+  await Axios.post("api/NorthsideForsyth", {}, {
       params: {
         pid: pid
       }
@@ -251,7 +251,7 @@ const queryAllHospitals = async (pid, ins, zipc) => {
       b = [];
     }
   })
-  await Axios.post("http://localhost:3002/api/NorthsideGwinnett", {}, {
+  await Axios.post("api/NorthsideGwinnett", {}, {
       params: {
         pid: pid
       }
@@ -391,7 +391,7 @@ const redirect = (hospital) => {
 
 
 function queryProcedures(userInput) {
-  Axios.post("http://localhost:3002/api/getProcedures", {}, {
+  Axios.post("api/getProcedures", {}, {
       params: {
         userInput: userInput
       }

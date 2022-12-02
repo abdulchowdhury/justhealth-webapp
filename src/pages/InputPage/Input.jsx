@@ -20,7 +20,7 @@ const Input = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Axios.post("http://localhost:3002/api/input", {}, {
+    // Axios.post("api/input", {}, {
     //   params: {
     //     procedure: procedure,
     //     insurance: insurance,
