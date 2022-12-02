@@ -72,7 +72,7 @@ const Form = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    Axios.post("http://localhost:3002/api/input", {}, {
+    Axios.post("api/input", {}, {
       params: {
         procedure: procedure,
         insurance: insurance,
@@ -109,7 +109,7 @@ const Form = () => {
 
 
   function queryProcedures(userInput) {
-    Axios.post("http://localhost:3002/api/getProcedures", {}, {
+    Axios.post("api/getProcedures", {}, {
         params: {
           userInput: userInput
         }
@@ -150,7 +150,7 @@ const Form = () => {
   }
 
   function queryHospitalNames(userInput) {
-    Axios.post("http://localhost:3002/api/getHospitals", {}, {
+    Axios.post("api/getHospitals", {}, {
         params: {
           userInput: userInput
         }
