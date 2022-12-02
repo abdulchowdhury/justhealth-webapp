@@ -9,6 +9,7 @@ import "./Home.css"
 import Button from '@mui/material/Button';
 import Container from '../../common/Container.js';
 import LoadingSpinner from "../../components/LoadingSpinner";
+import HomeBG from '../../Assets/home-bg.tsx';
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
@@ -96,9 +97,11 @@ return (
     <br></br>
     {/* <h3>width: {width} height: {height}</h3> */}
   <img src={Background} width={1200} className="svg" marginBottom={-100}/>
-  <Container maxWidth={800} paddingBottom={'0 !important'} 
+  
+  <Container className="svg" maxWidth={800} paddingBottom={'0 !important'} 
   sx={{marginTop: -47}} //change to -47 if not Christian's laptop
   >
+    
   <Box>
         <form onSubmit={handleSubmit}>
           <Box

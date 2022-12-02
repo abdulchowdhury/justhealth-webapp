@@ -1,0 +1,11 @@
+  cut from pack.json
+  ------------------------
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+
+  ----------------------------
+
