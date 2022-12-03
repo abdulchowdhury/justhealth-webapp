@@ -29,7 +29,7 @@ const Procedure = (props) => {
   }, []);
 
   const queryOnLoad = () => {
-    let url = "api/"
+    let url = "http://localhost:3002/api/"
     url += hospital
     Axios.post(url, {}, {
         params: {
@@ -38,7 +38,7 @@ const Procedure = (props) => {
       }).then((data)=>{
       setData(data.data.result)
     })
-    Axios.post("api/getCrowdsourced", {}, {
+    Axios.post("http://localhost:3002/api/getCrowdsourced", {}, {
         params: {
           pid: pid
         }
@@ -142,7 +142,7 @@ const Procedure = (props) => {
 
   return (
     <body>
-    <div style={{margin:15}}>
+    <div style={{margin:60} }>
       <center>
       <Grid
       container
