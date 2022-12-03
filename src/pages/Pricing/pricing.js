@@ -596,8 +596,9 @@ return (
       
       <h1>
       <center>
+        <Box>
               <TableContainer component={Paper}>
-              {done && rows.length > 0 ? (<Table sx={{ minWidth: 1050 }} aria-label="simple table">
+              {done && rows.length > 0 ? (<Table sx={{ minWidth: 750 } } display={'flex'} aria-label="simple table">
               <TableHead>
                     <TableRow
                     key={"Labels"}>
@@ -624,6 +625,7 @@ return (
                   </TableBody>
                 </Table>): ""}
                 </TableContainer>
+                </Box>
                 {rows.length === 0 && done && waited ? (<h3>Sorry, no results found.</h3>):""}
           </center>
           </h1>

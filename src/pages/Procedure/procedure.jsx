@@ -167,7 +167,7 @@ const Procedure = (props) => {
         {getBest() ? (<Grid item xs = {12} alignContent = 'center'>
           <h3><br></br> {"Paying with cash might be better for this procedure"}</h3>
         </Grid>) : "" }
-        <Grid item xs = {12}>
+        <Grid item xs = {12} width={window.innerWidth}>
           <Graph b={b} insurance={insurance}/>
         </Grid>
         <Grid itme xs = {12} sx={{
