@@ -450,7 +450,7 @@ function delay(time) {
 }
 
 return (
-    <div style = {{marginTop:0, marginRight:20, marginLeft:20}} className="procedures">
+    <div style = {{marginTop:60, marginRight:20, marginLeft:20}} className="procedures">
       <br></br>
        <form onSubmit={handleSubmit}>
        <div className="Searchbar">

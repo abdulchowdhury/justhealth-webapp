@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 
 const Headline = () => {
   return (
-    <Box padding={5} paddingBottom={1} paddingTop={0} marginBottom={-2}>
+    <Box padding={5} paddingBottom={1} paddingTop={0} marginBottom={-2} marginTop={10}>
       <Typography
         sx={{
           textTransform: 'uppercase',

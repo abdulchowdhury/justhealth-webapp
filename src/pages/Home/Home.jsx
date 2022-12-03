@@ -96,7 +96,7 @@ return (
   {/* <div  style={{ backgroundImage: `url(${Background})`, backgroundRepeat: "no-repeat", alignItems: "center" }}> */}
     {/* <h3>width: {width} height: {height}</h3> */}
   <div>
-    <Box className='cards' marginTop={2}>
+    <Box className='cards' marginTop={11}>
       <br></br>
     <Box className='car'>
       <img src={text} width={width} className="svg"/>
