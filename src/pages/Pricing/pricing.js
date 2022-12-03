@@ -22,9 +22,23 @@ import "../../App.css";
 import "../../index.css"
 import { ImportContactsOutlined } from '@mui/icons-material';
 
+function useWindowSize() {
+  const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
+  useEffect(() => {
+    const handleResize = () => {
+      setSize([window.innerHeight, window.innerWidth]);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+  return size;
+}
 
 
 export default function Pricing () {
+  const [height, width] = useWindowSize();
   let navigate = useNavigate()
   const zipCodeData = require('zipcode-city-distance');
   var zipCodeDistance;
@@ -445,7 +459,7 @@ return (
             spacing={0.5}
             sx ={{backgroundColor:"#fff", borderRadius: 2, padding: 0.5}}
           >
-        <Grid item xs ={6}>
+        {width > 700 ? (<Grid item xs ={6}>
           <div id="container">
             <TextField 
               id="searchInput"
@@ -474,9 +488,38 @@ return (
             </nav>
             }
           </div>
-        </Grid>
+        </Grid>) : (<Grid item xs ={12}>
+          <div id="container">
+            <TextField 
+              id="searchInput"
+              variant="outlined"
+              fullWidth
+              sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
+              value={procedureName}
+              onChange={(e) => {
+                searchProcedureNames(e.target.value)
+                setProcedureID(e.target.value)
+              }}
+              onBlur={() => {
+                setDropdownOptions([]);
+              }}
+              label= "Procedure name or code"
+            />
+            {isLoading ? <LoadingSpinner /> : 
+            <nav>
+              <ul className = "no-bullets">
+                {dropdownOptions && dropdownOptions.map((dropdownOption, index) =>
+                  <li key = {dropdownOption.label} value = {dropdownOption.value} className = "suggestion" onMouseDown={() => {onSuggestHandler(dropdownOption)}}>
+                    {dropdownOption.label}
+                  </li>
+                )}
+              </ul>
+            </nav>
+            }
+          </div>
+        </Grid>)}
 
-        <Grid item xs = {2}>
+        {width > 700 ? (<Grid item xs = {2}>
           <TextField
             id="input-with-icon-adornment"
             variant="outlined"
@@ -488,9 +531,21 @@ return (
             }}
             label= "Zip Code"
           />
-        </Grid>
+        </Grid>) : (<Grid item xs = {6}>
+          <TextField
+            id="input-with-icon-adornment"
+            variant="outlined"
+            value = {zip}
+            sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
+            fullWidth
+            onChange={(e) => {
+              setZip(e.target.value);
+            }}
+            label= "Zip Code"
+          />
+        </Grid>)}
 
-        <Grid item xs = {2}>
+        {width > 700 ? (<Grid item xs = {2}>
           <TextField
             id="input-with-icon-adornment"
             variant="outlined"
@@ -502,7 +557,19 @@ return (
             fullWidth
             label= "Insurance Provider"
           />
-        </Grid>
+        </Grid>) :(<Grid item xs = {6}>
+          <TextField
+            id="input-with-icon-adornment"
+            variant="outlined"
+            value = {insurance}
+            sx={{backgroundColor: '#f2efe6', borderRadius: 2, padding: 0}}
+            onChange={(e) => {
+              setInsurance(e.target.value);
+            }}
+            fullWidth
+            label= "Insurance Provider"
+          />
+        </Grid>)}
 
         {/* <div>
           <label>
@@ -517,9 +584,11 @@ return (
            Sort by Price
           </label>
           </div> */}
-          <Grid item xs = {2}>
+          {width > 700 ? (<Grid item xs = {2}>
             <Button sx={{ height: 54, width:"100%", fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} variant={'contained'} type={"submit"}>Search</Button>
-          </Grid>
+          </Grid>):(<Grid item xs = {12}>
+            <Button sx={{ height: 54, width:"100%", fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} variant={'contained'} type={"submit"}>Search</Button>
+          </Grid>)}
 
         </Grid>
         </div>
