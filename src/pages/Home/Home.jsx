@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Axios from 'axios'
 import React from 'react';
 import Grid from '@mui/material/Grid';
-import Background from '../../Assets/homee.svg'
+import Background from '../../Assets/header.svg'
 import text from '../../Assets/helalthtext.svg'
 import "./Home.css"
 import Button from '@mui/material/Button';
@@ -97,9 +97,10 @@ return (
     {/* <h3>width: {width} height: {height}</h3> */}
   <div>
     <Box className='cards' marginTop={11}>
+    <img src={Background} width={width} className="svg"/>
       <br></br>
     <Box className='car'>
-      <img src={text} width={width} className="svg"/>
+      <img src={text} width={width} className="svgMain"/>
     </Box>
   <Box className='card' width={width/2} marginTop={2}>
         <form onSubmit={handleSubmit}>

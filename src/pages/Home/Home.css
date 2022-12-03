@@ -2,7 +2,18 @@
     display: flex;
     justify-content: center;
     margin-top: 2em;
-    width: 80%;
+    width: 90%;
+    flex-wrap: wrap;
+    max-width: 1440px; /* whatever you desire */
+    margin-left: auto; /* center the container */
+    margin-right: auto; /* center the container */
+    margin-top: 0;
+}
+.svgMain {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+    width: 100%;
     flex-wrap: wrap;
     max-width: 1440px; /* whatever you desire */
     margin-left: auto; /* center the container */
@@ -16,7 +27,6 @@
     justify-content: center;
     margin-bottom: 0;
     background-color: #111a29;
-    border-radius: 25px;
 }
 .car {
     width: 100%;
@@ -36,7 +46,7 @@
 }
 
 @media screen and (max-width: 700px) {
-    .svg {
+    .svgMain {
         display: flex;
         justify-content: center;
         margin-top: 2em;
@@ -47,6 +57,18 @@
         margin-right: auto; /* center the container */
         margin-top: 0;
     }
+    .svg {
+        display: flex;
+        justify-content: center;
+        margin-top: 2em;
+        width: 90%;
+        flex-wrap: wrap;
+        max-width: 1440px; /* whatever you desire */
+        margin-left: auto; /* center the container */
+        margin-right: auto; /* center the container */
+        margin-top: 0;
+        border-radius: 25px;
+    }
     .cards {
         width: 95%;
         margin-left: auto; /* center the container */
@@ -54,7 +76,6 @@
         justify-content: center;
         margin-bottom: 0;
         background-color: #111a29;
-        border-radius: 25px;
     }
     .card {
         margin-left: auto; /* center the container */
@@ -62,6 +83,7 @@
         justify-content: center;
         background-color: #111a29;
         border-radius: 25px;
+        
     }
 }
 
