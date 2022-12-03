@@ -13,7 +13,7 @@ import Pricing from "./pages/Pricing/pricing"
 import Input from "./pages/InputPage/Input";
 import NoPage from "./pages/NoPage";
 import Procedure from "./pages/Procedure/procedure";
-import HireUs from "./pages/HireUs/HireUs"
+import PatientInput from "./pages/PatientInput/PatientInput"
 import Navbar from './components/faiz/Navbar/Navbar';
 import Sidebar from "./components/faiz/Sidebar/Sidebar";
 
@@ -30,7 +30,7 @@ export default function App() {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/layout" element={<Layout />} />
-        <Route path="/Patient Input" element={<HireUs />} />
+        <Route path="/Patient Input" element={<PatientInput />} />
         <Route path="/Pricing/*" element={<Pricing />} />
         <Route path="/Procedure/*" element={<Procedure />}/>
         <Route path="*" element={<NoPage />} />
