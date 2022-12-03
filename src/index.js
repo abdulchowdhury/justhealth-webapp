@@ -18,7 +18,7 @@ import Navbar from './components/faiz/Navbar/Navbar';
 import Sidebar from "./components/faiz/Sidebar/Sidebar";
 import axios from 'axios';
 
-// axios.defaults.baseURL = 'http://localhost:3002/';
+axios.defaults.baseURL = process.env.APP_URL;
 
 
 export default function App() {
