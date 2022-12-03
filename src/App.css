@@ -37,3 +37,11 @@ nav ul.no-bullets-home{
     max-height:50px;
 }
 nav ul{overflow:hidden; overflow-y:scroll;}
+
+.bob { 
+    display: flex;
+    margin-left: auto; /* center the container */
+    margin-right: auto; /* center the container */
+    justify-content: center;
+    margin-bottom: 0;
+}
