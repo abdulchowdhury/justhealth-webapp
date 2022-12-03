@@ -14,7 +14,8 @@ import MenuItem from '@mui/material/MenuItem';
 import LoadingSpinner from "../../../../components/LoadingSpinner";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-
+import { maxWidth, width } from '@mui/system';
+import './Form.css'
 const validationSchema = yup.object({
   procedure: yup
     .string('Enter your first and last name')
@@ -189,7 +190,7 @@ const Form = () => {
   }
   //--------------------------------------------------------------
   return (
-    <Box>
+    <Box padding={5} paddingTop={0}>
       <form onSubmit={handleSubmit}>
         <Box
           component={Grid}
@@ -330,10 +331,10 @@ const Form = () => {
             alignItems={'center'}
             flexDirection={'column'}
           >
-            <Button sx={{ height: 54, width: 700, fontWeight: 800, backgroundColor: '#1a2b40', ":hover":{background: '#111A29'}}} size={'large'} variant={'contained'} type={'submit'} >
+            <Button className='button' sx={{ height: 54, fontWeight: 800, backgroundColor: '#1a2b40', ":hover":{background: '#111A29'}}} variant={'contained'} type={'submit'} >
               Submit
             </Button>
-          </Grid>
+            </Grid>
         </Box>
       </form>
     </Box>
