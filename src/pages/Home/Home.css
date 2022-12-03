@@ -36,7 +36,7 @@
     
 }
 .cards {
-    width: 95%;
+    width: 90%;
     margin-left: auto; /* center the container */
     margin-right: auto; /* center the container */
     justify-content: center;
@@ -70,7 +70,7 @@
         border-radius: 25px;
     }
     .cards {
-        width: 95%;
+        width: 90%;
         margin-left: auto; /* center the container */
         margin-right: auto; /* center the container */
         justify-content: center;

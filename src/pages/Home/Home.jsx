@@ -212,10 +212,11 @@ return (
           </Box>
         </form>
       </Box>
-      <img src={Background} width={width} className="svg"/> 
-      {/* take out if you want */}
+      {width > 850 ? (<img src={Background} width={width} className="svg"/>) : "" }
       </Box>
       </div>
+      <br></br>
+      <br></br>
   </div>
     );
   };
