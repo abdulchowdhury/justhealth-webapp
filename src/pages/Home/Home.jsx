@@ -93,16 +93,14 @@ return (
     
   <div>
   {/* <div  style={{ backgroundImage: `url(${Background})`, backgroundRepeat: "no-repeat", alignItems: "center" }}> */}
-  <br></br>
-    <br></br>
     {/* <h3>width: {width} height: {height}</h3> */}
   <div>
-    <Box className='cards'>
+    <Box className='cards' marginTop={2}>
       <br></br>
     <Box className='car'>
       <img src={text} width={width} className="svg"/>
     </Box>
-  <Box className='card' width={width/2}>
+  <Box className='card' width={width/2} marginTop={2}>
         <form onSubmit={handleSubmit}>
           <Box
             component={Grid}
@@ -142,7 +140,7 @@ return (
             }
           </Grid>
             
-            <Grid item xs={6}>
+            {width > 700 ? (<Grid item xs={6}>
               <TextField
               sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
                 label="Insurance provider"
@@ -157,8 +155,23 @@ return (
                 // }
                 // helperText={formik.touched.firstName && formik.errors.firstName}
               />
-            </Grid>
-            <Grid item xs={6}>
+            </Grid>) : (<Grid item xs={12}>
+              <TextField
+              sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
+                label="Insurance provider"
+                variant="filled"
+                id="insurance"
+                fullWidth
+                
+                onChange={(e) => setInsurance(e.target.value)}
+                //value={formik.values.firstName}
+                // error={
+                //   formik.touched.firstName && Boolean(formik.errors.firstName)
+                // }
+                // helperText={formik.touched.firstName && formik.errors.firstName}
+              />
+            </Grid>)}
+            {width > 700 ? (<Grid item xs={6}>
               <TextField
                 sx={{backgroundColor: '#f2efe6', marginBottom: -5, borderRadius: 2}}
                 label="ZipCode"
@@ -168,7 +181,17 @@ return (
                 
                 onChange={(e) => setZip(e.target.value)}
               />
-            </Grid>
+            </Grid>) :(<Grid item xs={12}>
+              <TextField
+                sx={{backgroundColor: '#f2efe6', marginBottom: -5, borderRadius: 2}}
+                label="ZipCode"
+                variant="filled"
+                id="zip"
+                fullWidth
+                
+                onChange={(e) => setZip(e.target.value)}
+              />
+            </Grid>) }
             <Grid
               item
               container
@@ -177,9 +200,11 @@ return (
               alignItems={'center'}
               flexDirection={'column'}
             >
-              <Button sx={{ marginBottom: 5, height: 54, width: width/4, fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} size={'large'} variant={'contained'} type={'submit'} >
+              {width > 700 ? (<Button sx={{ marginBottom: 5, height: 54, width: width/3, fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} size={'large'} variant={'contained'} type={'submit'} >
                 Search
-              </Button>
+              </Button>) : (<Button sx={{ marginTop: 5, marginBottom: 5, height: 54, width: width/3, fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} size={'large'} variant={'contained'} type={'submit'} >
+                Search
+              </Button>)}
             </Grid>
           </Box>
         </form>

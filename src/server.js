@@ -10,14 +10,14 @@ const connection = mysql.createConnection({
 
 //IMPORTANT: RUN THIS FILE BEFORE STARTING REACT SERVER
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-  });
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header(
+//       "Access-Control-Allow-Headers",
+//       "Origin, X-Requested-With, Content-Type, Accept"
+//     );
+//     next();
+//   });
 
 connection.connect(function(err) {
     if(err) {
