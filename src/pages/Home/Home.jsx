@@ -98,6 +98,7 @@ return (
   <div>
     <Box className='cards' marginTop={11}>
     <img src={Background} width={width} className="svg"/>
+    {/* take out if you want */}
       <br></br>
     <Box className='car'>
       <img src={text} width={width} className="svgMain"/>
@@ -211,6 +212,8 @@ return (
           </Box>
         </form>
       </Box>
+      <img src={Background} width={width} className="svg"/> 
+      {/* take out if you want */}
       </Box>
       </div>
   </div>
