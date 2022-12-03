@@ -13,6 +13,7 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
+import { Typography } from '@mui/material';
 function useWindowSize() {
   const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
   useEffect(() => {
