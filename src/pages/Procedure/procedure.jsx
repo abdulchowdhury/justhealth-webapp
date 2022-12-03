@@ -5,9 +5,24 @@ import { useSearchParams } from 'react-router-dom';
 import { useState} from 'react';
 import infoBubble from '../Pricing/infoBubble';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
+function useWindowSize() {
+  const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
+  useEffect(() => {
+    const handleResize = () => {
+      setSize([window.innerHeight, window.innerWidth]);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+  return size;
+}
 
 const Procedure = (props) => {
+  const [height, width] = useWindowSize();
 
   const [data, setData] = useState("no data")
   const [crowdsourced, setCrowdsourced] = useState("no data")
@@ -142,7 +157,7 @@ const Procedure = (props) => {
 
   return (
     <body>
-    <div style={{margin:15}}>
+    <div style={{margin:60} }>
       <center>
       <Grid
       container
@@ -168,7 +183,7 @@ const Procedure = (props) => {
           <h3><br></br> {"Paying with cash might be better for this procedure"}</h3>
         </Grid>) : "" }
         <Grid item xs = {12}>
-          <Graph b={b} insurance={insurance}/>
+          <Graph b={b} insurance={insurance} width ={width}/>
         </Grid>
         <Grid itme xs = {12} sx={{
                 my: 2,
@@ -177,7 +192,7 @@ const Procedure = (props) => {
                 display: 'block',
                 textTransform: 'none',
                 fontWeight: 900,
-              }}>
+              }} marginLeft={5} className='bob'>
           <h2 style={{fontWeight: 800, fontSize: 30}}>Additional Infomation</h2>
           <div style={{padding: 3}}></div>
           <p style={{fontWeight: 600, fontSize: 17}}>Where's my insurance on this graph?</p>
