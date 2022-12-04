@@ -4,6 +4,7 @@ import { boltzmannDependencies } from 'mathjs';
 import React, {Component} from 'react';
 import Plotly from 'react-plotly.js';
 import "./Graph.css"
+
 class Graph extends Component {
   
     render() {
@@ -42,8 +43,8 @@ class Graph extends Component {
         insurance = insurance.toUpperCase();
         checker(Object.keys(this.props.b));
         var dtick_val = Number((Math.max(...Object.values(this.props.b))/10).toPrecision(1));
-        var width = window.innerWidth * .90
-        var height = window.innerHeight * .75
+        var width = this.props.width
+        var height = this.props.height * .75
         return (
             <div className='graph-font'>
                 <Plotly data = {[{
@@ -103,7 +104,8 @@ class Graph extends Component {
                     }
                 }}
                 config = {{
-                  responsive: true
+                  responsive: true,
+                  displayModeBar: false,
                 }}
                 />
             </div>

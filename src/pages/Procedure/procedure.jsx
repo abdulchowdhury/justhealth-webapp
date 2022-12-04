@@ -6,6 +6,7 @@ import { useState} from 'react';
 import infoBubble from '../Pricing/infoBubble';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { leftShift } from 'mathjs';
 
 function useWindowSize() {
   const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
@@ -157,42 +158,47 @@ const Procedure = (props) => {
 
   return (
     <body>
-    <div style={{margin:60} }>
+    <div style={{leftShift:10, marginTop:70} }>
       <center>
       <Grid
       container
-      spacing={2}
+      spacing={1}
+      width={width}
       >
-        <Grid item xs = {2}></Grid> {/**These empty grid cells are for padding */}
-        <Grid item xs = {8}>
+        <Grid item xs = {12}>
           <h1>{data[0].Med_Procedure_Description} at {hospital}</h1>
-          <p fontWeight = {900}>Procedure Code: {pid}</p>
         </Grid>
-        <Grid item xs = {2}></Grid> {/**These empty grid cells are for padding */}
-
-        <Grid item xs = {4}>
-          <p>Ticket Price<br></br> {dollar.format(price)} {infoBubble("What is a ticket price?", "The default, total cost of a procedure before any insurance reiembursements or cash discounts.")}</p>
+        <Grid item xs = {12}>
+        <p fontWeight = {900}>Procedure Code: {pid}</p>
         </Grid>
-        <Grid item xs = {4}>
-          <h3>Average Cost<br></br> {dollar.format(avgCost)} {infoBubble("How was this calculated?","We calculate the average cost using only the prices from insurances that actually cover this procedure and the cash price.")}</h3>
-        </Grid>
-        <Grid item xs = {4}>
-          <p>Crowdsourced Average<br></br> {getCAvg()} {infoBubble("How was this calculated?", "Currently, crowdsourced averages are calculated using user-inputted data across all hospitals and insurances for this procedure.")}</p>
-        </Grid>
-        {getBest() ? (<Grid item xs = {12} alignContent = 'center'>
+       {width > 700 ? (<Grid item xs = {4}>
+          <Box><p>Ticket Price<br></br>{dollar.format(price)} {infoBubble("What is a ticket price?", "The default, total cost of a procedure before any insurance reiembursements or cash discounts.")}</p></Box> 
+        </Grid>) : (<Grid item xs = {12}>
+          <Box><p>Ticket Price<br></br>{dollar.format(price)} {infoBubble("What is a ticket price?", "The default, total cost of a procedure before any insurance reiembursements or cash discounts.")}</p></Box> 
+        </Grid>)}
+        {width > 700 ? (<Grid item xs = {4}>
+          <Box><p>Average Cost<br></br> {dollar.format(avgCost)} {infoBubble("How was this calculated?","We calculate the average cost using only the prices from insurances that actually cover this procedure and the cash price.")}</p></Box>
+        </Grid>) : (<Grid item xs = {12}>
+          <Box><p>Average Cost<br></br> {dollar.format(avgCost)} {infoBubble("How was this calculated?","We calculate the average cost using only the prices from insurances that actually cover this procedure and the cash price.")}</p></Box>
+        </Grid>) }
+        {width > 700 ? (<Grid item xs = {4}>
+          <Box><p>Crowdsourced Average<br></br> {getCAvg()} {infoBubble("How was this calculated?", "Currently, crowdsourced averages are calculated using user-inputted data across all hospitals and insurances for this procedure.")}</p></Box>
+        </Grid>): (<Grid item xs = {12}>
+          <Box><p>Crowdsourced Average<br></br> {getCAvg()} {infoBubble("How was this calculated?", "Currently, crowdsourced averages are calculated using user-inputted data across all hospitals and insurances for this procedure.")}</p></Box>
+        </Grid>)}
+        {getBest() ? (<Grid item xs = {12}>
           <h3><br></br> {"Paying with cash might be better for this procedure"}</h3>
         </Grid>) : "" }
         <Grid item xs = {12}>
-          <Graph b={b} insurance={insurance} width ={width}/>
+          <Graph b={b} insurance={insurance} width ={width} height={height}/>
         </Grid>
         <Grid itme xs = {12} sx={{
-                my: 2,
-                mr: 3,
                 color: '#141414',
                 display: 'block',
                 textTransform: 'none',
                 fontWeight: 900,
-              }} marginLeft={5} className='bob'>
+                marginLeft:1
+              }}>
           <h2 style={{fontWeight: 800, fontSize: 30}}>Additional Infomation</h2>
           <div style={{padding: 3}}></div>
           <p style={{fontWeight: 600, fontSize: 17}}>Where's my insurance on this graph?</p>

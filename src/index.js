@@ -11,14 +11,14 @@ import Layout from "./pages/Layout";
 import Home from "./pages/Home/Home";
 import Pricing from "./pages/Pricing/pricing"
 import Input from "./pages/InputPage/Input";
-import NoPage from "./pages/NoPage";
+import NoPage from "./pages/NotFound/NotFound";
 import Procedure from "./pages/Procedure/procedure";
 import PatientInput from "./pages/PatientInput/PatientInput"
 import Navbar from './components/faiz/Navbar/Navbar';
 import Sidebar from "./components/faiz/Sidebar/Sidebar";
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.APP_URL;
+axios.defaults.baseURL = 'http://localhost:3002/';
 
 
 export default function App() {
@@ -32,6 +32,7 @@ export default function App() {
       <Sidebar isopen={isopen} toggle={toggle} />
       <Routes>
         <Route index element={<Home />} />
+        <Route path="/Home" element={<Home />} />
         <Route path="/layout" element={<Layout />} />
         <Route path="/Patient Input" element={<PatientInput />} />
         <Route path="/Pricing/*" element={<Pricing />} />
