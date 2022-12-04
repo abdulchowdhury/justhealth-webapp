@@ -18,8 +18,7 @@ import Navbar from './components/faiz/Navbar/Navbar';
 import Sidebar from "./components/faiz/Sidebar/Sidebar";
 import axios from 'axios';
 
-// axios.defaults.baseURL = 'http://localhost:3002/';
-// we like cock
+axios.defaults.baseURL = 'https://justhealth.herokuapp.com/';
 
 
 export default function App() {
