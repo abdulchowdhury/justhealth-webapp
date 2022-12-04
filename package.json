@@ -76,5 +76,9 @@
   },
   "devDependencies": {
     "react-router-dom": "^6.4.2"
+  },
+  "engines": {
+    "node": "18.12.1",
+    "npm": "8.19.2"
   }
 }
