@@ -19,6 +19,7 @@ import Sidebar from "./components/faiz/Sidebar/Sidebar";
 import axios from 'axios';
 
 // axios.defaults.baseURL = 'http://localhost:3002/';
+// we like cock
 
 
 export default function App() {
