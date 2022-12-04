@@ -78,12 +78,19 @@
         background-color: #111a29;
     }
     .card {
+        display: flex;
         margin-left: auto; /* center the container */
         margin-right: auto; /* center the container */
         justify-content: center;
         background-color: #111a29;
-        border-radius: 25px;
         
+    }
+    .c{
+       margin-top: auto;
+            
+    }
+    .set, .pg {
+        background-color: #111a29;
     }
 }
 

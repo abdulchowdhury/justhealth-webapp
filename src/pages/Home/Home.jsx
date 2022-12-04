@@ -10,6 +10,8 @@ import "./Home.css"
 import Button from '@mui/material/Button';
 import Container from '../../common/Container.js';
 import LoadingSpinner from "../../components/LoadingSpinner";
+import jhtext from '../../Assets/texts.svg'
+import jh from '../../Assets/jh.svg'
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
@@ -95,8 +97,8 @@ return (
   <div>
   {/* <div  style={{ backgroundImage: `url(${Background})`, backgroundRepeat: "no-repeat", alignItems: "center" }}> */}
     {/* <h3>width: {width} height: {height}</h3> */}
-  <div>
-    <Box className='cards' marginTop={11}>
+  <div className='set'>
+    {width > 700 ? (<Box className='cards' marginTop={11}>
     <img src={Background} width={width} className="svg"/>
     {/* take out if you want */}
       <br></br>
@@ -112,6 +114,102 @@ return (
             spacing={1}
           >
 
+          <Grid item xs={12}>
+            <TextField
+              sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
+              id="searchInput"
+              variant="filled"
+              fullWidth
+              value={procedureName}
+              
+              onChange={(e) => {
+                searchProcedureNames(e.target.value)
+                setProcedureID(e.target.value)
+              }}
+              onBlur={() => {
+                setDropdownOptions([]);
+              }}
+              label= "Procedure name or code"
+              
+            />
+            {isLoading ? <LoadingSpinner /> : 
+            <nav>
+              <ul className = "no-bullets-home">
+                {dropdownOptions && dropdownOptions.map((dropdownOption, index) =>
+                  <li key = {dropdownOption.label} value = {dropdownOption.value} className = "suggestion" onMouseDown={() => {onSuggestHandler(dropdownOption)}}>
+                    {dropdownOption.label}
+                  </li>
+                )}
+              </ul>
+            </nav>
+            }
+          </Grid>
+            
+            <Grid item xs={6}>
+              <TextField
+              sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
+                label="Insurance provider"
+                variant="filled"
+                id="insurance"
+                fullWidth
+                
+                onChange={(e) => setInsurance(e.target.value)}
+                //value={formik.values.firstName}
+                // error={
+                //   formik.touched.firstName && Boolean(formik.errors.firstName)
+                // }
+                // helperText={formik.touched.firstName && formik.errors.firstName}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                sx={{backgroundColor: '#f2efe6', marginBottom: -5, borderRadius: 2}}
+                label="ZipCode"
+                variant="filled"
+                id="zip"
+                fullWidth
+                
+                onChange={(e) => setZip(e.target.value)}
+              />
+            </Grid>
+            <Grid
+              item
+              container
+              xs={12}
+              justifyContent={'center'}
+              alignItems={'center'}
+              flexDirection={'column'}
+            >
+              <Button sx={{ marginBottom: 5, height: 54, width: width/3, fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} size={'large'} variant={'contained'} type={'submit'} >
+                Search
+              </Button>
+            </Grid>
+          </Box>
+        </form>
+      </Box>
+      {width > 850 ? (<img src={Background} width={width} className="svg"/>) : "" }
+      </Box>) : (<Box className='card' width={width} marginTop={8}>
+        <form onSubmit={handleSubmit}>
+        <Grid item xs={12}>
+            <img src={Background} width={width} className="svg"/>
+            </Grid>
+            <Grid item xs={12} width={width} className='svg'>
+              <Typography variant='h3' color={'white'} textAlign={'center'} fontWeight={900} fontStyle={'impact-bold'} fontSize={42}> we make prices transparent so you can focus on</Typography>
+            </Grid>
+            <Grid item xs={12} className='svgMain' marginTop={2}>
+            <img src={jh} width={width*.9}/>
+            </Grid>
+            <Grid item xs={12}>
+            <img src={Background} width={width} className="svg"/>
+            </Grid>
+          <Grid
+            width={width*.95}
+            spacing={1}
+            container 
+            alignContent={'center'}
+            marginLeft={'2%'}
+          >
+           
           <Grid item xs={12}>
             <TextField
               sx={{backgroundColor: '#f2efe6', borderRadius: 2}}
@@ -203,20 +301,17 @@ return (
               alignItems={'center'}
               flexDirection={'column'}
             >
-              {width > 700 ? (<Button sx={{ marginBottom: 5, height: 54, width: width/3, fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} size={'large'} variant={'contained'} type={'submit'} >
+              {width > 700 ? (<Button sx={{ marginBottom: 5, height: 54, width: width/2, fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} size={'large'} variant={'contained'} type={'submit'} >
                 Search
-              </Button>) : (<Button sx={{ marginTop: 5, marginBottom: 5, height: 54, width: width/3, fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} size={'large'} variant={'contained'} type={'submit'} >
+              </Button>) : (<Button sx={{ marginTop: 5, marginBottom: 5, height: 54, width: width*.85, fontWeight: 800, backgroundColor: '#22C55E', ":hover":{background: '#6437E7'}}} size={'large'} variant={'contained'} type={'submit'} >
                 Search
               </Button>)}
             </Grid>
-          </Box>
+          </Grid>
         </form>
       </Box>
-      {width > 850 ? (<img src={Background} width={width} className="svg"/>) : "" }
-      </Box>
+      )}
       </div>
-      <br></br>
-      <br></br>
   </div>
     );
   };
