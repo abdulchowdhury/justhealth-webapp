@@ -147,6 +147,6 @@ app.post("/api/getHospitals", (req, res) => {
     })
 });
 
-app.listen(process.env.PORT | PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
     console.log(`Listening on ${PORT}...`);
 });
