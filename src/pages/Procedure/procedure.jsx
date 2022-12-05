@@ -127,7 +127,13 @@ const Procedure = (props) => {
     if (crowdsourced.length !== 0) {
       var c_total = 0
       for (var i = 0; i < crowdsourced.length; i++) {
-        c_total += parseFloat(crowdsourced[i].cost)
+        let x = parseFloat(crowdsourced[i].cost);
+        if (!(isNaN(x))) {
+          c_total += parseFloat(crowdsourced[i].cost)
+        }
+      }
+      if (c_total === 0) {
+        return "No crowdsourced data."
       }
       c_avg = c_total/i
       return dollar.format(c_avg)
