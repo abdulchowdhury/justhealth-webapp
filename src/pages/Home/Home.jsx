@@ -98,7 +98,7 @@ return (
   {/* <div  style={{ backgroundImage: `url(${Background})`, backgroundRepeat: "no-repeat", alignItems: "center" }}> */}
     {/* <h3>width: {width} height: {height}</h3> */}
   <div className='set'>
-    {width > 700 ? (<Box className='cards' marginTop={11}>
+    {width > 821 ? (<Box className='cards' marginTop={11}>
     <img src={Background} width={width} className="svg"/>
     {/* take out if you want */}
       <br></br>
@@ -188,7 +188,7 @@ return (
         </form>
       </Box>
       {width > 850 ? (<img src={Background} width={width} className="svg"/>) : "" }
-      </Box>) : (<div backgroundColor={'#111a29'}><Box className='card' width={width} marginTop={8}>
+      </Box>) : (<div backgroundColor={'#111a29'}><Box className='card' width={width} height={height} marginTop={8}>
         <form onSubmit={handleSubmit}>
         <Grid item xs={12}>
             <img src={Background} width={width} className="svg"/>

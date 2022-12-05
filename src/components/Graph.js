@@ -18,15 +18,15 @@ class Graph extends Component {
         insurance = insurance.toUpperCase();
         if (insurance === undefined || insurance === "" || insurance === " " || insurance === "NULL"  || insurance === "Cash Discount") {
           if (data === "Cash Discount") {
-            return 'navy';
+            return '#142a50';
           } else {
-            return 'lightblue';
+            return '#c8d8e2';
           }
         }
         if ((data.toUpperCase()).indexOf(insurance) !== -1) {
-          return 'navy'
+          return '#142a50'
         }
-        return 'lightblue';
+        return '#c8d8e2';
       }
       function getName(data) {
         insurance = insurance.toUpperCase();
