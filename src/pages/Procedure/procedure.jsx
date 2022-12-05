@@ -155,6 +155,16 @@ const Procedure = (props) => {
     
   }
 
+  function getPay() {
+    let x = 0;
+    Object.entries(b).forEach(([key, value], index) => {
+      if (insurance !== "" && insurance !== null && insurance !== " " && insurance !== "." && ((key.toUpperCase().indexOf(insurance.toUpperCase())) !== -1)) {
+        x = value;
+      }
+    });
+    return dollar.format(x);
+  }
+
 
   return (
     <body>
@@ -186,13 +196,14 @@ const Procedure = (props) => {
         </Grid>): (<Grid item xs = {12}>
           <Box><p>Crowdsourced Average<br></br> {getCAvg()} {infoBubble("How was this calculated?", "Currently, crowdsourced averages are calculated using user-inputted data across all hospitals and insurances for this procedure.")}</p></Box>
         </Grid>)}
+        <Grid item xs = {12}><h2>Price You Pay: {getPay()}</h2></Grid>
         {getBest() ? (<Grid item xs = {12}>
-          <h3><br></br> {"Paying with cash might be better for this procedure"}</h3>
+          <h3>{"Paying with cash might be better for this procedure"}</h3>
         </Grid>) : "" }
         <Grid item xs = {12}>
           <Graph b={b} insurance={insurance} width ={width} height={height}/>
         </Grid>
-        <Grid itme xs = {12} sx={{
+        <Grid itme xs = {12} marginBottom={5} sx={{
                 color: '#141414',
                 display: 'block',
                 textTransform: 'none',

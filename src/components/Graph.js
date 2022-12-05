@@ -62,7 +62,7 @@ class Graph extends Component {
                 
                 layout = { {
                     title: {
-                      text: "Price You Pay based on Insurance",
+                      text: "<b>Price You Pay Based on Insurance</b>",
                       font: {
                         family: 'Tahoma',
                         size: 20,
