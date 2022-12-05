@@ -1,4 +1,5 @@
 //npm install --save modulename --legacy-peer-deps
+//"start": "react-scripts start",
 
 import React, {useState} from 'react';
 import './index.css';
