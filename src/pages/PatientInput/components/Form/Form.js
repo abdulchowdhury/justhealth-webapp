@@ -252,6 +252,7 @@ const Form = () => {
               Please enter the date of the procedure *
             </Typography>
             <TextField
+              alignItems='left'
               variant="outlined"
               type="date"
               id="date"
