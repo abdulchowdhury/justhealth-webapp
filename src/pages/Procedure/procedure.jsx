@@ -157,11 +157,17 @@ const Procedure = (props) => {
 
   function getPay() {
     let x = 0;
+    let cash = 0;
     Object.entries(b).forEach(([key, value], index) => {
       if (insurance !== "" && insurance !== null && insurance !== " " && insurance !== "." && ((key.toUpperCase().indexOf(insurance.toUpperCase())) !== -1)) {
         x = value;
+      } else if (key === "Cash Discount") {
+        cash = value;
       }
     });
+    if (x === 0) {
+      x = cash;
+    }
     return dollar.format(x);
   }
 
